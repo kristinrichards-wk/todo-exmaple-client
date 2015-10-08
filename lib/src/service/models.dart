@@ -2,14 +2,9 @@ library todo_example.src.service.models;
 
 import 'dart:convert';
 
-const dynamic unspecified = #unspecified;
-
 class Todo {
   /// Short description of item. Serves as the title.
   final String description;
-
-  /// Assigned due date. Null if no due date assigned.
-  final DateTime dueDate;
 
   /// Unique identifier. Assigned by server.
   final String id;
@@ -30,18 +25,16 @@ class Todo {
   /// Create a new item.
   Todo(
       {String this.description: '',
-      DateTime this.dueDate,
+      String this.id,
       bool this.isCompleted: false,
       bool this.isPublic: false,
-      String this.notes: ''})
-      : id = null,
-        userID = null;
+      String this.notes: '',
+      String this.userID});
 
   /// Create a new item, allowing the ID and userID fields to be set. Used by
   /// [change].
   Todo._(String this.id, String this.userID,
       {String this.description: '',
-      DateTime this.dueDate,
       bool this.isCompleted: false,
       bool this.isPublic: false,
       String this.notes: ''});
@@ -51,9 +44,6 @@ class Todo {
       : id = source['id'],
         description =
             source['description'] != null ? source['description'] : '',
-        dueDate = source['dueDate'] != null
-            ? DateTime.parse(source['dueDate'])
-            : null,
         isCompleted = source['isCompleted'] == true,
         isPublic = source['isPublic'] == true,
         notes = source['notes'] != null ? source['notes'] : '',
@@ -64,7 +54,6 @@ class Todo {
 
   Map toMap() => {
         'description': description,
-        'dueDate': dueDate,
         'id': id,
         'isCompleted': isCompleted,
         'isPublic': isPublic,
@@ -75,22 +64,17 @@ class Todo {
   String toServerJson() => JSON.encode(toMap());
 
   Todo change(
-      {String description: unspecified,
-      DateTime dueDate: unspecified,
-      bool isCompleted: unspecified,
-      bool isPublic: unspecified,
-      String notes: unspecified}) {
-    String rDescription =
-        description != unspecified ? description : this.description;
-    DateTime rDueDate = dueDate != unspecified ? dueDate : this.dueDate;
-    bool rIsCompleted =
-        isCompleted != unspecified ? isCompleted : this.isCompleted;
-    bool rIsPublic = isPublic != unspecified ? isPublic : this.isPublic;
-    String rNotes = notes != unspecified ? notes : this.notes;
+      {String description,
+      bool isCompleted,
+      bool isPublic,
+      String notes}) {
+    String rDescription = description != null ? description : this.description;
+    bool rIsCompleted = isCompleted != null ? isCompleted : this.isCompleted;
+    bool rIsPublic = isPublic != null ? isPublic : this.isPublic;
+    String rNotes = notes != null ? notes : this.notes;
 
     return new Todo._(id, userID,
         description: rDescription,
-        dueDate: rDueDate,
         isCompleted: rIsCompleted,
         isPublic: rIsPublic,
         notes: rNotes);

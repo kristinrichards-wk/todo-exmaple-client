@@ -9,27 +9,25 @@ import 'package:web_skin_dart/ui_components.dart';
 import 'package:todo_example/src/module/actions.dart' show TodoActions;
 
 var CreateTodoInput = react.registerComponent(() => new _CreateTodoInput());
+
 class _CreateTodoInput extends react.Component {
   TodoActions get actions => props['actions'];
   String get newTodoDescription => state['newTodoDescription'];
 
-  getInitialState() => {
-    'newTodoDescription': ''
-  };
+  getInitialState() => {'newTodoDescription': ''};
 
   render() {
-    return react.form({'className': 'create-todo-input', 'onSubmit': _createTodo},
-      (TextInput()
-        ..autoFocus = true
-        ..hideLabel = true
-        ..label = 'Create a Todo'
-        ..onChange = _updateNewTodoDescription
-        ..onSubmit
-        ..placeholder = 'What do you need to do?'
-        ..size = InputSize.LARGE
-        ..value = newTodoDescription
-      )()
-    );
+    return react.form(
+        {'className': 'create-todo-input', 'onSubmit': _createTodo},
+        (TextInput()
+          ..autoFocus = true
+          ..hideLabel = true
+          ..label = 'Create a Todo'
+          ..onChange = _updateNewTodoDescription
+          ..onSubmit
+          ..placeholder = 'What do you need to do?'
+          ..size = InputSize.LARGE
+          ..value = newTodoDescription)());
   }
 
   _createTodo(e) {

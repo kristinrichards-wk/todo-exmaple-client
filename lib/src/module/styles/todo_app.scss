@@ -1,0 +1,11 @@
+@import 'todo_variables';
+
+.todo-app {
+
+  .create-todo-input, .todo-list-filter, .todo-list {
+    max-width: $app-max-width;
+    min-width: $app-min-width;
+    margin: 0 auto;
+  }
+
+}

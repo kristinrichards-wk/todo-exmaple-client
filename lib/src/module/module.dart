@@ -6,6 +6,7 @@ import 'package:w_module/w_module.dart';
 
 import 'package:todo_example/src/module/actions.dart';
 import 'package:todo_example/src/module/components.dart';
+import 'package:todo_example/src/module/components/edit_todo_modal.dart';
 import 'package:todo_example/src/module/store.dart';
 
 class TodoModule extends Module {
@@ -25,6 +26,10 @@ class TodoModule extends Module {
     _actions = new TodoActions();
     _store = new TodoStore(_actions, _service);
     _components = new TodoComponents(_actions, _store, _modalManager);
+
+    _actions.editTodo.listen((todo) {
+      new EditTodoModal(todo, _actions, _modalManager).show();
+    });
 
     // Hook up modals
 //    _actions.showClearModal.listen((_) {
