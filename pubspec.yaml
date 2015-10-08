@@ -1,0 +1,42 @@
+name: todo_example
+version: 0.0.0
+
+dependencies:
+  react: "^0.8.0"
+  truss:
+    git:
+      url: git@github.com:Workiva/truss.git
+      ref: "0.5.1"
+  w_flux: "^1.0.0"
+  w_module: "^0.3.1"
+  web_skin_dart:
+    git:
+      url: git@github.com:Workiva/web_skin_dart.git
+      ref: "0.0.7"
+
+dev_dependencies:
+  browser: "^0.10.0"
+  dart_dev: "^1.0.1"
+  dart_style: "^0.2.0"
+  sass: any
+  test: "^0.12.4"
+  uuid: "^0.5.0"
+
+dependency_overrides:
+  # this will no longer be necessary as of https://github.com/Workiva/truss/pull/158
+  w_module: "^0.3.1"
+
+  # try to eliminate these as well (requires Truss dependency updates)
+  react: "^0.8.0"
+  web_skin:
+    git:
+      url: git@github.com:Workiva/web-skin.git
+      ref: 1.3.0
+  web_skin_dart:
+    git:
+      url: git@github.com:Workiva/web_skin_dart.git
+      ref: "0.0.7"
+
+transformers:
+- sass:
+    executable: sass

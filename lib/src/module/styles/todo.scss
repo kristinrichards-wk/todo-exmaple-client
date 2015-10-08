@@ -1,0 +1,16 @@
+.todo {
+
+  &.todo-complete {
+    &, .icon {
+      color: #444444;
+    }
+  }
+
+  &.todo-incomplete {
+    &, .icon {
+      color: #b2b2b2;
+      text-decoration: line-through;
+    }
+  }
+
+}
