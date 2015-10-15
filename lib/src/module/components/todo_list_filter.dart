@@ -1,6 +1,7 @@
 library todo_example.src.module.components.todo_filter;
 
 import 'package:react/react.dart' as react;
+import 'package:web_skin_dart/ui_core.dart';
 import 'package:web_skin_dart/ui_components.dart';
 
 import 'package:todo_example/src/module/actions.dart' show TodoActions;
@@ -15,27 +16,34 @@ class _TodoListFilter extends react.Component {
   bool get includePublic => props['includePublic'];
 
   render() {
-    return react.div({
-      'className': 'todo-list-filter'
-    }, [
-      (ToggleInputGroup()([
+    return (Dom.div()
+        ..className = 'todo-list-filter'
+    )(
+      (ToggleInputGroup()
+          ..groupLabel = 'Todo List Filters'
+          ..hideGroupLabel = true
+      )([
         (CheckboxInput()
-          ..checked = includePrivate
+          ..defaultChecked = includePrivate
+          ..key = 'your-todos'
           ..label = 'Your Todos'
           ..onChange = (_) => actions.toggleIncludePrivate())(),
         (CheckboxInput()
-          ..checked = includePublic
+          ..defaultChecked = includePublic
+          ..key = 'public-todos'
           ..label = 'Public Todos'
           ..onChange = (_) => actions.toggleIncludePublic())(),
         (CheckboxInput()
-          ..checked = includeIncomplete
+          ..defaultChecked = includeIncomplete
+          ..key = 'unfinished-todos'
           ..label = 'Unfinished Todos'
           ..onChange = (_) => actions.toggleIncludeIncomplete())(),
         (CheckboxInput()
-          ..checked = includeComplete
+          ..defaultChecked = includeComplete
+          ..key = 'finished-todos'
           ..label = 'Finished Todos'
           ..onChange = (_) => actions.toggleIncludeComplete())(),
-      ]))
-    ]);
+      ])
+    );
   }
 }

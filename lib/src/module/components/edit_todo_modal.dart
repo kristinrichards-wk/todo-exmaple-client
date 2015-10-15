@@ -23,12 +23,14 @@ class EditTodoModal extends ManagedModal {
   renderModalContent() {
     var description = (TextInput()
       ..type = TextInputType.TEXT
+      ..key = 'title'
       ..label = 'Title'
       ..value = _todo.description
       ..onChange = _updateTodoDescription)();
 
     var notes = (TextInput()
       ..isMultiline = true
+      ..key = 'notes'
       ..label = 'Notes'
       ..onChange = _updateTodoNotes
       ..placeholder = 'Notes'
@@ -44,9 +46,11 @@ class EditTodoModal extends ManagedModal {
     return [
       (Dom.div()
         ..className = 'modal-body'
+        ..key = 'body'
       )(FormLayout()([description, notes])),
       (Dom.div()
         ..className = 'modal-footer'
+        ..key = 'footer'
       )(save)
     ];
   }

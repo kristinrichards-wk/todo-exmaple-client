@@ -33,6 +33,7 @@ class _TodoList extends react.Component {
           .map((todo) => TodoListItem({
                 'actions': actions,
                 'isExpanded': activeTodo == todo,
+                'key': todo.id,
                 'todo': todo
               }))
           .toList();

@@ -27,6 +27,7 @@ class _TodoAppComponent extends FluxComponent<TodoActions, TodoStore> {
     elements.add((Block()
       ..content = true
       ..isNested = true
+      ..key = 'create'
       ..shrink = true)(CreateTodoInput({'actions': actions})));
 
     // Filter
@@ -35,6 +36,7 @@ class _TodoAppComponent extends FluxComponent<TodoActions, TodoStore> {
         ..collapse = BlockCollapse.VERTICAL
         ..content = true
         ..isNested = true
+        ..key = 'filter'
         ..shrink = true)(TodoListFilter({
         'actions': actions,
         'includeComplete': store.includeComplete,
@@ -47,7 +49,8 @@ class _TodoAppComponent extends FluxComponent<TodoActions, TodoStore> {
     // To-do List
     elements.add((Block()
       ..gutter = BlockGutter.ALL
-      ..isNested = true)(TodoList({
+      ..isNested = true
+      ..key = 'todos')(TodoList({
       'actions': actions,
       'activeTodo': store.activeTodo,
       'todos': store.todos

@@ -16,28 +16,32 @@ class _TodoListFilterSidebar extends FluxComponent<TodoActions, TodoStore> {
   render() {
     return WorkspacesMenu({}, [
       WorkspacesMenuItem({
+        'active': store.includePrivate,
         'icon': 'twfr-folder',
-        'text': 'Your Todos',
+        'key': 'your-todos',
         'onSelect': (_) => actions.toggleIncludePrivate(),
-        'active': store.includePrivate
+        'text': 'Your Todos',
       }),
       WorkspacesMenuItem({
+        'active': store.includePublic,
         'icon': 'twfr-folder-open',
-        'text': 'Public Todos',
+        'key': 'public-todos',
         'onSelect': (_) => actions.toggleIncludePublic(),
-        'active': store.includePublic
+        'text': 'Public Todos',
       }),
       WorkspacesMenuItem({
+        'active': store.includeIncomplete,
         'icon': 'twfr-task-check',
-        'text': 'Unfinished Todos',
+        'key': 'unfinished-todos',
         'onSelect': (_) => actions.toggleIncludeIncomplete(),
-        'active': store.includeIncomplete
+        'text': 'Unfinished Todos',
       }),
       WorkspacesMenuItem({
+        'active': store.includeComplete,
         'icon': 'twfr-task-create',
-        'text': 'Finished Todos',
+        'key': 'finished-todos',
         'onSelect': (_) => actions.toggleIncludeComplete(),
-        'active': store.includeComplete
+        'text': 'Finished Todos',
       }),
     ]);
   }

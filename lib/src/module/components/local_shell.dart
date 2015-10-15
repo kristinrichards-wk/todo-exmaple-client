@@ -15,13 +15,17 @@ class _TodoLocalShell extends react.Component {
         ..className = 'login-prompt'
         ..content = true
         ..isNested = true
+        ..key = 'login-prompt'
         ..shrink = true)(Dom.p()([
-        'Want to save and share your todos? ',
-        (Dom.a()..href = '/login')('Sign in now.')
+        (Dom.span()..key = 'text')('Want to save and share your todos? '),
+        (Dom.a()
+          ..href = '/login'
+          ..key = 'login-link')('Sign in now.')
       ])),
       (Block()
         ..gutter = BlockGutter.ALL
-        ..isNested = true)(application)
+        ..isNested = true
+        ..key = 'app')(application)
     ]));
   }
 }
