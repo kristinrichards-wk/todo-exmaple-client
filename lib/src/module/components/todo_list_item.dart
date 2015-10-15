@@ -28,11 +28,11 @@ class _TodoListItem extends react.Component {
     var todoContents = [];
     todoContents.add((Dom.p()
       ..className = 'todo-title'
-      ..onClick = _toggleExpansion
-    )(todoTitle));
+      ..onClick = _toggleExpansion)(todoTitle));
     if (isExpanded) {
       if (todo.notes == null || todo.notes.isEmpty) {
-        todoContents.add((Dom.p()..className = 'todo-notes todo-notes-empty')('No notes.'));
+        todoContents.add(
+            (Dom.p()..className = 'todo-notes todo-notes-empty')('No notes.'));
       } else {
         todoContents.add((Dom.p()..className = 'todo-notes')(todo.notes));
       }
@@ -66,18 +66,18 @@ class _TodoListItem extends react.Component {
       ..className = todoClass
       ..key = todo.id
       ..shrink = true)([
-        (Block()
-          ..className = 'todo-completion'
-          ..isNested = true
-          ..shrink = true)(todoCompletion),
-        (Block()
-          ..className = 'todo-contents'
-          ..isNested = true
-          ..wrap = true)(todoContents),
-        (Block()
-          ..className = 'todo-controls'
-          ..isNested = true
-          ..shrink = true)(todoControls),
+      (Block()
+        ..className = 'todo-completion'
+        ..isNested = true
+        ..shrink = true)(todoCompletion),
+      (Block()
+        ..className = 'todo-contents'
+        ..isNested = true
+        ..wrap = true)(todoContents),
+      (Block()
+        ..className = 'todo-controls'
+        ..isNested = true
+        ..shrink = true)(todoControls),
     ]);
   }
 

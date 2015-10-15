@@ -87,11 +87,13 @@ class TodoStore extends Store {
   }
 
   _initialize() async {
-    _todosMap = new Map.fromIterable(await _service.queryTodos(
-        includeComplete: true,
-        includeIncomplete: true,
-        includePrivate: true,
-        includePublic: true), key: (todo) => todo.id);
+    _todosMap = new Map.fromIterable(
+        await _service.queryTodos(
+            includeComplete: true,
+            includeIncomplete: true,
+            includePrivate: true,
+            includePublic: true),
+        key: (todo) => todo.id);
     trigger();
   }
 }

@@ -1,4 +1,4 @@
-library todo_example.src.service.definition;
+library todo_example.src.service.mock_service;
 
 import 'dart:async';
 
@@ -8,12 +8,11 @@ import 'package:todo_example/src/service/definition.dart' show TodoService;
 import 'package:todo_example/src/service/models.dart' show Todo;
 
 class MockTodoService implements TodoService {
-
   StreamController<Todo> _todoCreated = new StreamController.broadcast();
   StreamController<Todo> _todoDeleted = new StreamController.broadcast();
   StreamController<Todo> _todoUpdated = new StreamController.broadcast();
 
-  Map<String, Todo> _todos;
+  Map<String, Todo> _todos = {};
   Uuid _uuid = new Uuid();
 
   @override
@@ -53,9 +52,9 @@ class MockTodoService implements TodoService {
       bool includePrivate: false,
       bool includePublic: false}) async {
     if (!includeComplete &&
-    !includeIncomplete &&
-    !includePrivate &&
-    !includePublic) return [];
+        !includeIncomplete &&
+        !includePrivate &&
+        !includePublic) return [];
 
     List<Todo> todos = [];
     for (var todo in _todos.values) {

@@ -21,13 +21,9 @@ class _TodoList extends react.Component {
 
   render() {
     if (todos.isEmpty) {
-      return (Block()
-        ..className = 'todo-list'
-      )(
-        (Dom.p()
-          ..className = 'todo-list-empty'
-        )('No todos to show. Create one or adjust the filters.')
-      );
+      return (Block()..className = 'todo-list')((Dom.p()
+        ..className = 'todo-list-empty')(
+          'No todos to show. Create one or adjust the filters.'));
     } else {
       List todoItems = todos
           .map((todo) => TodoListItem({

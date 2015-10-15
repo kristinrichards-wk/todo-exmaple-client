@@ -40,18 +40,15 @@ class EditTodoModal extends ManagedModal {
     var save = (FormSubmitInput()
       ..skin = ButtonSkin.SUCCESS
       ..onClick = _save
-      ..pullRight = true
-    )('Save');
+      ..pullRight = true)('Save');
 
     return [
       (Dom.div()
         ..className = 'modal-body'
-        ..key = 'body'
-      )(FormLayout()([description, notes])),
+        ..key = 'body')(FormLayout()([description, notes])),
       (Dom.div()
         ..className = 'modal-footer'
-        ..key = 'footer'
-      )(save)
+        ..key = 'footer')(save)
     ];
   }
 

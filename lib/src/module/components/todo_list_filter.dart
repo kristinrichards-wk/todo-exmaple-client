@@ -16,34 +16,29 @@ class _TodoListFilter extends react.Component {
   bool get includePublic => props['includePublic'];
 
   render() {
-    return (Dom.div()
-        ..className = 'todo-list-filter'
-    )(
-      (ToggleInputGroup()
-          ..groupLabel = 'Todo List Filters'
-          ..hideGroupLabel = true
-      )([
-        (CheckboxInput()
-          ..defaultChecked = includePrivate
-          ..key = 'your-todos'
-          ..label = 'Your Todos'
-          ..onChange = (_) => actions.toggleIncludePrivate())(),
-        (CheckboxInput()
-          ..defaultChecked = includePublic
-          ..key = 'public-todos'
-          ..label = 'Public Todos'
-          ..onChange = (_) => actions.toggleIncludePublic())(),
-        (CheckboxInput()
-          ..defaultChecked = includeIncomplete
-          ..key = 'unfinished-todos'
-          ..label = 'Unfinished Todos'
-          ..onChange = (_) => actions.toggleIncludeIncomplete())(),
-        (CheckboxInput()
-          ..defaultChecked = includeComplete
-          ..key = 'finished-todos'
-          ..label = 'Finished Todos'
-          ..onChange = (_) => actions.toggleIncludeComplete())(),
-      ])
-    );
+    return (Dom.div()..className = 'todo-list-filter')((ToggleInputGroup()
+      ..groupLabel = 'Todo List Filters'
+      ..hideGroupLabel = true)([
+      (CheckboxInput()
+        ..defaultChecked = includePrivate
+        ..key = 'your-todos'
+        ..label = 'Your Todos'
+        ..onChange = (_) => actions.toggleIncludePrivate())(),
+      (CheckboxInput()
+        ..defaultChecked = includePublic
+        ..key = 'public-todos'
+        ..label = 'Public Todos'
+        ..onChange = (_) => actions.toggleIncludePublic())(),
+      (CheckboxInput()
+        ..defaultChecked = includeIncomplete
+        ..key = 'unfinished-todos'
+        ..label = 'Unfinished Todos'
+        ..onChange = (_) => actions.toggleIncludeIncomplete())(),
+      (CheckboxInput()
+        ..defaultChecked = includeComplete
+        ..key = 'finished-todos'
+        ..label = 'Finished Todos'
+        ..onChange = (_) => actions.toggleIncludeComplete())(),
+    ]));
   }
 }

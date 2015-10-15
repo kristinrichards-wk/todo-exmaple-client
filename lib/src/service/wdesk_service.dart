@@ -116,14 +116,15 @@ class WdeskTodoService implements TodoService {
     return _convertForClient(updated);
   }
 
-  base_service.RequestContext _createRequestContext() => new base_service.RequestContext()
-    ..accountID = _session.context.account.accountId
-    ..authorizationToken = _oauth2.accessToken
-    ..clientID = _oauth2.clientId
-    ..correlationID = _uuid.v4()
-    ..membershipID =
-        _decodeResourceId(_session.context.membership.resourceId, 'Membership')
-    ..userID = _session.context.user.resourceId;
+  base_service.RequestContext _createRequestContext() =>
+      new base_service.RequestContext()
+        ..accountID = _session.context.account.accountId
+        ..authorizationToken = _oauth2.accessToken
+        ..clientID = _oauth2.clientId
+        ..correlationID = _uuid.v4()
+        ..membershipID = _decodeResourceId(
+            _session.context.membership.resourceId, 'Membership')
+        ..userID = _session.context.user.resourceId;
 
   _getTodoService() => _todoService.future;
 
@@ -135,13 +136,14 @@ class WdeskTodoService implements TodoService {
       notes: serviceTodo.notes,
       userID: serviceTodo.userID);
 
-  todo_service.Todo _convertForService(Todo clientTodo) => new todo_service.Todo()
-    ..description = clientTodo.description
-    ..id = clientTodo.id
-    ..isCompleted = clientTodo.isCompleted
-    ..isPublic = clientTodo.isPublic
-    ..notes = clientTodo.notes
-    ..userID = _session.context.user.resourceId;
+  todo_service.Todo _convertForService(Todo clientTodo) =>
+      new todo_service.Todo()
+        ..description = clientTodo.description
+        ..id = clientTodo.id
+        ..isCompleted = clientTodo.isCompleted
+        ..isPublic = clientTodo.isPublic
+        ..notes = clientTodo.notes
+        ..userID = _session.context.user.resourceId;
 
   String _decodeResourceId(resourceId, strip) =>
       window.atob(resourceId).replaceAll('$strip\x1f', '');

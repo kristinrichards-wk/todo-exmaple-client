@@ -64,10 +64,7 @@ class Todo {
   String toServerJson() => JSON.encode(toMap());
 
   Todo change(
-      {String description,
-      bool isCompleted,
-      bool isPublic,
-      String notes}) {
+      {String description, bool isCompleted, bool isPublic, String notes}) {
     String rDescription = description != null ? description : this.description;
     bool rIsCompleted = isCompleted != null ? isCompleted : this.isCompleted;
     bool rIsPublic = isPublic != null ? isPublic : this.isPublic;

@@ -58,8 +58,7 @@ class _TodoAppComponent extends FluxComponent<TodoActions, TodoStore> {
 
     return (Block()
       ..align = BlockAlign.CENTER
-      ..size = 12
-    )((VBlock()
+      ..size = 12)((VBlock()
       ..className = 'todo-app'
       ..isNested = true
       ..size = 12
