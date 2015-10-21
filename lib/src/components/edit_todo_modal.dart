@@ -2,12 +2,12 @@ library todo_example.src.module.components.edit_todo_modal;
 
 import 'dart:html';
 
-import 'package:todo_example/service.dart' show Todo;
+import 'package:todo_sdk/todo_sdk.dart' show Todo;
 import 'package:truss/modal_manager.dart';
 import 'package:web_skin_dart/ui_components.dart';
 import 'package:web_skin_dart/ui_core.dart';
 
-import 'package:todo_example/src/module/actions.dart';
+import 'package:todo_example/src/actions.dart';
 
 class EditTodoModal extends ManagedModal {
   TodoActions _actions;

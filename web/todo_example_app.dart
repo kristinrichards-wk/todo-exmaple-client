@@ -4,61 +4,68 @@ import 'dart:html';
 
 import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show setClientConfiguration;
-import 'package:todo_example/module.dart';
-import 'package:todo_example/service.dart';
+import 'package:todo_example/todo_example.dart' show TodoModule;
+import 'package:todo_sdk/todo_sdk.dart';
 import 'package:w_session/api.dart';
 
-import 'package:messaging_sdk/messaging_sdk.dart';
 import 'package:truss/truss.dart' show WorkspacesShell;
 import 'package:w_oauth2/w_oauth2.dart';
-import 'package:w_service/w_service.dart';
+
+import 'settings.dart' as settings;
+
+String _decodeResourceId(resourceId, strip) => window.atob(resourceId).replaceAll('$strip\x1f', '');
 
 main() async {
   setClientConfiguration();
   var container = querySelector('#shell-container');
 
-  Uri sessionHost = Uri.parse('https://wk-dev.wdesk.org');
-  SessionApi sessionApi = new SessionApi(sessionHost: sessionHost);
+  SessionApi sessionApi = new SessionApi(sessionHost: settings.sessionHost);
   if ((await sessionApi.getAuthenticationStatus()).loggedIn) {
     // User is authenticated. Use the wdesk version.
 
-    WorkspacesShell shell = new WorkspacesShell(sessionHost: sessionHost);
+    // Instantiate and initialize the workspaces shell. This also establishes a
+    // a valid session against our session host.
+    WorkspacesShell shell = new WorkspacesShell(sessionHost: settings.sessionHost);
     await shell.load();
 
+    // Set up our OAuth2 configuration.
     String clientId = 'w_oauth2_example';
-    String redirectUri =
-        'http://localhost:8080/oauth2_token_management/oauth2redirect';
-    List<String> scope = ['sox|r', 'sox|w'];
+    Uri currentHost = Uri.parse('${window.location.protocol}//${window.location.host}');
+    Uri redirectUri = currentHost.replace(path: '/oauth2_token_management/oauth2redirect');
+    OAuth2 oauth2 = new OAuth2(clientId, redirectUri.toString(), [], shell.session);
 
-    OAuth2 oauth2 = new OAuth2(clientId, redirectUri, scope, shell.session);
-    await oauth2.start();
+    // Instantiate the authenticated & authorized to-do SDK.
+    TodoSdk todoSdk = new WdeskTodoSdk(shell.session, oauth2, settings.messagingFrontendHost);
 
-    String membershipResourceId =
-        window.atob(shell.session.context.membership.resourceId);
-    String membershipId = membershipResourceId.replaceAll('Membership\x1f', '');
+    // Inject the service into our to-do module.
+    TodoModule todoModule = new TodoModule(todoSdk);
 
-    HttpProvider clientProvider = new HttpProvider()
-      ..use(oauth2.httpInterceptor);
-    Options options =
-        new Options('http://localhost:8100', membershipId, clientProvider);
-    Client client = new Client(options);
-    await client.open();
+    // Grab the main to-do UI, but hide the filter since we'll be placing a
+    // variation of the filter in the workspaces sidebar.
+    String user = _decodeResourceId(shell.session.context.user.resourceId, 'WFUser');
+    var mainContent = todoModule.components.content(currentUserID: user, withFilter: false);
 
-    TodoService todoService =
-        new WdeskTodoService(client, shell.session, oauth2);
-    TodoModule todoModule = new TodoModule(todoService);
-
-    var mainContent = todoModule.components.content(withFilter: false);
+    // Construct the entire application component to render using the shell's
+    // content factory.
     var component = shell.components.content(
+        // Main content area of the shell.
         content: mainContent,
+        // Populate the workspaces sidebar with a variant of the to-do filter.
         menuContent: todoModule.components.sidebar(),
+        // Hide the create menu.
         menuHeader: null);
+
     react.render(component, container);
   } else {
     // User is not authenticated. Use the local version.
 
-    TodoService todoService = new LocalTodoService();
-    TodoModule todoModule = new TodoModule(todoService);
+    // Use an implementation of the to-do SDK that uses localStorage.
+    TodoSdk todoSdk = new LocalTodoSdk();
+
+    // Inject this service into the to-do module.
+    TodoModule todoModule = new TodoModule(todoSdk);
+
+    // Render the module's local UI variant.
     react.render(todoModule.components.localShell(), container);
   }
 }

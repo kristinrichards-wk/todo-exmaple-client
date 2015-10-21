@@ -5,19 +5,17 @@ import 'package:react/react.dart' as react;
 import 'package:web_skin_dart/ui_core.dart';
 import 'package:web_skin_dart/ui_components.dart';
 
-import 'package:todo_example/src/module/actions.dart' show TodoActions;
-import 'package:todo_example/src/module/store.dart' show TodoStore;
+import 'package:todo_example/src/actions.dart' show TodoActions;
+import 'package:todo_example/src/store.dart' show TodoStore;
 
-import 'package:todo_example/src/module/components/create_todo_input.dart'
-    show CreateTodoInput;
-import 'package:todo_example/src/module/components/todo_list.dart'
-    show TodoList;
-import 'package:todo_example/src/module/components/todo_list_filter.dart'
-    show TodoListFilter;
+import 'package:todo_example/src/components/create_todo_input.dart' show CreateTodoInput;
+import 'package:todo_example/src/components/todo_list.dart' show TodoList;
+import 'package:todo_example/src/components/todo_list_filter.dart' show TodoListFilter;
 
 var TodoAppComponent = react.registerComponent(() => new _TodoAppComponent());
 
 class _TodoAppComponent extends FluxComponent<TodoActions, TodoStore> {
+  String get currentUserID => props['currentUserID'];
   bool get withFilter => props['withFilter'];
 
   render() {
@@ -53,6 +51,7 @@ class _TodoAppComponent extends FluxComponent<TodoActions, TodoStore> {
       ..key = 'todos')(TodoList({
       'actions': actions,
       'activeTodo': store.activeTodo,
+      'currentUserID': currentUserID,
       'todos': store.todos
     })));
 

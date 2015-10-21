@@ -1,4 +1,4 @@
-@import '../../../../packages/web_skin/sass/core/api';
+@import '../../../packages/web_skin/sass/core/api';
 @import 'todo_variables';
 
 .todo-list {
@@ -48,6 +48,10 @@
 
     .todo-delete:hover {
       color: $zc-red;
+    }
+
+    .todo-check-inactive {
+      color: $zc-gray-lighter3;
     }
 
     // Editing, privacy, and deletion. Hidden until to-do item is hovered.

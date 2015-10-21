@@ -1,11 +1,11 @@
 library todo_example.src.module.components.todo_list_item;
 
 import 'package:react/react.dart' as react;
-import 'package:todo_example/service.dart' show Todo;
+import 'package:todo_sdk/todo_sdk.dart' show Todo;
 import 'package:web_skin_dart/ui_core.dart';
 import 'package:web_skin_dart/ui_components.dart';
 
-import 'package:todo_example/src/module/actions.dart' show TodoActions;
+import 'package:todo_example/src/actions.dart' show TodoActions;
 
 var TodoListItem = react.registerComponent(() => new _TodoListItem());
 
@@ -13,6 +13,7 @@ class _TodoListItem extends react.Component {
   Todo edited;
 
   TodoActions get actions => props['actions'];
+  String get currentUserID => props['currentUserID'];
   bool get isEditing => state['isEditing'];
   bool get isExpanded => props['isExpanded'];
   Todo get todo => props['todo'];
@@ -31,32 +32,42 @@ class _TodoListItem extends react.Component {
       ..onClick = _toggleExpansion)(todoTitle));
     if (isExpanded) {
       if (todo.notes == null || todo.notes.isEmpty) {
-        todoContents.add(
-            (Dom.p()..className = 'todo-notes todo-notes-empty')('No notes.'));
+        todoContents.add((Dom.p()..className = 'todo-notes todo-notes-empty')('No notes.'));
       } else {
         todoContents.add((Dom.p()..className = 'todo-notes')(todo.notes));
       }
     }
 
-    var todoCompletion = (Icon()
-      ..className = 'todo-check'
-      ..glyph = IconGlyph.CHECKMARK
-      ..onClick = _toggleCompletion)();
+    var todoCompletion;
+    var todoControls;
 
-    var todoControls = [
-      (Icon()
-        ..className = 'todo-edit'
-        ..glyph = IconGlyph.PENCIL
-        ..onClick = _edit)(),
-      (Icon()
-        ..className = 'todo-privacy'
-        ..glyph = todo.isPublic ? IconGlyph.EYE_BLOCKED : IconGlyph.EYE
-        ..onClick = _togglePrivacy)(),
-      (Icon()
-        ..className = 'todo-delete'
-        ..glyph = IconGlyph.TRASH
-        ..onClick = _delete)(),
-    ];
+    if (_canModify()) {
+      todoCompletion = (Icon()
+        ..className = 'todo-check'
+        ..glyph = IconGlyph.CHECKMARK
+        ..onClick = _toggleCompletion)();
+
+      todoControls = [
+        (Icon()
+          ..className = 'todo-edit'
+          ..glyph = IconGlyph.PENCIL
+          ..onClick = _edit)(),
+        (Icon()
+          ..className = 'todo-privacy'
+          ..glyph = todo.isPublic ? IconGlyph.EYE_BLOCKED : IconGlyph.EYE
+          ..onClick = _togglePrivacy)(),
+        (Icon()
+          ..className = 'todo-delete'
+          ..glyph = IconGlyph.TRASH
+          ..onClick = _delete)(),
+      ];
+    } else {
+      todoCompletion = (Icon()
+        ..className = 'todo-check-inactive'
+        ..glyph = IconGlyph.CHECKMARK)();
+
+      todoControls = [];
+    }
 
     var todoClass = 'todo';
     todoClass += todo.isCompleted ? ' todo-complete' : ' todo-incomplete';
@@ -80,6 +91,8 @@ class _TodoListItem extends react.Component {
         ..shrink = true)(todoControls),
     ]);
   }
+
+  bool _canModify() => currentUserID == null || currentUserID == todo.userID;
 
   _delete(e) {
     e.preventDefault();

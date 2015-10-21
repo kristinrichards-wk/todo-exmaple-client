@@ -4,11 +4,10 @@ import 'package:react/react.dart' as react;
 import 'package:truss/truss.dart';
 import 'package:w_flux/w_flux.dart';
 
-import 'package:todo_example/src/module/actions.dart' show TodoActions;
-import 'package:todo_example/src/module/store.dart' show TodoStore;
+import 'package:todo_example/src/actions.dart' show TodoActions;
+import 'package:todo_example/src/store.dart' show TodoStore;
 
-var TodoListFilterSidebar =
-    react.registerComponent(() => new _TodoListFilterSidebar());
+var TodoListFilterSidebar = react.registerComponent(() => new _TodoListFilterSidebar());
 
 class _TodoListFilterSidebar extends FluxComponent<TodoActions, TodoStore> {
   TodoActions get actions => props['actions'];

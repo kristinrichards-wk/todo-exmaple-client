@@ -1,9 +1,9 @@
 library todo_example.src.module.store;
 
-import 'package:todo_example/service.dart' show Todo, TodoService;
+import 'package:todo_sdk/todo_sdk.dart' show Todo, TodoSdk;
 import 'package:w_flux/w_flux.dart';
 
-import 'package:todo_example/src/module/actions.dart' show TodoActions;
+import 'package:todo_example/src/actions.dart' show TodoActions;
 
 class TodoStore extends Store {
   TodoActions _actions;
@@ -12,10 +12,10 @@ class TodoStore extends Store {
   bool _includeIncomplete = true;
   bool _includePrivate = true;
   bool _includePublic = true;
-  TodoService _service;
+  TodoSdk _service;
   Map<String, Todo> _todosMap = {};
 
-  TodoStore(TodoActions actions, TodoService service)
+  TodoStore(TodoActions actions, TodoSdk service)
       : _actions = actions,
         _service = service {
     _actions.createTodo.listen(_createTodo);
@@ -24,14 +24,11 @@ class TodoStore extends Store {
 
     triggerOnAction(_actions.selectTodo, _selectTodo);
 
-    triggerOnAction(_actions.toggleIncludeComplete,
-        (_) => _includeComplete = !_includeComplete);
-    triggerOnAction(_actions.toggleIncludeIncomplete,
-        (_) => _includeIncomplete = !_includeIncomplete);
-    triggerOnAction(_actions.toggleIncludePrivate,
-        (_) => _includePrivate = !_includePrivate);
+    triggerOnAction(_actions.toggleIncludeComplete, (_) => _includeComplete = !_includeComplete);
     triggerOnAction(
-        _actions.toggleIncludePublic, (_) => _includePublic = !_includePublic);
+        _actions.toggleIncludeIncomplete, (_) => _includeIncomplete = !_includeIncomplete);
+    triggerOnAction(_actions.toggleIncludePrivate, (_) => _includePrivate = !_includePrivate);
+    triggerOnAction(_actions.toggleIncludePublic, (_) => _includePublic = !_includePublic);
 
     _service.todoCreated.listen((todo) {
       _todosMap[todo.id] = todo;
@@ -60,6 +57,7 @@ class TodoStore extends Store {
     List<Todo> complete = [];
     List<Todo> incomplete = [];
     for (var todo in _todosMap.values) {
+      if (!_service.userCanAccess(todo)) continue;
       if (!includeComplete && todo.isCompleted) continue;
       if (!includeIncomplete && !todo.isCompleted) continue;
       if (!includePrivate && !todo.isPublic) continue;
@@ -69,6 +67,8 @@ class TodoStore extends Store {
 
     return []..addAll(incomplete.reversed)..addAll(complete.reversed);
   }
+
+  bool canAccess(Todo todo) => _service.userCanAccess(todo);
 
   _createTodo(Todo todo) {
     _service.createTodo(todo);

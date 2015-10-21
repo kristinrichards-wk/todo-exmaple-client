@@ -4,7 +4,7 @@ import 'package:react/react.dart' as react;
 import 'package:web_skin_dart/ui_core.dart';
 import 'package:web_skin_dart/ui_components.dart';
 
-import 'package:todo_example/src/module/actions.dart' show TodoActions;
+import 'package:todo_example/src/actions.dart' show TodoActions;
 
 var TodoListFilter = react.registerComponent(() => new _TodoListFilter());
 
