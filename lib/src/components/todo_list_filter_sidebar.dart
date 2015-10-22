@@ -10,7 +10,6 @@ import 'package:todo_example/src/store.dart' show TodoStore;
 var TodoListFilterSidebar = react.registerComponent(() => new _TodoListFilterSidebar());
 
 class _TodoListFilterSidebar extends FluxComponent<TodoActions, TodoStore> {
-  TodoActions get actions => props['actions'];
 
   render() {
     return WorkspacesMenu({}, [
