@@ -1,9 +1,9 @@
-library todo_example.src.module.store;
+library todo_client.src.module.store;
 
 import 'package:todo_sdk/todo_sdk.dart' show Todo, TodoSdk;
 import 'package:w_flux/w_flux.dart';
 
-import 'package:todo_example/src/actions.dart' show TodoActions;
+import 'package:todo_client/src/actions.dart' show TodoActions;
 
 class TodoStore extends Store {
   TodoActions _actions;

@@ -1,12 +1,12 @@
-library todo_example.src.module.components.todo_list;
+library todo_client.src.module.components.todo_list;
 
 import 'package:react/react.dart' as react;
 import 'package:todo_sdk/todo_sdk.dart' show Todo;
 import 'package:web_skin_dart/ui_components.dart';
 import 'package:web_skin_dart/ui_core.dart';
 
-import 'package:todo_example/src/actions.dart' show TodoActions;
-import 'package:todo_example/src/components/todo_list_item.dart' show TodoListItem;
+import 'package:todo_client/src/actions.dart' show TodoActions;
+import 'package:todo_client/src/components/todo_list_item.dart' show TodoListItem;
 
 var TodoList = react.registerComponent(() => new _TodoList());
 

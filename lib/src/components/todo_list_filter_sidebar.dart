@@ -1,11 +1,11 @@
-library todo_example.src.module.components.todo_list_filter_sidebar;
+library todo_client.src.module.components.todo_list_filter_sidebar;
 
 import 'package:react/react.dart' as react;
 import 'package:truss/truss.dart';
 import 'package:w_flux/w_flux.dart';
 
-import 'package:todo_example/src/actions.dart' show TodoActions;
-import 'package:todo_example/src/store.dart' show TodoStore;
+import 'package:todo_client/src/actions.dart' show TodoActions;
+import 'package:todo_client/src/store.dart' show TodoStore;
 
 var TodoListFilterSidebar = react.registerComponent(() => new _TodoListFilterSidebar());
 

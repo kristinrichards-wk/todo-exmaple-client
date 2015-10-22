@@ -1,16 +1,16 @@
-library todo_example.src.module.components.app;
+library todo_client.src.module.components.app;
 
 import 'package:w_flux/w_flux.dart';
 import 'package:react/react.dart' as react;
 import 'package:web_skin_dart/ui_core.dart';
 import 'package:web_skin_dart/ui_components.dart';
 
-import 'package:todo_example/src/actions.dart' show TodoActions;
-import 'package:todo_example/src/store.dart' show TodoStore;
+import 'package:todo_client/src/actions.dart' show TodoActions;
+import 'package:todo_client/src/store.dart' show TodoStore;
 
-import 'package:todo_example/src/components/create_todo_input.dart' show CreateTodoInput;
-import 'package:todo_example/src/components/todo_list.dart' show TodoList;
-import 'package:todo_example/src/components/todo_list_filter.dart' show TodoListFilter;
+import 'package:todo_client/src/components/create_todo_input.dart' show CreateTodoInput;
+import 'package:todo_client/src/components/todo_list.dart' show TodoList;
+import 'package:todo_client/src/components/todo_list_filter.dart' show TodoListFilter;
 
 var TodoAppComponent = react.registerComponent(() => new _TodoAppComponent());
 

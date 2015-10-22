@@ -1,10 +1,10 @@
-library todo_example.src.module.components.todo_filter;
+library todo_client.src.module.components.todo_filter;
 
 import 'package:react/react.dart' as react;
 import 'package:web_skin_dart/ui_core.dart';
 import 'package:web_skin_dart/ui_components.dart';
 
-import 'package:todo_example/src/actions.dart' show TodoActions;
+import 'package:todo_client/src/actions.dart' show TodoActions;
 
 var TodoListFilter = react.registerComponent(() => new _TodoListFilter());
 

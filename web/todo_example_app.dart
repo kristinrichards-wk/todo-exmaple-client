@@ -1,10 +1,10 @@
-library todo_example.web.local_todo_example;
+library todo_client.web.local_todo_example;
 
 import 'dart:html';
 
 import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show setClientConfiguration;
-import 'package:todo_example/todo_example.dart' show TodoModule;
+import 'package:todo_client/todo_client.dart' show TodoModule;
 import 'package:todo_sdk/todo_sdk.dart';
 import 'package:w_session/api.dart';
 

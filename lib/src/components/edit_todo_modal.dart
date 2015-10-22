@@ -1,4 +1,4 @@
-library todo_example.src.module.components.edit_todo_modal;
+library todo_client.src.module.components.edit_todo_modal;
 
 import 'dart:html';
 
@@ -7,7 +7,7 @@ import 'package:truss/modal_manager.dart';
 import 'package:web_skin_dart/ui_components.dart';
 import 'package:web_skin_dart/ui_core.dart';
 
-import 'package:todo_example/src/actions.dart';
+import 'package:todo_client/src/actions.dart';
 
 class EditTodoModal extends ManagedModal {
   TodoActions _actions;

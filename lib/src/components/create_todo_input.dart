@@ -1,4 +1,4 @@
-library todo_example.src.module.components.create_todo_input;
+library todo_client.src.module.components.create_todo_input;
 
 import 'dart:html';
 
@@ -6,7 +6,7 @@ import 'package:react/react.dart' as react;
 import 'package:todo_sdk/todo_sdk.dart' show Todo;
 import 'package:web_skin_dart/ui_components.dart';
 
-import 'package:todo_example/src/actions.dart' show TodoActions;
+import 'package:todo_client/src/actions.dart' show TodoActions;
 
 var CreateTodoInput = react.registerComponent(() => new _CreateTodoInput());
 

@@ -1,4 +1,4 @@
-library todo_example.web.login.login;
+library todo_client.web.login.login;
 
 import 'dart:html';
 

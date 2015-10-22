@@ -1,4 +1,4 @@
-library todo_example.src.module.components.local_shell;
+library todo_client.src.module.components.local_shell;
 
 import 'package:react/react.dart' as react;
 import 'package:web_skin_dart/ui_core.dart';

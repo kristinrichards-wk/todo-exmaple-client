@@ -1,13 +1,13 @@
-library todo_example.src.module;
+library todo_client.src.module;
 
 import 'package:todo_sdk/todo_sdk.dart' show TodoSdk;
 import 'package:truss/modal_manager.dart' show ModalManager;
 import 'package:w_module/w_module.dart';
 
-import 'package:todo_example/src/actions.dart';
-import 'package:todo_example/src/components.dart';
-import 'package:todo_example/src/components/edit_todo_modal.dart';
-import 'package:todo_example/src/store.dart';
+import 'package:todo_client/src/actions.dart';
+import 'package:todo_client/src/components.dart';
+import 'package:todo_client/src/components/edit_todo_modal.dart';
+import 'package:todo_client/src/store.dart';
 
 class TodoModule extends Module {
   TodoActions _actions;

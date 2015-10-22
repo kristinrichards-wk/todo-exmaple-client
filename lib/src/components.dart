@@ -1,14 +1,14 @@
-library todo_example.src.module.components;
+library todo_client.src.module.components;
 
 import 'package:truss/modal_manager.dart' show ModalManager;
 import 'package:w_module/w_module.dart';
 
-import 'package:todo_example/src/actions.dart' show TodoActions;
-import 'package:todo_example/src/store.dart' show TodoStore;
+import 'package:todo_client/src/actions.dart' show TodoActions;
+import 'package:todo_client/src/store.dart' show TodoStore;
 
-import 'package:todo_example/src/components/app.dart' show TodoAppComponent;
-import 'package:todo_example/src/components/local_shell.dart' show TodoLocalShell;
-import 'package:todo_example/src/components/todo_list_filter_sidebar.dart'
+import 'package:todo_client/src/components/app.dart' show TodoAppComponent;
+import 'package:todo_client/src/components/local_shell.dart' show TodoLocalShell;
+import 'package:todo_client/src/components/todo_list_filter_sidebar.dart'
     show TodoListFilterSidebar;
 
 class TodoComponents extends ModuleComponents {
