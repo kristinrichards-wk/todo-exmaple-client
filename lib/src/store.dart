@@ -12,12 +12,12 @@ class TodoStore extends Store {
   bool _includeIncomplete = true;
   bool _includePrivate = true;
   bool _includePublic = true;
-  TodoSdk _service;
+  TodoSdk _sdk;
   Map<String, Todo> _todosMap = {};
 
-  TodoStore(TodoActions actions, TodoSdk service)
+  TodoStore(TodoActions actions, TodoSdk sdk)
       : _actions = actions,
-        _service = service {
+        _sdk = sdk {
     _actions.createTodo.listen(_createTodo);
     _actions.deleteTodo.listen(_deleteTodo);
     _actions.updateTodo.listen(_updateTodo);
@@ -30,17 +30,17 @@ class TodoStore extends Store {
     triggerOnAction(_actions.toggleIncludePrivate, (_) => _includePrivate = !_includePrivate);
     triggerOnAction(_actions.toggleIncludePublic, (_) => _includePublic = !_includePublic);
 
-    _service.todoCreated.listen((todo) {
+    _sdk.todoCreated.listen((todo) {
       _todosMap[todo.id] = todo;
       trigger();
     });
 
-    _service.todoDeleted.listen((todo) {
+    _sdk.todoDeleted.listen((todo) {
       _todosMap.remove(todo.id);
       trigger();
     });
 
-    _service.todoUpdated.listen((todo) {
+    _sdk.todoUpdated.listen((todo) {
       _todosMap[todo.id] = todo;
       trigger();
     });
@@ -57,7 +57,7 @@ class TodoStore extends Store {
     List<Todo> complete = [];
     List<Todo> incomplete = [];
     for (var todo in _todosMap.values) {
-      if (!_service.userCanAccess(todo)) continue;
+      if (!_sdk.userCanAccess(todo)) continue;
       if (!includeComplete && todo.isCompleted) continue;
       if (!includeIncomplete && !todo.isCompleted) continue;
       if (!includePrivate && !todo.isPublic) continue;
@@ -68,14 +68,14 @@ class TodoStore extends Store {
     return []..addAll(incomplete.reversed)..addAll(complete.reversed);
   }
 
-  bool canAccess(Todo todo) => _service.userCanAccess(todo);
+  bool canAccess(Todo todo) => _sdk.userCanAccess(todo);
 
   _createTodo(Todo todo) {
-    _service.createTodo(todo);
+    _sdk.createTodo(todo);
   }
 
   _deleteTodo(Todo todo) {
-    _service.deleteTodo(todo.id);
+    _sdk.deleteTodo(todo.id);
   }
 
   _selectTodo(Todo todo) {
@@ -83,12 +83,12 @@ class TodoStore extends Store {
   }
 
   _updateTodo(Todo todo) {
-    _service.updateTodo(todo);
+    _sdk.updateTodo(todo);
   }
 
   _initialize() async {
     _todosMap = new Map.fromIterable(
-        await _service.queryTodos(
+        await _sdk.queryTodos(
             includeComplete: true,
             includeIncomplete: true,
             includePrivate: true,
