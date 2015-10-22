@@ -1,8 +1,8 @@
-# LINK 2015 Client
+# Todo Example Client Application
 
 ## Installation
 ```
-git clone git@github.com:Workiva/link-2015-client.git
+git clone git@github.com:Workiva/todo-example-client.git
 ```
 
 ## Building
