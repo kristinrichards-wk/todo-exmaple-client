@@ -9,66 +9,86 @@ import 'package:web_skin_dart/ui_core.dart';
 
 import 'package:todo_client/src/actions.dart';
 
-class EditTodoModal extends ManagedModal {
-  TodoActions _actions;
-  Todo _todo;
+@Factory()
+UiFactory<EditTodoModalProps> EditTodoModal;
 
-  EditTodoModal(Todo todo, TodoActions actions, ModalManager modalManager)
-      : super(modalManager),
-        _todo = todo,
-        _actions = actions;
+@Props()
+class EditTodoModalProps extends ModalProps {
+  TodoActions actions;
+  ModalManager modalManager;
+  Todo originalTodo;
+}
 
-  String get title => 'Edit Todo';
+@State()
+class EditTodoModalState extends UiState {
+  String description;
+  String notes;
+}
 
-  renderModalContent() {
-    var description = (TextInput()
-      ..type = TextInputType.TEXT
-      ..key = 'title'
-      ..label = 'Title'
-      ..value = _todo.description
-      ..onChange = _updateTodoDescription)();
+@Component(subtypeOf: ModalComponent)
+class EditTodoModalComponent extends UiStatefulComponent<EditTodoModalProps, EditTodoModalState> {
 
-    var notes = (TextInput()
-      ..isMultiline = true
-      ..key = 'notes'
-      ..label = 'Notes'
-      ..onChange = _updateTodoNotes
-      ..placeholder = 'Notes'
-      ..rows = 3
-      ..value = _todo.notes)();
+  @override
+  getInitialState() => (newState()
+    ..description = props.originalTodo.description
+    ..notes = props.originalTodo.notes
+  );
 
-    var save = (FormSubmitInput()
-      ..skin = ButtonSkin.SUCCESS
-      ..onClick = _save
-      ..pullRight = true)('Save');
-
-    return [
-      (Dom.div()
+  @override
+  render() {
+    return (Modal()
+      ..addProps(copyUnconsumedProps())
+      ..title = 'Edit Todo'
+    )((Dom.div()
         ..className = 'modal-body'
-        ..key = 'body')(FormLayout()([description, notes])),
+      )((FormLayout()
+        )((TextInput()
+            ..type = TextInputType.TEXT
+            ..label = 'Title'
+            ..onChange = _updateTodoDescription
+            ..value = state.description
+          )(),
+          (TextInput()
+            ..isMultiline = true
+            ..label = 'Notes'
+            ..onChange = _updateTodoNotes
+            ..placeholder = 'Notes'
+            ..rows = 3
+            ..value = state.notes
+          )()
+        )
+      ),
       (Dom.div()
         ..className = 'modal-footer'
-        ..key = 'footer')(save)
-    ];
+      )((FormSubmitInput()
+        ..skin = ButtonSkin.SUCCESS
+        ..onClick = _save
+        ..pullRight = true
+        )('Save')
+      )
+    );
   }
 
   _save(e) {
     e.preventDefault();
     e.stopPropagation();
-
-    _actions.updateTodo(_todo);
-    hide();
+    props.actions.updateTodo(props.originalTodo);
+    props.onRequestHide(e);
   }
 
   _updateTodoDescription(e) {
-    var value = (e.target as TextInputElement).value;
-    _todo = _todo.change(description: value);
-    redraw();
+    String value = (e.target as TextInputElement).value;
+    setState(newState()
+      ..description = value
+    );
+    props.originalTodo = props.originalTodo.change(description: value);
   }
 
   _updateTodoNotes(e) {
-    var value = (e.target as TextAreaElement).value;
-    _todo = _todo.change(notes: value);
-    redraw();
+    String value = (e.target as TextAreaElement).value;
+    setState(newState()
+     ..notes = value
+    );
+    props.originalTodo = props.originalTodo.change(notes: value);
   }
 }

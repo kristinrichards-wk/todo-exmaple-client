@@ -1,5 +1,3 @@
-library todo_client.src.module.store;
-
 import 'package:todo_sdk/todo_sdk.dart' show Todo, TodoSdk;
 import 'package:w_flux/w_flux.dart';
 
@@ -16,8 +14,8 @@ class TodoStore extends Store {
   Map<String, Todo> _todosMap = {};
 
   TodoStore(TodoActions actions, TodoSdk sdk)
-      : _actions = actions,
-        _sdk = sdk {
+    : _actions = actions,
+      _sdk = sdk {
     _actions.createTodo.listen(_createTodo);
     _actions.deleteTodo.listen(_deleteTodo);
     _actions.updateTodo.listen(_updateTodo);
@@ -26,7 +24,7 @@ class TodoStore extends Store {
 
     triggerOnAction(_actions.toggleIncludeComplete, (_) => _includeComplete = !_includeComplete);
     triggerOnAction(
-        _actions.toggleIncludeIncomplete, (_) => _includeIncomplete = !_includeIncomplete);
+      _actions.toggleIncludeIncomplete, (_) => _includeIncomplete = !_includeIncomplete);
     triggerOnAction(_actions.toggleIncludePrivate, (_) => _includePrivate = !_includePrivate);
     triggerOnAction(_actions.toggleIncludePublic, (_) => _includePublic = !_includePublic);
 
@@ -53,6 +51,7 @@ class TodoStore extends Store {
   bool get includeIncomplete => _includeIncomplete;
   bool get includePrivate => _includePrivate;
   bool get includePublic => _includePublic;
+
   List<Todo> get todos {
     List<Todo> complete = [];
     List<Todo> incomplete = [];
@@ -88,12 +87,12 @@ class TodoStore extends Store {
 
   _initialize() async {
     _todosMap = new Map.fromIterable(
-        await _sdk.queryTodos(
-            includeComplete: true,
-            includeIncomplete: true,
-            includePrivate: true,
-            includePublic: true),
-        key: (todo) => todo.id);
+      await _sdk.queryTodos(
+        includeComplete: true,
+        includeIncomplete: true,
+        includePrivate: true,
+        includePublic: true),
+      key: (todo) => todo.id);
     trigger();
   }
 }

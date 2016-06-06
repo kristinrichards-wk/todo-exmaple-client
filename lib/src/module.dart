@@ -1,5 +1,3 @@
-library todo_client.src.module;
-
 import 'package:todo_sdk/todo_sdk.dart' show TodoSdk;
 import 'package:truss/modal_manager.dart' show ModalManager;
 import 'package:w_module/w_module.dart';
@@ -16,19 +14,19 @@ class TodoModule extends Module {
   TodoSdk _sdk;
   TodoStore _store;
 
-  TodoModule(TodoSdk sdk, {ModalManager modalManager})
-      : _modalManager = modalManager,
-        _sdk = sdk {
-    if (_modalManager == null) {
-      _modalManager = new ModalManager();
-    }
+  TodoModule(this._sdk, {ModalManager modalManager}) {
+    _modalManager = modalManager ?? new ModalManager();
 
     _actions = new TodoActions();
     _store = new TodoStore(_actions, _sdk);
     _components = new TodoComponents(_actions, _store, _modalManager);
 
     _actions.editTodo.listen((todo) {
-      new EditTodoModal(todo, _actions, _modalManager).show();
+      _modalManager.show((EditTodoModal()
+        ..actions = _actions
+        ..originalTodo = todo
+        ..modalManager = _modalManager
+      )());
     });
   }
 

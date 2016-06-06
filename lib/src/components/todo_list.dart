@@ -1,39 +1,48 @@
 library todo_client.src.module.components.todo_list;
 
-import 'package:react/react.dart' as react;
 import 'package:todo_sdk/todo_sdk.dart' show Todo;
 import 'package:web_skin_dart/ui_components.dart';
 import 'package:web_skin_dart/ui_core.dart';
 
 import 'package:todo_client/src/actions.dart' show TodoActions;
+import 'package:todo_client/src/store.dart' show TodoStore;
 import 'package:todo_client/src/components/todo_list_item.dart' show TodoListItem;
 
-var TodoList = react.registerComponent(() => new _TodoList());
+@Factory()
+UiFactory<TodoListProps> TodoList;
 
-class _TodoList extends react.Component {
-  TodoActions get actions => props['actions'];
+@Props()
+class TodoListProps extends FluxUiProps<TodoActions, TodoStore> {
+  List<Todo> todos;
+  Todo activeTodo;
+  String currentUserId;
+}
 
-  Todo get activeTodo => props['activeTodo'];
+@Component()
+class TodoListComponent extends FluxUiComponent<TodoListProps> {
 
-  String get currentUserID => props['currentUserID'];
+  @override
+  getDefaultProps() => (newProps()
+    ..todos = []
+    ..activeTodo = null
+    ..currentUserId = ''
+  );
 
-  /// Sorted list of to-do items.
-  List<Todo> get todos => props['todos'] != null ? props['todos'] : [];
-
+  @override
   render() {
-    if (todos.isEmpty) {
+    if (props.todos.isEmpty) {
       return (Block()..className = 'todo-list')((Dom.p()
         ..className = 'todo-list-empty')('No todos to show. Create one or adjust the filters.'));
     } else {
-      List todoItems = todos
-          .map((todo) => TodoListItem({
-                'actions': actions,
-                'currentUserID': currentUserID,
-                'isExpanded': activeTodo == todo,
-                'key': todo.id,
-                'todo': todo
-              }))
-          .toList();
+      List todoItems = props.todos
+        .map((todo) => (TodoListItem()
+          ..actions = props.actions
+          ..currentUserId = props.currentUserId
+          ..isExpanded = props.activeTodo == todo
+          ..key = todo.id
+          ..todo = todo
+        )())
+        .toList();
       return (VBlock()..className = 'todo-list')(todoItems);
     }
   }
