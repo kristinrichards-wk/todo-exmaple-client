@@ -5,7 +5,7 @@ dependencies:
   react: "^1.0.0"
   todo_sdk:
     git:
-      url: git@github.com/Workiva/todo-example-sdk
+      url: git@github.com:Workiva/todo-example-sdk.git
   truss:
     hosted:
       name: truss
