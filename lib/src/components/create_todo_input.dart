@@ -7,13 +7,14 @@ import 'package:web_skin_dart/ui_components.dart';
 import 'package:web_skin_dart/ui_core.dart';
 
 import 'package:todo_client/src/actions.dart' show TodoActions;
-import 'package:todo_client/src/store.dart' show TodoStore;
 
 @Factory()
 UiFactory<CreateTodoInputProps> CreateTodoInput;
 
 @Props()
-class CreateTodoInputProps extends FluxUiProps<TodoActions, TodoStore> {}
+class CreateTodoInputProps extends UiProps {
+  TodoActions actions;
+}
 
 @State()
 class CreateTodoInputState extends UiState {
@@ -21,7 +22,7 @@ class CreateTodoInputState extends UiState {
 }
 
 @Component()
-class CreateTodoInputComponent extends FluxUiStatefulComponent<CreateTodoInputProps, CreateTodoInputState> {
+class CreateTodoInputComponent extends UiStatefulComponent<CreateTodoInputProps, CreateTodoInputState> {
 
   @override
   getInitialState() => (newState()
@@ -38,7 +39,6 @@ class CreateTodoInputComponent extends FluxUiStatefulComponent<CreateTodoInputPr
         ..hideLabel = true
         ..label = 'Create a Todo'
         ..onChange = _updateNewTodoDescription
-        ..onSubmit
         ..placeholder = 'What do you need to do?'
         ..size = InputSize.LARGE
         ..value = state.newTodoDescription

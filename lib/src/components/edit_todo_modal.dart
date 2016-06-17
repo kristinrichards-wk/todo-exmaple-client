@@ -41,8 +41,7 @@ class EditTodoModalComponent extends UiStatefulComponent<EditTodoModalProps, Edi
       ..title = 'Edit Todo'
     )((Dom.div()
         ..className = 'modal-body'
-      )((FormLayout()
-        )((TextInput()
+      )(FormLayout()((TextInput()
             ..type = TextInputType.TEXT
             ..label = 'Title'
             ..onChange = _updateTodoDescription

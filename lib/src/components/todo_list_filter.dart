@@ -10,7 +10,8 @@ import 'package:todo_client/src/store.dart' show TodoStore;
 UiFactory<TodoListFilterProps> TodoListFilter;
 
 @Props()
-class TodoListFilterProps extends FluxUiProps<TodoActions, TodoStore> {
+class TodoListFilterProps extends UiProps {
+  TodoActions actions;
   bool includeComplete;
   bool includeIncomplete;
   bool includePrivate;
@@ -18,7 +19,7 @@ class TodoListFilterProps extends FluxUiProps<TodoActions, TodoStore> {
 }
 
 @Component()
-class TodoListFilterComponent extends FluxUiComponent<TodoListFilterProps> {
+class TodoListFilterComponent extends UiComponent<TodoListFilterProps> {
 
   @override
   getDefaultProps() => (newProps()

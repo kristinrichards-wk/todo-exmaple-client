@@ -20,15 +20,15 @@ class TodoComponents extends ModuleComponents {
       _modalManager = modalManager;
 
   @override
-  content({String currentUserId, bool withFilter: true}) =>
+  content({String currentUserId: '', bool withFilter: true}) =>
     (TodoApp()
       ..actions = _actions
       ..store = _store
-      ..currentUserId = currentUserId ?? ""
+      ..currentUserId = currentUserId
       ..withFilter = withFilter
     )();
 
-  localShell() => (TodoLocalShell()(content()));
+  localShell() => TodoLocalShell()(content());
 
   sidebar() => (TodoListFilterSidebar()
     ..actions = _actions

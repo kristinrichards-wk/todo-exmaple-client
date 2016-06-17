@@ -11,7 +11,8 @@ import 'package:todo_client/src/store.dart' show TodoStore;
 UiFactory<TodoListItemProps> TodoListItem;
 
 @Props()
-class TodoListItemProps extends FluxUiProps<TodoActions, TodoStore> {
+class TodoListItemProps extends UiProps {
+  TodoActions actions;
   String currentUserId;
   bool isExpanded;
   Todo todo;
@@ -23,7 +24,7 @@ class TodoListItemState extends UiState {
 }
 
 @Component()
-class TodoListItemComponent extends FluxUiStatefulComponent<TodoListItemProps, TodoListItemState> {
+class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoListItemState> {
   Todo edited;
 
   @override

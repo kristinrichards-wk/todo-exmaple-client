@@ -14,7 +14,7 @@ main() async {
   Uri sessionHost = Uri.parse('https://wk-dev.wdesk.org');
   Uri messagingFrontendHost = Uri.parse('http://localhost:8100');
 
-  // Instantiate and initialize the workspaces shell. This also establishes a
+  // Instantiate and initialize the workspaces shell. This also establishes
   // a valid session against our session host.
   WorkspacesShell shell = new WorkspacesShell(sessionHost: sessionHost);
   await shell.load();

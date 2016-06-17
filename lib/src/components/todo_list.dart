@@ -5,21 +5,21 @@ import 'package:web_skin_dart/ui_components.dart';
 import 'package:web_skin_dart/ui_core.dart';
 
 import 'package:todo_client/src/actions.dart' show TodoActions;
-import 'package:todo_client/src/store.dart' show TodoStore;
 import 'package:todo_client/src/components/todo_list_item.dart' show TodoListItem;
 
 @Factory()
 UiFactory<TodoListProps> TodoList;
 
 @Props()
-class TodoListProps extends FluxUiProps<TodoActions, TodoStore> {
+class TodoListProps extends UiProps {
   List<Todo> todos;
   Todo activeTodo;
+  TodoActions actions;
   String currentUserId;
 }
 
 @Component()
-class TodoListComponent extends FluxUiComponent<TodoListProps> {
+class TodoListComponent extends UiComponent<TodoListProps> {
 
   @override
   getDefaultProps() => (newProps()

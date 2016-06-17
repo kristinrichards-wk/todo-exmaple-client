@@ -24,7 +24,7 @@ class TodoAppComponent extends FluxUiComponent<TodoAppProps> {
 
   @override
   getDefaultProps() => (newProps()
-    ..currentUserId = ""
+    ..currentUserId = ''
     ..withFilter = true
   );
 
@@ -40,7 +40,6 @@ class TodoAppComponent extends FluxUiComponent<TodoAppProps> {
       ..shrink = true
     )((CreateTodoInput()
       ..actions = props.actions
-      ..store = props.store
     )()));
 
     // Filter
@@ -53,7 +52,6 @@ class TodoAppComponent extends FluxUiComponent<TodoAppProps> {
         ..shrink = true
       )((TodoListFilter()
         ..actions = props.actions
-        ..store = props.store
         ..includeComplete = props.store.includeComplete
         ..includeIncomplete = props.store.includeIncomplete
         ..includePrivate = props.store.includePrivate
