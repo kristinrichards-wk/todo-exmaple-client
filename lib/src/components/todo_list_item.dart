@@ -1,40 +1,57 @@
 library todo_client.src.module.components.todo_list_item;
 
-import 'package:react/react.dart' as react;
 import 'package:todo_sdk/todo_sdk.dart' show Todo;
 import 'package:web_skin_dart/ui_core.dart';
 import 'package:web_skin_dart/ui_components.dart';
 
 import 'package:todo_client/src/actions.dart' show TodoActions;
 
-var TodoListItem = react.registerComponent(() => new _TodoListItem());
+@Factory()
+UiFactory<TodoListItemProps> TodoListItem;
 
-class _TodoListItem extends react.Component {
+@Props()
+class TodoListItemProps extends UiProps {
+  TodoActions actions;
+  String currentUserId;
+  bool isExpanded;
+  Todo todo;
+}
+
+@State()
+class TodoListItemState extends UiState {
+  bool isEditing;
+}
+
+@Component()
+class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoListItemState> {
   Todo edited;
 
-  TodoActions get actions => props['actions'];
-  String get currentUserID => props['currentUserID'];
-  bool get isEditing => state['isEditing'];
-  bool get isExpanded => props['isExpanded'];
-  Todo get todo => props['todo'];
+  @override
+  getDefaultProps() => (newProps()
+    ..currentUserId = ''
+    ..isExpanded = false
+    ..todo = null);
 
-  getInitialState() => {'isEditing': false};
+  @override
+  getInitialState() => (newState()..isEditing = false);
 
+  @override
   render() {
-    var todoTitle = [todo.description];
-    if (todo.isPublic) {
-      todoTitle.add(Label()('public'));
-    }
-
     var todoContents = [];
     todoContents.add((Dom.p()
       ..className = 'todo-title'
-      ..onClick = _toggleExpansion)(todoTitle));
-    if (isExpanded) {
-      if (todo.notes == null || todo.notes.isEmpty) {
-        todoContents.add((Dom.p()..className = 'todo-notes todo-notes-empty')('No notes.'));
+      ..key = 'todo-title'
+      ..onClick = _toggleExpansion)((Dom.span())(props.todo.description),
+        (Label())(props.todo.isPublic ? 'public' : 'private')));
+    if (props.isExpanded) {
+      if (props.todo.notes == null || props.todo.notes.isEmpty) {
+        todoContents.add((Dom.p()
+          ..className = 'todo-notes todo-notes-empty'
+          ..key = 'todo-notes-empty')('No notes.'));
       } else {
-        todoContents.add((Dom.p()..className = 'todo-notes')(todo.notes));
+        todoContents.add((Dom.p()
+          ..className = 'todo-notes'
+          ..key = 'todo-notes')(props.todo.notes));
       }
     }
 
@@ -50,14 +67,17 @@ class _TodoListItem extends react.Component {
       todoControls = [
         (Icon()
           ..className = 'todo-edit'
+          ..key = 'todo-edit'
           ..glyph = IconGlyph.PENCIL
           ..onClick = _edit)(),
         (Icon()
           ..className = 'todo-privacy'
-          ..glyph = todo.isPublic ? IconGlyph.EYE_BLOCKED : IconGlyph.EYE
+          ..key = 'todo-privacy'
+          ..glyph = props.todo.isPublic ? IconGlyph.EYE_BLOCKED : IconGlyph.EYE
           ..onClick = _togglePrivacy)(),
         (Icon()
           ..className = 'todo-delete'
+          ..key = 'todo-delete'
           ..glyph = IconGlyph.TRASH
           ..onClick = _delete)(),
       ];
@@ -70,59 +90,58 @@ class _TodoListItem extends react.Component {
     }
 
     var todoClass = 'todo';
-    todoClass += todo.isCompleted ? ' todo-complete' : ' todo-incomplete';
-    todoClass += isExpanded ? ' todo-expanded' : '';
+    todoClass += props.todo.isCompleted ? ' todo-complete' : ' todo-incomplete';
+    todoClass += props.isExpanded ? ' todo-expanded' : '';
 
     return (Block()
       ..className = todoClass
-      ..key = todo.id
-      ..shrink = true)([
-      (Block()
-        ..className = 'todo-completion'
-        ..isNested = true
-        ..shrink = true)(todoCompletion),
-      (Block()
-        ..className = 'todo-contents'
-        ..isNested = true
-        ..wrap = true)(todoContents),
-      (Block()
-        ..className = 'todo-controls'
-        ..isNested = true
-        ..shrink = true)(todoControls),
-    ]);
+      ..key = props.todo.id
+      ..shrink = true)(
+        (Block()
+          ..className = 'todo-completion'
+          ..isNested = true
+          ..shrink = true)(todoCompletion),
+        (Block()
+          ..className = 'todo-contents'
+          ..isNested = true
+          ..wrap = true)(todoContents),
+        (Block()
+          ..className = 'todo-controls'
+          ..isNested = true
+          ..shrink = true)(todoControls));
   }
 
-  bool _canModify() => currentUserID == null || currentUserID == todo.userID;
+  bool _canModify() => props.currentUserId == null || props.currentUserId == props.todo.userID;
 
   _delete(e) {
     e.preventDefault();
     e.stopPropagation();
 
-    actions.deleteTodo(todo);
+    props.actions.deleteTodo(props.todo);
   }
 
   _edit(e) {
     e.preventDefault();
     e.stopPropagation();
 
-    actions.editTodo(todo);
+    props.actions.editTodo(props.todo);
   }
 
   _togglePrivacy(e) {
     e.preventDefault();
     e.stopPropagation();
 
-    actions.updateTodo(todo.change(isPublic: !todo.isPublic));
+    props.actions.updateTodo(props.todo.change(isPublic: !props.todo.isPublic));
   }
 
   _toggleExpansion(e) {
     e.preventDefault();
     e.stopPropagation();
 
-    if (isExpanded) {
-      actions.selectTodo(null);
+    if (props.isExpanded) {
+      props.actions.selectTodo(null);
     } else {
-      actions.selectTodo(todo);
+      props.actions.selectTodo(props.todo);
     }
   }
 
@@ -130,6 +149,6 @@ class _TodoListItem extends react.Component {
     e.preventDefault();
     e.stopPropagation();
 
-    actions.updateTodo(todo.change(isCompleted: !todo.isCompleted));
+    props.actions.updateTodo(props.todo.change(isCompleted: !props.todo.isCompleted));
   }
 }

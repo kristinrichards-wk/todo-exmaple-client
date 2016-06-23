@@ -1,0 +1,13 @@
+project: dart
+language: dart
+
+runner_image: docker.webfilings.org/devops/smithy-runner-dart1.15.0-libc:3.2.7
+
+script:
+  - pub get
+  - pub run dart_dev format --check
+  - pub run dart_dev analyze
+
+after_script:
+
+artifacts:

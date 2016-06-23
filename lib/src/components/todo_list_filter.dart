@@ -1,44 +1,51 @@
 library todo_client.src.module.components.todo_filter;
 
-import 'package:react/react.dart' as react;
 import 'package:web_skin_dart/ui_core.dart';
 import 'package:web_skin_dart/ui_components.dart';
 
 import 'package:todo_client/src/actions.dart' show TodoActions;
 
-var TodoListFilter = react.registerComponent(() => new _TodoListFilter());
+@Factory()
+UiFactory<TodoListFilterProps> TodoListFilter;
 
-class _TodoListFilter extends react.Component {
-  TodoActions get actions => props['actions'];
-  bool get includeComplete => props['includeComplete'];
-  bool get includeIncomplete => props['includeIncomplete'];
-  bool get includePrivate => props['includePrivate'];
-  bool get includePublic => props['includePublic'];
+@Props()
+class TodoListFilterProps extends UiProps {
+  TodoActions actions;
+  bool includeComplete;
+  bool includeIncomplete;
+  bool includePrivate;
+  bool includePublic;
+}
 
+@Component()
+class TodoListFilterComponent extends UiComponent<TodoListFilterProps> {
+  @override
+  getDefaultProps() => (newProps()
+    ..includeComplete = false
+    ..includeIncomplete = false
+    ..includePrivate = false
+    ..includePublic = false);
+
+  @override
   render() {
     return (Dom.div()..className = 'todo-list-filter')((ToggleInputGroup()
       ..groupLabel = 'Todo List Filters'
-      ..hideGroupLabel = true)([
-      (CheckboxInput()
-        ..defaultChecked = includePrivate
-        ..key = 'your-todos'
-        ..label = 'Your Todos'
-        ..onChange = (_) => actions.toggleIncludePrivate())(),
-      (CheckboxInput()
-        ..defaultChecked = includePublic
-        ..key = 'public-todos'
-        ..label = 'Public Todos'
-        ..onChange = (_) => actions.toggleIncludePublic())(),
-      (CheckboxInput()
-        ..defaultChecked = includeIncomplete
-        ..key = 'unfinished-todos'
-        ..label = 'Unfinished Todos'
-        ..onChange = (_) => actions.toggleIncludeIncomplete())(),
-      (CheckboxInput()
-        ..defaultChecked = includeComplete
-        ..key = 'finished-todos'
-        ..label = 'Finished Todos'
-        ..onChange = (_) => actions.toggleIncludeComplete())(),
-    ]));
+      ..hideGroupLabel = true)(
+        (CheckboxInput()
+          ..defaultChecked = props.includePrivate
+          ..label = 'Your Todos'
+          ..onChange = (_) => props.actions.toggleIncludePrivate())(),
+        (CheckboxInput()
+          ..defaultChecked = props.includePublic
+          ..label = 'Public Todos'
+          ..onChange = (_) => props.actions.toggleIncludePublic())(),
+        (CheckboxInput()
+          ..defaultChecked = props.includeIncomplete
+          ..label = 'Unfinished Todos'
+          ..onChange = (_) => props.actions.toggleIncludeIncomplete())(),
+        (CheckboxInput()
+          ..defaultChecked = props.includeComplete
+          ..label = 'Finished Todos'
+          ..onChange = (_) => props.actions.toggleIncludeComplete())()));
   }
 }

@@ -1,31 +1,40 @@
 name: todo_client
-version: 0.0.0
+version: 0.0.1
 
 dependencies:
-  react: "^0.8.0"
+  react: "^1.0.0"
   todo_sdk:
     git:
       url: git@github.com:Workiva/todo-example-sdk.git
   truss:
-    git:
-      url: git@github.com:Workiva/truss.git
-      ref: "0.6.0"
-  w_flux: "^1.0.0"
-  w_module: "^0.3.1"
+    hosted:
+      name: truss
+      url: https://pub.workiva.org
+    version: "^2.8.1"
+  w_flux: "^2.0.0"
+  w_module: "^0.3.2"
   w_oauth2:
-    git:
-      url: git@github.com:Workiva/w_oauth2.git
-      ref: "0.1.1"
+    hosted:
+      name: w_oauth2
+      url: https://pub.workiva.org
+    version: "^1.2.0"
   w_session:
-    git:
-      url: git@github.com:Workiva/w_session.git
-      ref: "1.2.2"
+     hosted:
+       name: w_session
+       url: https://pub.workiva.org
+     version: "^4.5.4"
   web_skin_dart:
-    git:
-      url: git@github.com:Workiva/web_skin_dart.git
-      ref: "0.0.7"
+    hosted:
+      name: web_skin_dart
+      url: https://pub.workiva.org
+    version: ^0.3.2
 
 dev_dependencies:
   browser: "^0.10.0"
   dart_dev: "^1.0.1"
   dart_style: "^0.2.0"
+  test: "^0.12.0"
+transformers:
+  - web_skin_dart
+  - test/pub_serve:
+      $include: test/**_test{.*,}.dart

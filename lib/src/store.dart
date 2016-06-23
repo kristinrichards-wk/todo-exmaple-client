@@ -1,5 +1,3 @@
-library todo_client.src.module.store;
-
 import 'package:todo_sdk/todo_sdk.dart' show Todo, TodoSdk;
 import 'package:w_flux/w_flux.dart';
 
@@ -53,6 +51,7 @@ class TodoStore extends Store {
   bool get includeIncomplete => _includeIncomplete;
   bool get includePrivate => _includePrivate;
   bool get includePublic => _includePublic;
+
   List<Todo> get todos {
     List<Todo> complete = [];
     List<Todo> incomplete = [];

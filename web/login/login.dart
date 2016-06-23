@@ -1,5 +1,3 @@
-library todo_client.web.login.login;
-
 import 'dart:html';
 
 import 'package:w_session/api.dart';

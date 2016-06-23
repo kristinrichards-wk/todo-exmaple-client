@@ -1,23 +1,32 @@
 library todo_client.src.module.components.app;
 
-import 'package:w_flux/w_flux.dart';
-import 'package:react/react.dart' as react;
 import 'package:web_skin_dart/ui_core.dart';
 import 'package:web_skin_dart/ui_components.dart';
 
 import 'package:todo_client/src/actions.dart' show TodoActions;
 import 'package:todo_client/src/store.dart' show TodoStore;
 
-import 'package:todo_client/src/components/create_todo_input.dart' show CreateTodoInput;
-import 'package:todo_client/src/components/todo_list.dart' show TodoList;
-import 'package:todo_client/src/components/todo_list_filter.dart' show TodoListFilter;
+import 'package:todo_client/src/components/create_todo_input.dart';
+import 'package:todo_client/src/components/todo_list.dart';
+import 'package:todo_client/src/components/todo_list_filter.dart';
 
-var TodoAppComponent = react.registerComponent(() => new _TodoAppComponent());
+@Factory()
+UiFactory<TodoAppProps> TodoApp;
 
-class _TodoAppComponent extends FluxComponent<TodoActions, TodoStore> {
-  String get currentUserID => props['currentUserID'];
-  bool get withFilter => props['withFilter'];
+@Props()
+class TodoAppProps extends FluxUiProps<TodoActions, TodoStore> {
+  String currentUserId;
+  bool withFilter;
+}
 
+@Component()
+class TodoAppComponent extends FluxUiComponent<TodoAppProps> {
+  @override
+  getDefaultProps() => (newProps()
+    ..currentUserId = ''
+    ..withFilter = true);
+
+  @override
   render() {
     var elements = [];
 
@@ -26,34 +35,32 @@ class _TodoAppComponent extends FluxComponent<TodoActions, TodoStore> {
       ..content = true
       ..isNested = true
       ..key = 'create'
-      ..shrink = true)(CreateTodoInput({'actions': actions})));
+      ..shrink = true)((CreateTodoInput()..actions = props.actions)()));
 
     // Filter
-    if (withFilter) {
+    if (props.withFilter) {
       elements.add((Block()
         ..collapse = BlockCollapse.VERTICAL
         ..content = true
         ..isNested = true
         ..key = 'filter'
-        ..shrink = true)(TodoListFilter({
-        'actions': actions,
-        'includeComplete': store.includeComplete,
-        'includeIncomplete': store.includeIncomplete,
-        'includePrivate': store.includePrivate,
-        'includePublic': store.includePublic
-      })));
+        ..shrink = true)((TodoListFilter()
+        ..actions = props.actions
+        ..includeComplete = props.store.includeComplete
+        ..includeIncomplete = props.store.includeIncomplete
+        ..includePrivate = props.store.includePrivate
+        ..includePublic = props.store.includePublic)()));
     }
 
     // To-do List
     elements.add((Block()
       ..gutter = BlockGutter.ALL
       ..isNested = true
-      ..key = 'todos')(TodoList({
-      'actions': actions,
-      'activeTodo': store.activeTodo,
-      'currentUserID': currentUserID,
-      'todos': store.todos
-    })));
+      ..key = 'todos')((TodoList()
+      ..actions = props.actions
+      ..activeTodo = props.store.activeTodo
+      ..currentUserId = props.currentUserId
+      ..todos = props.store.todos)()));
 
     return (Block()
       ..align = BlockAlign.CENTER

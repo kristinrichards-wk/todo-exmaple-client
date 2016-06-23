@@ -1,9 +1,7 @@
-library todo_client.web.local_todo_example;
-
 import 'dart:html';
 
-import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart' show setClientConfiguration;
+import 'package:react/react_dom.dart' as react_dom;
 import 'package:todo_client/todo_client.dart' show TodoModule;
 import 'package:todo_sdk/todo_sdk.dart';
 import 'package:w_session/api.dart';
@@ -12,8 +10,6 @@ import 'package:truss/truss.dart' show WorkspacesShell;
 import 'package:w_oauth2/w_oauth2.dart';
 
 import 'settings.dart' as settings;
-
-String _decodeResourceId(resourceId, strip) => window.atob(resourceId).replaceAll('$strip\x1f', '');
 
 main() async {
   setClientConfiguration();
@@ -35,15 +31,15 @@ main() async {
     OAuth2 oauth2 = new OAuth2(clientId, redirectUri.toString(), [], shell.session);
 
     // Instantiate the authenticated & authorized to-do SDK.
-    TodoSdk todoSdk = new WdeskTodoSdk(shell.session, oauth2, settings.messagingFrontendHost);
+    TodoSdk todoSdk = new WdeskTodoSdk(oauth2, settings.messagingFrontendHost);
 
     // Inject the service into our to-do module.
     TodoModule todoModule = new TodoModule(todoSdk);
 
     // Grab the main to-do UI, but hide the filter since we'll be placing a
     // variation of the filter in the workspaces sidebar.
-    String user = _decodeResourceId(shell.session.context.user.resourceId, 'WFUser');
-    var mainContent = todoModule.components.content(currentUserID: user, withFilter: false);
+    var mainContent = todoModule.components
+        .content(currentUserId: shell.session.context.user.resourceId, withFilter: false);
 
     // Construct the entire application component to render using the shell's
     // content factory.
@@ -55,7 +51,7 @@ main() async {
         // Hide the create menu.
         menuHeader: null);
 
-    react.render(component, container);
+    react_dom.render(component, container);
   } else {
     // User is not authenticated. Use the local version.
 
@@ -66,6 +62,6 @@ main() async {
     TodoModule todoModule = new TodoModule(todoSdk);
 
     // Render the module's local UI variant.
-    react.render(todoModule.components.localShell(), container);
+    react_dom.render(todoModule.components.localShell(), container);
   }
 }
