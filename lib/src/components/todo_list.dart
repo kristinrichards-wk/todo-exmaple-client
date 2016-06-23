@@ -20,13 +20,11 @@ class TodoListProps extends UiProps {
 
 @Component()
 class TodoListComponent extends UiComponent<TodoListProps> {
-
   @override
   getDefaultProps() => (newProps()
     ..todos = []
     ..activeTodo = null
-    ..currentUserId = ''
-  );
+    ..currentUserId = '');
 
   @override
   render() {
@@ -35,14 +33,13 @@ class TodoListComponent extends UiComponent<TodoListProps> {
         ..className = 'todo-list-empty')('No todos to show. Create one or adjust the filters.'));
     } else {
       List todoItems = props.todos
-        .map((todo) => (TodoListItem()
-          ..actions = props.actions
-          ..currentUserId = props.currentUserId
-          ..isExpanded = props.activeTodo == todo
-          ..key = todo.id
-          ..todo = todo
-        )())
-        .toList();
+          .map((todo) => (TodoListItem()
+            ..actions = props.actions
+            ..currentUserId = props.currentUserId
+            ..isExpanded = props.activeTodo == todo
+            ..key = todo.id
+            ..todo = todo)())
+          .toList();
       return (VBlock()..className = 'todo-list')(todoItems);
     }
   }

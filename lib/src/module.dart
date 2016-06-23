@@ -25,8 +25,7 @@ class TodoModule extends Module {
       _modalManager.show((EditTodoModal()
         ..actions = _actions
         ..originalTodo = todo
-        ..modalManager = _modalManager
-      )());
+        ..modalManager = _modalManager)());
     });
   }
 

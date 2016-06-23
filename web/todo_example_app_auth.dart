@@ -33,17 +33,18 @@ main() async {
 
   // Grab the main to-do UI, but hide the filter since we'll be placing a
   // variation of the filter in the workspaces sidebar.
-  var mainContent = todoModule.components.content(currentUserId: shell.session.context.user.resourceId, withFilter: false);
+  var mainContent = todoModule.components
+      .content(currentUserId: shell.session.context.user.resourceId, withFilter: false);
 
   // Construct the entire application component to render using the shell's
   // content factory.
   var component = shell.components.content(
-  // Main content area of the shell.
-    content: mainContent,
-  // Populate the workspaces sidebar with a variant of the to-do filter.
-    menuContent: todoModule.components.sidebar(),
-  // Hide the create menu.
-    menuHeader: null);
+      // Main content area of the shell.
+      content: mainContent,
+      // Populate the workspaces sidebar with a variant of the to-do filter.
+      menuContent: todoModule.components.sidebar(),
+      // Hide the create menu.
+      menuHeader: null);
 
   react_dom.render(component, container);
 }

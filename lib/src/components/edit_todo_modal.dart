@@ -27,45 +27,33 @@ class EditTodoModalState extends UiState {
 
 @Component(subtypeOf: ModalComponent)
 class EditTodoModalComponent extends UiStatefulComponent<EditTodoModalProps, EditTodoModalState> {
-
   @override
   getInitialState() => (newState()
     ..description = props.originalTodo.description
-    ..notes = props.originalTodo.notes
-  );
+    ..notes = props.originalTodo.notes);
 
   @override
   render() {
     return (Modal()
       ..addProps(copyUnconsumedProps())
-      ..title = 'Edit Todo'
-    )((Dom.div()
-        ..className = 'modal-body'
-      )(FormLayout()((TextInput()
-            ..type = TextInputType.TEXT
-            ..label = 'Title'
-            ..onChange = _updateTodoDescription
-            ..value = state.description
-          )(),
-          (TextInput()
-            ..isMultiline = true
-            ..label = 'Notes'
-            ..onChange = _updateTodoNotes
-            ..placeholder = 'Notes'
-            ..rows = 3
-            ..value = state.notes
-          )()
-        )
-      ),
-      (Dom.div()
-        ..className = 'modal-footer'
-      )((FormSubmitInput()
-        ..skin = ButtonSkin.SUCCESS
-        ..onClick = _save
-        ..pullRight = true
-        )('Save')
-      )
-    );
+      ..title = 'Edit Todo')(
+        (Dom.div()..className = 'modal-body')(FormLayout()(
+            (TextInput()
+              ..type = TextInputType.TEXT
+              ..label = 'Title'
+              ..onChange = _updateTodoDescription
+              ..value = state.description)(),
+            (TextInput()
+              ..isMultiline = true
+              ..label = 'Notes'
+              ..onChange = _updateTodoNotes
+              ..placeholder = 'Notes'
+              ..rows = 3
+              ..value = state.notes)())),
+        (Dom.div()..className = 'modal-footer')((FormSubmitInput()
+          ..skin = ButtonSkin.SUCCESS
+          ..onClick = _save
+          ..pullRight = true)('Save')));
   }
 
   _save(e) {
@@ -77,17 +65,13 @@ class EditTodoModalComponent extends UiStatefulComponent<EditTodoModalProps, Edi
 
   _updateTodoDescription(e) {
     String value = (e.target as TextInputElement).value;
-    setState(newState()
-      ..description = value
-    );
+    setState(newState()..description = value);
     props.originalTodo = props.originalTodo.change(description: value);
   }
 
   _updateTodoNotes(e) {
     String value = (e.target as TextAreaElement).value;
-    setState(newState()
-     ..notes = value
-    );
+    setState(newState()..notes = value);
     props.originalTodo = props.originalTodo.change(notes: value);
   }
 }

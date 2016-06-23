@@ -4,7 +4,6 @@ import 'package:web_skin_dart/ui_core.dart';
 import 'package:web_skin_dart/ui_components.dart';
 
 import 'package:todo_client/src/actions.dart' show TodoActions;
-import 'package:todo_client/src/store.dart' show TodoStore;
 
 @Factory()
 UiFactory<TodoListFilterProps> TodoListFilter;
@@ -20,36 +19,33 @@ class TodoListFilterProps extends UiProps {
 
 @Component()
 class TodoListFilterComponent extends UiComponent<TodoListFilterProps> {
-
   @override
   getDefaultProps() => (newProps()
     ..includeComplete = false
     ..includeIncomplete = false
     ..includePrivate = false
-    ..includePublic = false
-  );
+    ..includePublic = false);
 
   @override
   render() {
     return (Dom.div()..className = 'todo-list-filter')((ToggleInputGroup()
       ..groupLabel = 'Todo List Filters'
       ..hideGroupLabel = true)(
-      (CheckboxInput()
-        ..defaultChecked = props.includePrivate
-        ..label = 'Your Todos'
-        ..onChange = (_) => props.actions.toggleIncludePrivate())(),
-      (CheckboxInput()
-        ..defaultChecked = props.includePublic
-        ..label = 'Public Todos'
-        ..onChange = (_) => props.actions.toggleIncludePublic())(),
-      (CheckboxInput()
-        ..defaultChecked = props.includeIncomplete
-        ..label = 'Unfinished Todos'
-        ..onChange = (_) => props.actions.toggleIncludeIncomplete())(),
-      (CheckboxInput()
-        ..defaultChecked = props.includeComplete
-        ..label = 'Finished Todos'
-        ..onChange = (_) => props.actions.toggleIncludeComplete())()
-    ));
+        (CheckboxInput()
+          ..defaultChecked = props.includePrivate
+          ..label = 'Your Todos'
+          ..onChange = (_) => props.actions.toggleIncludePrivate())(),
+        (CheckboxInput()
+          ..defaultChecked = props.includePublic
+          ..label = 'Public Todos'
+          ..onChange = (_) => props.actions.toggleIncludePublic())(),
+        (CheckboxInput()
+          ..defaultChecked = props.includeIncomplete
+          ..label = 'Unfinished Todos'
+          ..onChange = (_) => props.actions.toggleIncludeIncomplete())(),
+        (CheckboxInput()
+          ..defaultChecked = props.includeComplete
+          ..label = 'Finished Todos'
+          ..onChange = (_) => props.actions.toggleIncludeComplete())()));
   }
 }

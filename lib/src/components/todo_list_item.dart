@@ -5,7 +5,6 @@ import 'package:web_skin_dart/ui_core.dart';
 import 'package:web_skin_dart/ui_components.dart';
 
 import 'package:todo_client/src/actions.dart' show TodoActions;
-import 'package:todo_client/src/store.dart' show TodoStore;
 
 @Factory()
 UiFactory<TodoListItemProps> TodoListItem;
@@ -31,13 +30,10 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
   getDefaultProps() => (newProps()
     ..currentUserId = ''
     ..isExpanded = false
-    ..todo = null
-  );
+    ..todo = null);
 
   @override
-  getInitialState() => (newState()
-    ..isEditing = false
-  );
+  getInitialState() => (newState()..isEditing = false);
 
   @override
   render() {
@@ -45,21 +41,17 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
     todoContents.add((Dom.p()
       ..className = 'todo-title'
       ..key = 'todo-title'
-      ..onClick = _toggleExpansion)(
-        (Dom.span())(props.todo.description),
-        (Label())(props.todo.isPublic ? 'public' : 'private')
-      ));
+      ..onClick = _toggleExpansion)((Dom.span())(props.todo.description),
+        (Label())(props.todo.isPublic ? 'public' : 'private')));
     if (props.isExpanded) {
       if (props.todo.notes == null || props.todo.notes.isEmpty) {
         todoContents.add((Dom.p()
           ..className = 'todo-notes todo-notes-empty'
-          ..key = 'todo-notes-empty'
-        )('No notes.'));
+          ..key = 'todo-notes-empty')('No notes.'));
       } else {
         todoContents.add((Dom.p()
           ..className = 'todo-notes'
-          ..key = 'todo-notes'
-        )(props.todo.notes));
+          ..key = 'todo-notes')(props.todo.notes));
       }
     }
 
@@ -105,19 +97,18 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
       ..className = todoClass
       ..key = props.todo.id
       ..shrink = true)(
-      (Block()
-        ..className = 'todo-completion'
-        ..isNested = true
-        ..shrink = true)(todoCompletion),
-      (Block()
-        ..className = 'todo-contents'
-        ..isNested = true
-        ..wrap = true)(todoContents),
-      (Block()
-        ..className = 'todo-controls'
-        ..isNested = true
-        ..shrink = true)(todoControls)
-    );
+        (Block()
+          ..className = 'todo-completion'
+          ..isNested = true
+          ..shrink = true)(todoCompletion),
+        (Block()
+          ..className = 'todo-contents'
+          ..isNested = true
+          ..wrap = true)(todoContents),
+        (Block()
+          ..className = 'todo-controls'
+          ..isNested = true
+          ..shrink = true)(todoControls));
   }
 
   bool _canModify() => props.currentUserId == null || props.currentUserId == props.todo.userID;

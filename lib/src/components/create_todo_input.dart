@@ -22,28 +22,22 @@ class CreateTodoInputState extends UiState {
 }
 
 @Component()
-class CreateTodoInputComponent extends UiStatefulComponent<CreateTodoInputProps, CreateTodoInputState> {
-
+class CreateTodoInputComponent
+    extends UiStatefulComponent<CreateTodoInputProps, CreateTodoInputState> {
   @override
-  getInitialState() => (newState()
-    ..newTodoDescription = ''
-  );
+  getInitialState() => (newState()..newTodoDescription = '');
 
   render() {
     return (Form()
       ..className = 'create-todo-input'
-      ..onSubmit = _createTodo
-    )(
-      (TextInput()
-        ..autoFocus = true
-        ..hideLabel = true
-        ..label = 'Create a Todo'
-        ..onChange = _updateNewTodoDescription
-        ..placeholder = 'What do you need to do?'
-        ..size = InputSize.LARGE
-        ..value = state.newTodoDescription
-      )()
-    );
+      ..onSubmit = _createTodo)((TextInput()
+      ..autoFocus = true
+      ..hideLabel = true
+      ..label = 'Create a Todo'
+      ..onChange = _updateNewTodoDescription
+      ..placeholder = 'What do you need to do?'
+      ..size = InputSize.LARGE
+      ..value = state.newTodoDescription)());
   }
 
   _createTodo(e) {
