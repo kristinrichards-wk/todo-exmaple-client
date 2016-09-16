@@ -1,7 +1,8 @@
 project: dart
 language: dart
 
-runner_image: docker.webfilings.org/devops/smithy-runner-dart1.15.0-libc:3.2.7
+# dart 1.19.1, built from https://github.com/Workiva/smithy-runner-dart/tree/0.0.4
+runner_image: drydock-prod.workiva.org/workiva/smithy-runner-dart:74173
 
 script:
   - pub get
