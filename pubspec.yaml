@@ -3,7 +3,7 @@ version: 0.0.1
 
 dependencies:
 # pinning analyzer dependency to allow for pub resolution
-  analyzer: 0.27.3
+  analyzer: ^0.27.3
   react: "^1.0.0"
   todo_sdk:
     git:
