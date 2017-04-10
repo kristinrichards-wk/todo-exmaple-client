@@ -65,14 +65,6 @@ class TodoAppComponent extends FluxUiComponent<TodoAppProps> {
         ..todos = props.store.todos)(),
     ));
 
-    return (Block()
-      ..align = BlockAlign.CENTER
-      ..size = 12)(
-      (VBlock()
-        ..className = 'todo-app'
-        ..isNested = true
-        ..size = 12
-        ..shrink = true)(elements),
-    );
+    return (VBlock()..className = 'todo-app')(elements);
   }
 }

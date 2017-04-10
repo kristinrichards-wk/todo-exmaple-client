@@ -17,14 +17,10 @@ class TodoLocalShellComponent extends UiComponent<TodoLocalShellProps> {
         (BlockContent()
           ..className = 'login-prompt'
           ..shrink = true)(
-          Dom.p()(
-            'Want to save and share your todos? ',
-            (Dom.a()..href = '/login')('Sign in now.'),
-          ),
+          'Want to save and share your todos? ',
+          (Dom.a()..href = '/login')('Sign in now.'),
         ),
-        (Block()
-          ..gutter = BlockGutter.ALL
-          ..isNested = true)(props.children),
+        Block()(props.children),
       ),
     );
   }
