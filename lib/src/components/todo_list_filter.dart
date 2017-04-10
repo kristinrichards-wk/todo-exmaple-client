@@ -28,9 +28,10 @@ class TodoListFilterComponent extends UiComponent<TodoListFilterProps> {
 
   @override
   render() {
-    return (Dom.div()..className = 'todo-list-filter')((ToggleInputGroup()
-      ..groupLabel = 'Todo List Filters'
-      ..hideGroupLabel = true)(
+    return (Dom.div()..className = 'todo-list-filter')(
+      (ToggleInputGroup()
+        ..groupLabel = 'Todo List Filters'
+        ..hideGroupLabel = true)(
         (CheckboxInput()
           ..defaultChecked = props.includePrivate
           ..label = 'Your Todos'
@@ -46,6 +47,8 @@ class TodoListFilterComponent extends UiComponent<TodoListFilterProps> {
         (CheckboxInput()
           ..defaultChecked = props.includeComplete
           ..label = 'Finished Todos'
-          ..onChange = (_) => props.actions.toggleIncludeComplete())()));
+          ..onChange = (_) => props.actions.toggleIncludeComplete())(),
+      ),
+    );
   }
 }

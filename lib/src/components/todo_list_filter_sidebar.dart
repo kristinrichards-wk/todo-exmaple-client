@@ -17,25 +17,26 @@ class TodoListFilterSidebarProps extends FluxUiProps<TodoActions, TodoStore> {}
 class TodoListFilterSidebarComponent extends FluxUiComponent<TodoListFilterSidebarProps> {
   render() {
     return WorkspacesMenu()(
-        (WorkspacesMenuItem()
-          ..active = props.store.includePrivate
-          ..icon = IconGlyph.TWFR_FOLDER
-          ..onSelect = ((_) => props.actions.toggleIncludePrivate())
-          ..text = 'Your Todos')(),
-        (WorkspacesMenuItem()
-          ..active = props.store.includePublic
-          ..icon = IconGlyph.TWFR_FOLDER_OPEN
-          ..onSelect = ((_) => props.actions.toggleIncludePublic())
-          ..text = 'Public Todos')(),
-        (WorkspacesMenuItem()
-          ..active = props.store.includeIncomplete
-          ..icon = IconGlyph.TWFR_TASK_CHECK
-          ..onSelect = ((_) => props.actions.toggleIncludeIncomplete())
-          ..text = 'Unfinished Todos')(),
-        (WorkspacesMenuItem()
-          ..active = props.store.includeComplete
-          ..icon = IconGlyph.TWFR_TASK_CREATE
-          ..onSelect = ((_) => props.actions.toggleIncludeComplete())
-          ..text = 'Finished Todos')());
+      (WorkspacesMenuItem()
+        ..active = props.store.includePrivate
+        ..icon = IconGlyph.TWFR_FOLDER
+        ..onSelect = ((_) => props.actions.toggleIncludePrivate())
+        ..text = 'Your Todos')(),
+      (WorkspacesMenuItem()
+        ..active = props.store.includePublic
+        ..icon = IconGlyph.TWFR_FOLDER_OPEN
+        ..onSelect = ((_) => props.actions.toggleIncludePublic())
+        ..text = 'Public Todos')(),
+      (WorkspacesMenuItem()
+        ..active = props.store.includeIncomplete
+        ..icon = IconGlyph.TWFR_TASK_CHECK
+        ..onSelect = ((_) => props.actions.toggleIncludeIncomplete())
+        ..text = 'Unfinished Todos')(),
+      (WorkspacesMenuItem()
+        ..active = props.store.includeComplete
+        ..icon = IconGlyph.TWFR_TASK_CREATE
+        ..onSelect = ((_) => props.actions.toggleIncludeComplete())
+        ..text = 'Finished Todos')(),
+    );
   }
 }

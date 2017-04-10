@@ -37,23 +37,29 @@ class EditTodoModalComponent extends UiStatefulComponent<EditTodoModalProps, Edi
     return (Modal()
       ..addProps(copyUnconsumedProps())
       ..title = 'Edit Todo')(
-        (Dom.div()..className = 'modal-body')(FormLayout()(
-            (TextInput()
-              ..type = TextInputType.TEXT
-              ..label = 'Title'
-              ..onChange = _updateTodoDescription
-              ..value = state.description)(),
-            (TextInput()
-              ..isMultiline = true
-              ..label = 'Notes'
-              ..onChange = _updateTodoNotes
-              ..placeholder = 'Notes'
-              ..rows = 3
-              ..value = state.notes)())),
-        (Dom.div()..className = 'modal-footer')((FormSubmitInput()
+      (Dom.div()..className = 'modal-body')(
+        FormLayout()(
+          (TextInput()
+            ..type = TextInputType.TEXT
+            ..label = 'Title'
+            ..onChange = _updateTodoDescription
+            ..value = state.description)(),
+          (TextInput()
+            ..isMultiline = true
+            ..label = 'Notes'
+            ..onChange = _updateTodoNotes
+            ..placeholder = 'Notes'
+            ..rows = 3
+            ..value = state.notes)(),
+        ),
+      ),
+      (Dom.div()..className = 'modal-footer')(
+        (FormSubmitInput()
           ..skin = ButtonSkin.SUCCESS
           ..onClick = _save
-          ..pullRight = true)('Save')));
+          ..pullRight = true)('Save'),
+      ),
+    );
   }
 
   _save(e) {

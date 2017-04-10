@@ -41,8 +41,10 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
     todoContents.add((Dom.p()
       ..className = 'todo-title'
       ..key = 'todo-title'
-      ..onClick = _toggleExpansion)((Dom.span())(props.todo.description),
-        (Label())(props.todo.isPublic ? 'public' : 'private')));
+      ..onClick = _toggleExpansion)(
+      (Dom.span())(props.todo.description),
+      (Label())(props.todo.isPublic ? 'public' : 'private'),
+    ));
     if (props.isExpanded) {
       if (props.todo.notes == null || props.todo.notes.isEmpty) {
         todoContents.add((Dom.p()
@@ -97,18 +99,19 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
       ..className = todoClass
       ..key = props.todo.id
       ..shrink = true)(
-        (Block()
-          ..className = 'todo-completion'
-          ..isNested = true
-          ..shrink = true)(todoCompletion),
-        (Block()
-          ..className = 'todo-contents'
-          ..isNested = true
-          ..wrap = true)(todoContents),
-        (Block()
-          ..className = 'todo-controls'
-          ..isNested = true
-          ..shrink = true)(todoControls));
+      (Block()
+        ..className = 'todo-completion'
+        ..isNested = true
+        ..shrink = true)(todoCompletion),
+      (Block()
+        ..className = 'todo-contents'
+        ..isNested = true
+        ..wrap = true)(todoContents),
+      (Block()
+        ..className = 'todo-controls'
+        ..isNested = true
+        ..shrink = true)(todoControls),
+    );
   }
 
   bool _canModify() => props.currentUserId == null || props.currentUserId == props.todo.userID;
