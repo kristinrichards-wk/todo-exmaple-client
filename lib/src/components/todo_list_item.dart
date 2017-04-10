@@ -38,7 +38,7 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
   render() {
     var classes = forwardingClassNameBuilder()
       ..add('todo')
-      ..add(props.todo.isCompleted ? 'todo-complete' : 'todo-incomplete')
+      ..add(props.todo.isCompleted ? 'todo--complete' : 'todo--incomplete')
       ..add('todo-expanded', props.isExpanded);
 
     return (ListGroupItem()..className = classes.toClassName())(
@@ -67,18 +67,20 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
   }
 
   ReactElement _renderContents() {
-    return (BlockContent()..className = 'todo-contents')(
+    return (BlockContent()..className = 'todo__contents')(
       (Dom.div()
-        ..className = 'todo-title'
+        ..className = 'todo__title'
         ..onClick = _toggleExpansion)(
         props.todo.description,
         Label()(props.todo.isPublic ? 'public' : 'private'),
       ),
       (props.isExpanded && !_hasNotes)
-          ? (Dom.div()..className = 'todo-notes todo-notes-empty')('No notes.')
+          ? (Dom.div()..className = 'todo__notes todo__notes--empty')(
+              Dom.em()('No notes.'),
+            )
           : null,
       (props.isExpanded && _hasNotes)
-          ? (Dom.div()..className = 'todo-notes')(props.todo.notes)
+          ? (Dom.div()..className = 'todo__notes')(props.todo.notes)
           : null,
     );
   }
@@ -100,12 +102,16 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
 
     return (BlockContent()
       ..shrink = true
-      ..className = 'todo-controls')(
+      ..className = 'todo__controls')(
       (ButtonToolbar()..onClick = (e) => e.stopPropagation())(
-        _renderControlButton('todo-edit', _edit, IconGlyph.PENCIL),
-        _renderControlButton('todo-privacy', _togglePrivacy,
-            props.todo.isPublic ? IconGlyph.EYE_BLOCKED : IconGlyph.EYE),
-        _renderControlButton('todo-delete', _delete, IconGlyph.TRASH),
+        _renderControlButton('todo__edit-btn', _edit, IconGlyph.PENCIL),
+        props.todo.isCompleted
+            ? null
+            : _renderControlButton('todo__privacy-btn', _togglePrivacy,
+                props.todo.isPublic ? IconGlyph.EYE_BLOCKED : IconGlyph.EYE),
+        props.todo.isCompleted
+            ? null
+            : _renderControlButton('todo__delete-btn', _delete, IconGlyph.TRASH),
       ),
     );
   }

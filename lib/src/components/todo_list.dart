@@ -30,7 +30,7 @@ class TodoListComponent extends UiComponent<TodoListProps> {
   render() {
     if (props.todos.isEmpty) {
       return (Dom.div()..className = 'todo-list')(
-        (Dom.p()..className = 'todo-list-empty')(
+        (Dom.div()..className = 'text-muted')(
           'No todos to show. Create one or adjust the filters.',
         ),
       );

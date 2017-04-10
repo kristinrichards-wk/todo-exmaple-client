@@ -8,20 +8,22 @@
 
 .todo {
   background-color: #fff;
+  // Override list-group-item padding and let
+  // the child BlockContents manage it
   padding: 0 !important;
-}
 
-.todo:hover .todo__controls {
-  visibility: visible;
-}
+  &:hover .todo__controls {
+    visibility: visible;
+  }
 
-.todo--expanded .todo__title {
-  font-weight: bold;
-}
+  &--expanded .todo__title {
+    font-weight: bold;
+  }
 
-.todo--complete {
-  background: none;
-  color: #b2b2b2;
+  &--complete {
+    background: none;
+    color: #b2b2b2;
+  }
 }
 
 .todo__controls {
@@ -30,13 +32,13 @@
 
 .todo__title {
   cursor: pointer;
-}
 
-.todo__title .label {
-  background-color: #f3f3f3;
-  color: #b2b2b2;
-  font-weight: normal;
-  margin-left: 6px;
+  .label {
+    background-color: #f3f3f3;
+    color: #b2b2b2;
+    font-weight: normal;
+    margin-left: 6px;
+  }
 }
 
 .todo__notes {
@@ -44,13 +46,17 @@
   margin-top: 12px;
 }
 
-.todo__edit-btn:hover,
-.todo__privacy-btn:hover {
-  color: #66cc00;
+.todo__edit-btn,
+.todo__privacy-btn {
+  &:hover {
+    color: #66cc00;
+  }
 }
 
-.todo__delete-btn:hover {
-  color: #ee2724;
+.todo__delete-btn {
+  &:hover {
+    color: #ee2724;
+  }
 }
 
 .todo-list-filter .checkbox {
