@@ -30,14 +30,16 @@ class CreateTodoInputComponent
   render() {
     return (Form()
       ..className = 'create-todo-input'
-      ..onSubmit = _createTodo)((TextInput()
-      ..autoFocus = true
-      ..hideLabel = true
-      ..label = 'Create a Todo'
-      ..onChange = _updateNewTodoDescription
-      ..placeholder = 'What do you need to do?'
-      ..size = InputSize.LARGE
-      ..value = state.newTodoDescription)());
+      ..onSubmit = _createTodo)(
+      (TextInput()
+        ..autoFocus = true
+        ..hideLabel = true
+        ..label = 'Create a Todo'
+        ..onChange = _updateNewTodoDescription
+        ..placeholder = 'What do you need to do?'
+        ..size = InputSize.LARGE
+        ..value = state.newTodoDescription)(),
+    );
   }
 
   _createTodo(e) {
