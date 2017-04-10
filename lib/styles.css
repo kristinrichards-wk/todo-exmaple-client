@@ -1,6 +1,3 @@
-.create-todo-input input {
-    width: 100%; }
-
 .todo-app .create-todo-input, .todo-app .todo-list-filter, .todo-app .todo-list {
     max-width: 600px;
     min-width: 300px;
@@ -10,32 +7,16 @@
     color: #b2b2b2; }
 .todo-list .todo {
     background-color: #fff;
-    border: 1px solid #cbcbcb;
-    border-bottom: none; }
-.todo-list .todo:first-of-type {
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px; }
-.todo-list .todo:last-of-type {
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
-    border-bottom: 1px solid #cbcbcb; }
+    /* Let the BlockContents manage the padding. */
+    padding: 0;
+}
 
-.todo-list .todo .todo-completion .icon, .todo-list .todo .todo-controls .icon {
-    margin-right: 6px; }
-.todo-list .todo .todo-completion .icon:last-of-type, .todo-list .todo .todo-controls .icon:last-of-type {
-    margin-right: 0; }
 .todo-list .todo .todo-check:hover, .todo-list .todo .todo-edit:hover, .todo-list .todo .todo-privacy:hover, .todo-list .todo .todo-delete:hover {
-    cursor: pointer;
     color: #66cc00; }
 .todo-list .todo .todo-delete:hover {
     color: #ee2724; }
-.todo-list .todo .todo-check-inactive {
-    color: #b2b2b2; }
 .todo-list .todo .todo-controls {
     visibility: hidden; }
-.todo-list .todo .todo-contents .todo-title, .todo-list .todo .todo-contents .todo-notes {
-    margin: 0;
-    width: 100%; }
 .todo-list .todo .todo-contents .todo-title {
     cursor: pointer; }
 .todo-list .todo .todo-contents .todo-title .label {

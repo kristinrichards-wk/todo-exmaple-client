@@ -25,8 +25,6 @@ class TodoListItemState extends UiState {
 
 @Component()
 class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoListItemState> {
-  Todo edited;
-
   @override
   Map getDefaultProps() => (newProps()
     ..currentUserId = ''
@@ -43,10 +41,12 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
       ..add(props.todo.isCompleted ? 'todo-complete' : 'todo-incomplete')
       ..add('todo-expanded', props.isExpanded);
 
-    return (Block()..className = classes.toClassName())(
-      _renderCompletion(),
-      _renderContents(),
-      _renderControls(),
+    return (ListGroupItem()..className = classes.toClassName())(
+      Block()(
+        _renderCompletion(),
+        _renderContents(),
+        _renderControls(),
+      ),
     );
   }
 
@@ -59,6 +59,7 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
         ..isDisabled = !_canModify
         ..size = ButtonSize.XSMALL
         ..skin = ButtonSkin.VANILLA
+        ..noText = true
         ..onClick = _toggleCompletion)(
         (Icon()..glyph = IconGlyph.CHECKMARK)(),
       ),
@@ -67,17 +68,17 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
 
   ReactElement _renderContents() {
     return (BlockContent()..className = 'todo-contents')(
-      (Dom.p()
+      (Dom.div()
         ..className = 'todo-title'
         ..onClick = _toggleExpansion)(
         props.todo.description,
         Label()(props.todo.isPublic ? 'public' : 'private'),
       ),
       (props.isExpanded && !_hasNotes)
-          ? (Dom.p()..className = 'todo-notes todo-notes-empty')('No notes.')
+          ? (Dom.div()..className = 'todo-notes todo-notes-empty')('No notes.')
           : null,
       (props.isExpanded && _hasNotes)
-          ? (Dom.p()..className = 'todo-notes')(props.todo.notes)
+          ? (Dom.div()..className = 'todo-notes')(props.todo.notes)
           : null,
     );
   }
@@ -91,6 +92,7 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
         ..className = className
         ..skin = ButtonSkin.VANILLA
         ..size = ButtonSize.XSMALL
+        ..noText = true
         ..onClick = onClick)(
         (Icon()..glyph = glyph)(),
       );
@@ -98,14 +100,13 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
 
     return (BlockContent()
       ..shrink = true
-      ..className = 'todo-controls'
-      ..onClick = (e) {
-        e.stopPropagation();
-      })(
-      _renderControlButton('todo-edit', _edit, IconGlyph.PENCIL),
-      _renderControlButton('todo-privacy', _togglePrivacy,
-          props.todo.isPublic ? IconGlyph.EYE_BLOCKED : IconGlyph.EYE),
-      _renderControlButton('todo-delete', _delete, IconGlyph.TRASH),
+      ..className = 'todo-controls')(
+      (ButtonToolbar()..onClick = (e) => e.stopPropagation())(
+        _renderControlButton('todo-edit', _edit, IconGlyph.PENCIL),
+        _renderControlButton('todo-privacy', _togglePrivacy,
+            props.todo.isPublic ? IconGlyph.EYE_BLOCKED : IconGlyph.EYE),
+        _renderControlButton('todo-delete', _delete, IconGlyph.TRASH),
+      ),
     );
   }
 
@@ -127,17 +128,11 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
 
   void _toggleExpansion(e) {
     e.stopPropagation();
-
-    if (props.isExpanded) {
-      props.actions.selectTodo(null);
-    } else {
-      props.actions.selectTodo(props.todo);
-    }
+    props.actions.selectTodo(props.isExpanded ? null : props.todo);
   }
 
   void _toggleCompletion(e) {
     e.stopPropagation();
-
     props.actions.updateTodo(props.todo.change(isCompleted: !props.todo.isCompleted));
   }
 }

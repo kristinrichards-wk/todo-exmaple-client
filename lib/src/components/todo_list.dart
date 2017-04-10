@@ -43,7 +43,10 @@ class TodoListComponent extends UiComponent<TodoListProps> {
             ..key = todo.id
             ..todo = todo)())
           .toList();
-      return (Dom.div()..className = 'todo-list')(todoItems);
+      return (ListGroup()
+        ..className = 'todo-list'
+        ..isBordered = true
+        ..size = ListGroupSize.LARGE)(todoItems);
     }
   }
 }
