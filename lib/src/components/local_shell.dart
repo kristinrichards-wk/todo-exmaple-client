@@ -12,15 +12,13 @@ class TodoLocalShellProps extends UiProps {}
 @Component()
 class TodoLocalShellComponent extends UiComponent<TodoLocalShellProps> {
   render() {
-    return (GridFrame())(
+    return GridFrame()(
       VBlock()(
-        (Block()
+        (BlockContent()
           ..className = 'login-prompt'
-          ..content = true
-          ..isNested = true
           ..shrink = true)(
           Dom.p()(
-            (Dom.span())('Want to save and share your todos? '),
+            'Want to save and share your todos? ',
             (Dom.a()..href = '/login')('Sign in now.'),
           ),
         ),

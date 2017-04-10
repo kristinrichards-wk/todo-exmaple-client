@@ -19,11 +19,7 @@
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
     border-bottom: 1px solid #cbcbcb; }
-.todo-list .todo .todo-completion, .todo-list .todo .todo-controls, .todo-list .todo .todo-contents {
-    margin: 12px 0; }
-.todo-list .todo .todo-completion, .todo-list .todo .todo-controls {
-    padding-left: 12px;
-    padding-right: 12px; }
+
 .todo-list .todo .todo-completion .icon, .todo-list .todo .todo-controls .icon {
     margin-right: 6px; }
 .todo-list .todo .todo-completion .icon:last-of-type, .todo-list .todo .todo-controls .icon:last-of-type {

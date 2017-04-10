@@ -1,8 +1,9 @@
 library todo_client.src.module.components.todo_list_item;
 
+import 'package:react/react_client.dart';
 import 'package:todo_sdk/todo_sdk.dart' show Todo;
-import 'package:web_skin_dart/ui_core.dart';
 import 'package:web_skin_dart/ui_components.dart';
+import 'package:web_skin_dart/ui_core.dart';
 
 import 'package:todo_client/src/actions.dart' show TodoActions;
 
@@ -27,118 +28,104 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
   Todo edited;
 
   @override
-  getDefaultProps() => (newProps()
+  Map getDefaultProps() => (newProps()
     ..currentUserId = ''
     ..isExpanded = false
     ..todo = null);
 
   @override
-  getInitialState() => (newState()..isEditing = false);
+  Map getInitialState() => (newState()..isEditing = false);
 
   @override
   render() {
-    var todoContents = [];
-    todoContents.add((Dom.p()
-      ..className = 'todo-title'
-      ..key = 'todo-title'
-      ..onClick = _toggleExpansion)(
-      (Dom.span())(props.todo.description),
-      (Label())(props.todo.isPublic ? 'public' : 'private'),
-    ));
-    if (props.isExpanded) {
-      if (props.todo.notes == null || props.todo.notes.isEmpty) {
-        todoContents.add((Dom.p()
-          ..className = 'todo-notes todo-notes-empty'
-          ..key = 'todo-notes-empty')('No notes.'));
-      } else {
-        todoContents.add((Dom.p()
-          ..className = 'todo-notes'
-          ..key = 'todo-notes')(props.todo.notes));
-      }
-    }
+    var classes = forwardingClassNameBuilder()
+      ..add('todo')
+      ..add(props.todo.isCompleted ? 'todo-complete' : 'todo-incomplete')
+      ..add('todo-expanded', props.isExpanded);
 
-    var todoCompletion;
-    var todoControls;
-
-    if (_canModify()) {
-      todoCompletion = (Icon()
-        ..className = 'todo-check'
-        ..glyph = IconGlyph.CHECKMARK
-        ..onClick = _toggleCompletion)();
-
-      todoControls = [
-        (Icon()
-          ..className = 'todo-edit'
-          ..key = 'todo-edit'
-          ..glyph = IconGlyph.PENCIL
-          ..onClick = _edit)(),
-        (Icon()
-          ..className = 'todo-privacy'
-          ..key = 'todo-privacy'
-          ..glyph = props.todo.isPublic ? IconGlyph.EYE_BLOCKED : IconGlyph.EYE
-          ..onClick = _togglePrivacy)(),
-        (Icon()
-          ..className = 'todo-delete'
-          ..key = 'todo-delete'
-          ..glyph = IconGlyph.TRASH
-          ..onClick = _delete)(),
-      ];
-    } else {
-      todoCompletion = (Icon()
-        ..className = 'todo-check-inactive'
-        ..glyph = IconGlyph.CHECKMARK)();
-
-      todoControls = [];
-    }
-
-    var todoClass = 'todo';
-    todoClass += props.todo.isCompleted ? ' todo-complete' : ' todo-incomplete';
-    todoClass += props.isExpanded ? ' todo-expanded' : '';
-
-    return (Block()
-      ..className = todoClass
-      ..key = props.todo.id
-      ..shrink = true)(
-      (Block()
-        ..className = 'todo-completion'
-        ..isNested = true
-        ..shrink = true)(todoCompletion),
-      (Block()
-        ..className = 'todo-contents'
-        ..isNested = true
-        ..wrap = true)(todoContents),
-      (Block()
-        ..className = 'todo-controls'
-        ..isNested = true
-        ..shrink = true)(todoControls),
+    return (Block()..className = classes.toClassName())(
+      _renderCompletion(),
+      _renderContents(),
+      _renderControls(),
     );
   }
 
-  bool _canModify() => props.currentUserId == null || props.currentUserId == props.todo.userID;
+  ReactElement _renderCompletion() {
+    return (BlockContent()
+      ..className = 'todo-completion'
+      ..shrink = true)(
+      (Button()
+        ..className = 'todo-check'
+        ..isDisabled = !_canModify
+        ..size = ButtonSize.XSMALL
+        ..skin = ButtonSkin.VANILLA
+        ..onClick = _toggleCompletion)(
+        (Icon()..glyph = IconGlyph.CHECKMARK)(),
+      ),
+    );
+  }
 
-  _delete(e) {
-    e.preventDefault();
-    e.stopPropagation();
+  ReactElement _renderContents() {
+    return (BlockContent()..className = 'todo-contents')(
+      (Dom.p()
+        ..className = 'todo-title'
+        ..onClick = _toggleExpansion)(
+        props.todo.description,
+        Label()(props.todo.isPublic ? 'public' : 'private'),
+      ),
+      (props.isExpanded && !_hasNotes)
+          ? (Dom.p()..className = 'todo-notes todo-notes-empty')('No notes.')
+          : null,
+      (props.isExpanded && _hasNotes)
+          ? (Dom.p()..className = 'todo-notes')(props.todo.notes)
+          : null,
+    );
+  }
 
+  ReactElement _renderControls() {
+    if (!_canModify) return null;
+
+    ReactElement _renderControlButton(
+        String className, MouseEventCallback onClick, IconGlyph glyph) {
+      return (Button()
+        ..className = className
+        ..skin = ButtonSkin.VANILLA
+        ..size = ButtonSize.XSMALL
+        ..onClick = onClick)(
+        (Icon()..glyph = glyph)(),
+      );
+    }
+
+    return (BlockContent()
+      ..shrink = true
+      ..className = 'todo-controls'
+      ..onClick = (e) {
+        e.stopPropagation();
+      })(
+      _renderControlButton('todo-edit', _edit, IconGlyph.PENCIL),
+      _renderControlButton('todo-privacy', _togglePrivacy,
+          props.todo.isPublic ? IconGlyph.EYE_BLOCKED : IconGlyph.EYE),
+      _renderControlButton('todo-delete', _delete, IconGlyph.TRASH),
+    );
+  }
+
+  bool get _hasNotes => props.todo.notes != null && props.todo.notes.isNotEmpty;
+
+  bool get _canModify => props.currentUserId == null || props.currentUserId == props.todo.userID;
+
+  void _delete(e) {
     props.actions.deleteTodo(props.todo);
   }
 
-  _edit(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
+  void _edit(e) {
     props.actions.editTodo(props.todo);
   }
 
-  _togglePrivacy(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
+  void _togglePrivacy(e) {
     props.actions.updateTodo(props.todo.change(isPublic: !props.todo.isPublic));
   }
 
-  _toggleExpansion(e) {
-    e.preventDefault();
+  void _toggleExpansion(e) {
     e.stopPropagation();
 
     if (props.isExpanded) {
@@ -148,8 +135,7 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
     }
   }
 
-  _toggleCompletion(e) {
-    e.preventDefault();
+  void _toggleCompletion(e) {
     e.stopPropagation();
 
     props.actions.updateTodo(props.todo.change(isCompleted: !props.todo.isCompleted));

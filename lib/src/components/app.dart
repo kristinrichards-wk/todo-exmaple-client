@@ -57,10 +57,7 @@ class TodoAppComponent extends FluxUiComponent<TodoAppProps> {
     }
 
     // To-do List
-    elements.add((Block()
-      ..gutter = BlockGutter.ALL
-      ..isNested = true
-      ..key = 'todos')(
+    elements.add((BlockContent()..key = 'todos')(
       (TodoList()
         ..actions = props.actions
         ..activeTodo = props.store.activeTodo
