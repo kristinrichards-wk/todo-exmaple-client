@@ -19,7 +19,7 @@ class TodoModule extends Module {
 
     _actions = new TodoActions();
     _store = new TodoStore(_actions, _sdk);
-    _components = new TodoComponents(_actions, _store, _modalManager);
+    _components = new TodoComponents(_actions, _store);
 
     _actions.editTodo.listen((todo) {
       _modalManager.show((EditTodoModal()

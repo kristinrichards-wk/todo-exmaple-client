@@ -18,7 +18,7 @@ packages:
       name: app_intelligence
       url: "https://pub.workiva.org"
     source: hosted
-    version: "1.2.0"
+    version: "1.3.6"
   archive:
     description:
       name: archive
@@ -186,7 +186,7 @@ packages:
       name: frugal
       url: "https://pub.workiva.org"
     source: hosted
-    version: "1.24.2"
+    version: "2.2.3"
   glob:
     description:
       name: glob
@@ -276,7 +276,7 @@ packages:
       name: messaging_sdk
       url: "https://pub.workiva.org"
     source: hosted
-    version: "1.18.2"
+    version: "2.7.2"
   meta:
     description:
       name: meta
@@ -521,18 +521,18 @@ packages:
     version: "0.0.7"
   todo_sdk:
     description:
-      ref: HEAD
-      resolved-ref: "0338a5324f862495ed8ee732f64f7e01cbcb21ff"
+      ref: update_sdk_2017_link
+      resolved-ref: d4ca0b09e283260ba282b7d618ef9ea043151647
       url: "git@github.com:Workiva/todo-example-sdk.git"
     source: git
     version: "0.0.1"
   todo_transport:
     description:
-      ref: HEAD
-      resolved-ref: "19eeb7fd9ebea49a4ebe895e877acb7c21b65b93"
+      ref: master
+      resolved-ref: "101508956307d84a05f76a308b5e06de8ee5994d"
       url: "git@github.com:Workiva/todo-example-transport.git"
     source: git
-    version: "1.4.1"
+    version: "2.2.1"
   transformer_utils:
     description:
       name: transformer_utils
@@ -587,12 +587,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.5.3"
-  vessel:
-    description:
-      name: vessel
-      url: "https://pub.workiva.org"
-    source: hosted
-    version: "3.1.3"
   vm_service_client:
     description:
       name: vm_service_client
