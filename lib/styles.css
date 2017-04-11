@@ -1,9 +1,10 @@
-.todo-app .create-todo-input,
-.todo-app .todo-list-filter,
-.todo-app .todo-list {
+.todo-app {
   max-width: 600px;
-  min-width: 300px;
   margin: 0 auto;
+}
+
+.todo-list {
+  margin-bottom: 0 !important;
 }
 
 .todo {

@@ -1,13 +1,18 @@
-.todo-app .create-todo-input,
-.todo-app .todo-list-filter,
-.todo-app .todo-list {
-  max-width: 600px;
-  min-width: 300px;
+$max-width: 600px;
+
+.todo-app {
+  max-width: $max-width;
   margin: 0 auto;
+}
+
+.todo-list {
+  // Override list-group margin.
+  margin-bottom: 0 !important;
 }
 
 .todo {
   background-color: #fff;
+
   // Override list-group-item padding and let
   // the child BlockContents manage it
   padding: 0 !important;
@@ -63,7 +68,7 @@
   width: 100%;
 }
 
-@media all and (min-width: 600px) {
+@media all and (min-width: $max-width) {
   .todo-list-filter .checkbox {
     display: inline-block;
     margin: 0 10px;
