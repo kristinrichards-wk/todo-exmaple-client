@@ -31,9 +31,7 @@ class TodoAppComponent extends FluxUiComponent<TodoAppProps> {
     var elements = [];
 
     // Create To-do Input
-    elements.add((Block()
-      ..content = true
-      ..isNested = true
+    elements.add((BlockContent()
       ..key = 'create'
       ..shrink = true)(
       (CreateTodoInput()..actions = props.actions)(),
@@ -41,10 +39,8 @@ class TodoAppComponent extends FluxUiComponent<TodoAppProps> {
 
     // Filter
     if (props.withFilter) {
-      elements.add((Block()
+      elements.add((BlockContent()
         ..collapse = BlockCollapse.VERTICAL
-        ..content = true
-        ..isNested = true
         ..key = 'filter'
         ..shrink = true)(
         (TodoListFilter()

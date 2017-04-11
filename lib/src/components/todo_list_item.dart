@@ -74,13 +74,10 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
         props.todo.description,
         Label()(props.todo.isPublic ? 'public' : 'private'),
       ),
-      (props.isExpanded && !_hasNotes)
-          ? (Dom.div()..className = 'todo__notes todo__notes--empty')(
-              Dom.em()('No notes.'),
+      props.isExpanded
+          ? (Dom.div()..className = 'todo__notes')(
+              _hasNotes ? props.todo.notes : Dom.em()('No notes.'),
             )
-          : null,
-      (props.isExpanded && _hasNotes)
-          ? (Dom.div()..className = 'todo__notes')(props.todo.notes)
           : null,
     );
   }
@@ -88,8 +85,7 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
   ReactElement _renderControls() {
     if (!_canModify) return null;
 
-    ReactElement _renderControlButton(
-        String className, MouseEventCallback onClick, IconGlyph glyph) {
+    _renderControl(String className, MouseEventCallback onClick, IconGlyph glyph) {
       return (Button()
         ..className = className
         ..skin = ButtonSkin.VANILLA
@@ -103,15 +99,19 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
     return (BlockContent()
       ..shrink = true
       ..className = 'todo__controls')(
-      (ButtonToolbar()..onClick = (e) => e.stopPropagation())(
-        _renderControlButton('todo__edit-btn', _edit, IconGlyph.PENCIL),
+      (ButtonToolbar()
+        ..onClick = (e) {
+          // Prevent clicks from expanding/collapsing the item
+          e.stopPropagation();
+        })(
+        _renderControl('todo__edit-btn', _edit, IconGlyph.PENCIL),
         props.todo.isCompleted
             ? null
-            : _renderControlButton('todo__privacy-btn', _togglePrivacy,
+            : _renderControl('todo__privacy-btn', _togglePrivacy,
                 props.todo.isPublic ? IconGlyph.EYE_BLOCKED : IconGlyph.EYE),
         props.todo.isCompleted
             ? null
-            : _renderControlButton('todo__delete-btn', _delete, IconGlyph.TRASH),
+            : _renderControl('todo__delete-btn', _delete, IconGlyph.TRASH),
       ),
     );
   }
