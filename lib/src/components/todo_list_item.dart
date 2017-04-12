@@ -39,8 +39,8 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
   render() {
     var classes = forwardingClassNameBuilder()
       ..add('todo-list__item')
-      ..add(props.todo.isCompleted ? 'todo--complete' : 'todo--incomplete')
-      ..add('todo-expanded', props.isExpanded);
+      ..add(props.todo.isCompleted ? 'todo-list__item--complete' : 'todo-list__item--incomplete')
+      ..add('todo-list__item--expanded', props.isExpanded);
 
     return (ListGroupItem()..className = classes.toClassName())(
       Block()(

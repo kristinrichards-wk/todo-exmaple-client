@@ -28,7 +28,7 @@ class TodoListFilterComponent extends UiComponent<TodoListFilterProps> {
 
   @override
   render() {
-    return (Dom.div()..className = 'todo-list-filter')(
+    return (Dom.div()..className = 'todo-list__filter')(
       (ToggleInputGroup()
         ..groupLabel = 'Todo List Filters'
         ..hideGroupLabel = true)(

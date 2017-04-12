@@ -72,12 +72,12 @@ $max-width: 600px;
   }
 }
 
-.todo-list-filter .checkbox {
+.todo-list__filter .checkbox {
   width: 100%;
 }
 
-@media all and (min-width: $max-width) {
-  .todo-list-filter .checkbox {
+@include breakpoint('screen' $max-width) {
+  .todo-list__filter .checkbox {
     display: inline-block;
     margin: 0 1rem;
     width: auto;
