@@ -10,18 +10,18 @@ $max-width: 600px;
   margin-bottom: 0 !important;
 }
 
-.todo {
+.todo-list__item {
   background-color: #fff;
 
   // Override list-group-item padding and let
   // the child BlockContents manage it
   padding: 0 !important;
 
-  &:hover .todo__controls {
+  &:hover .todo-list__item__controls {
     visibility: visible;
   }
 
-  &--expanded .todo__title {
+  &--expanded .todo-list__item__title {
     font-weight: bold;
   }
 
@@ -31,11 +31,11 @@ $max-width: 600px;
   }
 }
 
-.todo__controls {
+.todo-list__item__controls {
   visibility: hidden;
 }
 
-.todo__title {
+.todo-list__item__title {
   cursor: pointer;
 
   .label {
@@ -46,19 +46,19 @@ $max-width: 600px;
   }
 }
 
-.todo__notes {
+.todo-list__item__notes {
   color: #8a8a8a;
   margin-top: 12px;
 }
 
-.todo__edit-btn,
-.todo__privacy-btn {
+.todo-list__item__edit-btn,
+.todo-list__item__privacy-btn {
   &:hover {
     color: #66cc00;
   }
 }
 
-.todo__delete-btn {
+.todo-list__item__delete-btn {
   &:hover {
     color: #ee2724;
   }

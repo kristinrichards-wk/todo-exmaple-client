@@ -7,50 +7,50 @@
   margin-bottom: 0 !important;
 }
 
-.todo {
+.todo-list__item {
   background-color: #fff;
   padding: 0 !important;
 }
 
-.todo:hover .todo__controls {
+.todo-list__item:hover .todo-list__item__controls {
   visibility: visible;
 }
 
-.todo--expanded .todo__title {
+.todo-list__item--expanded .todo-list__item__title {
   font-weight: bold;
 }
 
-.todo--complete {
+.todo-list__item--complete {
   background: none;
   color: #b2b2b2;
 }
 
-.todo__controls {
+.todo-list__item__controls {
   visibility: hidden;
 }
 
-.todo__title {
+.todo-list__item__title {
   cursor: pointer;
 }
 
-.todo__title .label {
+.todo-list__item__title .label {
   background-color: #f3f3f3;
   color: #b2b2b2;
   font-weight: normal;
   margin-left: 6px;
 }
 
-.todo__notes {
+.todo-list__item__notes {
   color: #8a8a8a;
   margin-top: 12px;
 }
 
-.todo__edit-btn:hover,
-.todo__privacy-btn:hover {
+.todo-list__item__edit-btn:hover,
+.todo-list__item__privacy-btn:hover {
   color: #66cc00;
 }
 
-.todo__delete-btn:hover {
+.todo-list__item__delete-btn:hover {
   color: #ee2724;
 }
 
