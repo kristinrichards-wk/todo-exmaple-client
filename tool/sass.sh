@@ -2,4 +2,4 @@
 
 set -e
 
-sassc -t expanded lib/styles.scss lib/styles.css
+sassc -m -t expanded lib/styles.scss lib/styles.css
