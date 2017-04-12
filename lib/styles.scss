@@ -18,9 +18,8 @@ $max-width: 600px;
 .todo-list__item {
   background-color: #fff;
 
-  // Override list-group-item padding and let
-  // the child BlockContents manage it
-  padding: 0 !important;
+  // Make this behave like a grid-block
+  @include grid-block($scroll: false, $allow-nested-vblocks: false);
 
   //TODO would be more accessible if the item controls received a CSS class and/or an aria-hidden value when hovered, and change the visibility based on that
   #{$link-hover-focus} {
@@ -37,6 +36,11 @@ $max-width: 600px;
     background: none;
     color: $zc-gray-70;
   }
+}
+
+.todo-list__item__contents {
+  // Center this item vertically
+  @include align-self(center);
 }
 
 .todo-list__item__controls {

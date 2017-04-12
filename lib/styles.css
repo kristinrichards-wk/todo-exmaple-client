@@ -9,7 +9,20 @@
 
 .todo-list__item {
   background-color: #fff;
-  padding: 0 !important;
+  position: relative;
+  backface-visibility: hidden;
+  display: -ms-flexbox ;
+  display: flex ;
+  -ms-flex: 1 1 0% ;
+  flex: 1 1 0% ;
+  -ms-flex-direction: row ;
+  flex-direction: row ;
+  -ms-flex-wrap: nowrap ;
+  flex-wrap: nowrap ;
+  -ms-flex-align: stretch ;
+  align-items: stretch ;
+  -ms-flex-pack: start ;
+  justify-content: flex-start ;
 }
 
 .todo-list__item:hover .todo-list__item__controls, .todo-list__item:focus .todo-list__item__controls {
@@ -23,6 +36,11 @@
 .todo-list__item--complete {
   background: none;
   color: #b2b2b2;
+}
+
+.todo-list__item__contents {
+  -ms-flex-item-align: center ;
+  align-self: center ;
 }
 
 .todo-list__item__controls {

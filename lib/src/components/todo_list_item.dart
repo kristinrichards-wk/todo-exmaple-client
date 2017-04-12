@@ -43,16 +43,15 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
       ..add('todo-list__item--expanded', props.isExpanded);
 
     return (ListGroupItem()..className = classes.toClassName())(
-      Block()(
-        _renderCompletion(),
-        _renderContents(),
-        _renderControls(),
-      ),
+      _renderCompletion(),
+      _renderContents(),
+      _renderControls(),
     );
   }
 
   ReactElement _renderCompletion() {
     return (BlockContent()
+      ..collapse = BlockCollapse.ALL
       ..className = 'todo-list__item__completion-indicator'
       ..shrink = true)(
       (Button()
@@ -68,7 +67,9 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
   }
 
   ReactElement _renderContents() {
-    return (BlockContent()..className = 'todo-list__item__contents')(
+    return (BlockContent()
+      ..collapse = BlockCollapse.VERTICAL
+      ..className = 'todo-list__item__contents')(
       (Dom.div()
         ..className = 'todo-list__item__title'
         ..onClick = _toggleExpansion)(
@@ -98,6 +99,7 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
     }
 
     return (BlockContent()
+      ..collapse = BlockCollapse.ALL
       ..shrink = true
       ..className = 'todo-list__item__controls')(
       (ButtonToolbar()
