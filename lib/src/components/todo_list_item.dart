@@ -1,5 +1,6 @@
 library todo_client.src.module.components.todo_list_item;
 
+import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart';
 import 'package:todo_sdk/todo_sdk.dart' show Todo;
 import 'package:web_skin_dart/ui_components.dart';
@@ -120,25 +121,25 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
 
   bool get _hasNotes => props.todo.notes != null && props.todo.notes.isNotEmpty;
 
-  void _delete(e) {
+  void _delete(_) {
     props.actions.deleteTodo(props.todo);
   }
 
-  void _edit(e) {
+  void _edit(_) {
     props.actions.editTodo(props.todo);
   }
 
-  void _togglePrivacy(e) {
+  void _togglePrivacy(_) {
     props.actions.updateTodo(props.todo.change(isPublic: !props.todo.isPublic));
   }
 
-  void _toggleExpansion(e) {
-    e.stopPropagation();
+  void _toggleExpansion(react.SyntheticMouseEvent event) {
+    event.stopPropagation();
     props.actions.selectTodo(props.isExpanded ? null : props.todo);
   }
 
-  void _toggleCompletion(e) {
-    e.stopPropagation();
+  void _toggleCompletion(react.SyntheticMouseEvent event) {
+    event.stopPropagation();
     props.actions.updateTodo(props.todo.change(isCompleted: !props.todo.isCompleted));
   }
 }
