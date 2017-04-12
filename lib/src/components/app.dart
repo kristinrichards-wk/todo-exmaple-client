@@ -31,9 +31,7 @@ class TodoAppComponent extends FluxUiComponent<TodoAppProps> {
     var elements = [];
 
     // Create To-do Input
-    elements.add((Block()
-      ..content = true
-      ..isNested = true
+    elements.add((BlockContent()
       ..key = 'create'
       ..shrink = true)(
       (CreateTodoInput()..actions = props.actions)(),
@@ -41,10 +39,8 @@ class TodoAppComponent extends FluxUiComponent<TodoAppProps> {
 
     // Filter
     if (props.withFilter) {
-      elements.add((Block()
+      elements.add((BlockContent()
         ..collapse = BlockCollapse.VERTICAL
-        ..content = true
-        ..isNested = true
         ..key = 'filter'
         ..shrink = true)(
         (TodoListFilter()
@@ -58,24 +54,19 @@ class TodoAppComponent extends FluxUiComponent<TodoAppProps> {
 
     // To-do List
     elements.add((Block()
-      ..gutter = BlockGutter.ALL
-      ..isNested = true
-      ..key = 'todos')(
-      (TodoList()
-        ..actions = props.actions
-        ..activeTodo = props.store.activeTodo
-        ..currentUserId = props.currentUserId
-        ..todos = props.store.todos)(),
+      ..key = 'todos'
+      // Add a top gutter and collapse the content's top padding
+      // so that there's still space above when the content is scrolled.
+      ..gutter = BlockGutter.TOP)(
+      (BlockContent()..collapse = BlockCollapse.TOP)(
+        (TodoList()
+          ..actions = props.actions
+          ..activeTodo = props.store.activeTodo
+          ..currentUserId = props.currentUserId
+          ..todos = props.store.todos)(),
+      ),
     ));
 
-    return (Block()
-      ..align = BlockAlign.CENTER
-      ..size = 12)(
-      (VBlock()
-        ..className = 'todo-app'
-        ..isNested = true
-        ..size = 12
-        ..shrink = true)(elements),
-    );
+    return (VBlock()..className = 'todo-app')(elements);
   }
 }

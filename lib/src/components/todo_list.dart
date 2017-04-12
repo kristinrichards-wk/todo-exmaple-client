@@ -29,8 +29,8 @@ class TodoListComponent extends UiComponent<TodoListProps> {
   @override
   render() {
     if (props.todos.isEmpty) {
-      return (Block()..className = 'todo-list')(
-        (Dom.p()..className = 'todo-list-empty')(
+      return (Dom.div()..className = 'todo-list')(
+        (Dom.div()..className = 'text-muted')(
           'No todos to show. Create one or adjust the filters.',
         ),
       );
@@ -43,7 +43,10 @@ class TodoListComponent extends UiComponent<TodoListProps> {
             ..key = todo.id
             ..todo = todo)())
           .toList();
-      return (VBlock()..className = 'todo-list')(todoItems);
+      return (ListGroup()
+        ..className = 'todo-list'
+        ..isBordered = true
+        ..size = ListGroupSize.LARGE)(todoItems);
     }
   }
 }
