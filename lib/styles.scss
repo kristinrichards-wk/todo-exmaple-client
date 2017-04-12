@@ -1,7 +1,12 @@
+// -------------------------------------
+//   Web Skin API
+// -------------------------------------
+@import 'packages/web_skin/sass/core/api';
+
 $max-width: 600px;
 
 .todo-app {
-  max-width: $max-width;
+  max-width: to-rem($max-width);
   margin: 0 auto;
 }
 
@@ -17,8 +22,11 @@ $max-width: 600px;
   // the child BlockContents manage it
   padding: 0 !important;
 
-  &:hover .todo-list__item__controls {
-    visibility: visible;
+  //TODO would be more accessible if the item controls received a CSS class and/or an aria-hidden value when hovered, and change the visibility based on that
+  #{$link-hover-focus} {
+    .todo-list__item__controls {
+      visibility: visible;
+    }
   }
 
   &--expanded .todo-list__item__title {
@@ -27,7 +35,7 @@ $max-width: 600px;
 
   &--complete {
     background: none;
-    color: #b2b2b2;
+    color: $zc-gray-70;
   }
 }
 
@@ -39,28 +47,28 @@ $max-width: 600px;
   cursor: pointer;
 
   .label {
-    background-color: #f3f3f3;
-    color: #b2b2b2;
+    background-color: $zc-gray-20;
+    color: $zc-gray-70;
     font-weight: normal;
-    margin-left: 6px;
+    margin-left: .6rem;
   }
 }
 
 .todo-list__item__notes {
-  color: #8a8a8a;
-  margin-top: 12px;
+  color: $zc-gray-80;
+  margin-top: to-rem(get-deep($list-group-item-config, 'padding.lg.top'));
 }
 
 .todo-list__item__edit-btn,
 .todo-list__item__privacy-btn {
-  &:hover {
-    color: #66cc00;
+  #{$link-hover-focus} {
+    color: $zc-green;
   }
 }
 
 .todo-list__item__delete-btn {
-  &:hover {
-    color: #ee2724;
+  #{$link-hover-focus} {
+    color: $zc-red;
   }
 }
 
