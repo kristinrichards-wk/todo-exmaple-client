@@ -2,26 +2,27 @@ name: todo_client
 version: 0.0.1
 
 dependencies:
+  messaging_sdk:
+    hosted:
+      name: messaging_sdk
+      url: https://pub.workiva.org
+    version: ^2.7.1
   todo_sdk:
     git:
       url: git@github.com:Workiva/todo-example-sdk.git
+      ref: 5351948d37bb59e71bd97b98fe7371eef4f37d6e
   truss:
     hosted:
       name: truss
       url: https://pub.workiva.org
-    version: "^3.8.3"
-  w_flux: "^2.0.0"
-  w_module: "^1.2.1"
-  w_oauth2:
-    hosted:
-      name: w_oauth2
-      url: https://pub.workiva.org
-    version: "^1.2.0"
+    version: ^3.8.3
+  w_flux: ^2.6.1
+  w_module: ^1.2.1
   w_session:
      hosted:
        name: w_session
        url: https://pub.workiva.org
-     version: "^4.5.4"
+     version: ^5.15.0
   web_skin_dart:
     hosted:
       name: web_skin_dart
@@ -29,23 +30,12 @@ dependencies:
     version: ^1.21.0
 
 dev_dependencies:
-  browser: "^0.10.0"
-  dart_dev: "^1.0.1"
-  dart_style: "^1.0.3"
-  test: "^0.12.0"
+  browser: ^0.10.0
+  dart_dev: ^1.7.2
+  dart_style: ^1.0.3
+  test: ^0.12.20
+
 transformers:
   - web_skin_dart
   - test/pub_serve:
       $include: test/**_test{.*,}.dart
-
-dependency_overrides:
-  w_session:
-     hosted:
-       name: w_session
-       url: https://pub.workiva.org
-     version: "^5.15.0"
-  w_oauth2:
-    hosted:
-      name: w_oauth2
-      url: https://pub.workiva.org
-    version: "^2.7.0"
