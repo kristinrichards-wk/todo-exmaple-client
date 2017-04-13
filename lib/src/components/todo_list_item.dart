@@ -19,21 +19,13 @@ class TodoListItemProps extends UiProps {
   Todo todo;
 }
 
-@State()
-class TodoListItemState extends UiState {
-  bool isEditing;
-}
-
 @Component()
-class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoListItemState> {
+class TodoListItemComponent extends UiComponent<TodoListItemProps> {
   @override
   Map getDefaultProps() => (newProps()
     ..currentUserId = ''
     ..isExpanded = false
     ..todo = null);
-
-  @override
-  Map getInitialState() => (newState()..isEditing = false);
 
   @override
   render() {
