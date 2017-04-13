@@ -114,10 +114,12 @@ $transition-duration: .2s;
 
 .fab-toolbar--primary {
   background: $zc-green;
-  color: white;
 
   &.fab-toolbar--open {
     background: white;
-    color: $text-color;
+  }
+
+  .fab-toolbar__content {
+    color: white;
   }
 }

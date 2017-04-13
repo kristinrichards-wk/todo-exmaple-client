@@ -149,12 +149,14 @@
 
 .fab-toolbar--primary {
   background: #66cc00;
-  color: white;
 }
 
 .fab-toolbar--primary.fab-toolbar--open {
   background: white;
-  color: #595959;
+}
+
+.fab-toolbar--primary .fab-toolbar__content {
+  color: white;
 }
 
 /*# sourceMappingURL=styles.css.map */
