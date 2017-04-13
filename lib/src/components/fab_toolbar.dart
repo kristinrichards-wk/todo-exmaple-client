@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:react/react_client/react_interop.dart';
 import 'package:web_skin_dart/ui_components.dart';
 import 'package:web_skin_dart/ui_core.dart';
@@ -16,8 +18,23 @@ class FabToolbarState extends UiState {
 }
 
 @Component()
-class FabToolbarComponent extends UiStatefulComponent<FabToolbarProps, FabToolbarState> {
-  getInitialState() => newState()..isOpen = false;
+class FabToolbarComponent extends UiStatefulComponent<FabToolbarProps, FabToolbarState> with RootCloseHandlersMixin {
+  Map getInitialState() => newState()..isOpen = false;
+
+  @override
+  void componentWillUpdate(Map nextProps, Map nextState) {
+    super.componentWillUpdate(nextProps, nextState);
+
+    var tNextState = typedStateFactory(nextState);
+    tNextState.isOpen ? bindRootCloseHandlers() : unbindRootCloseHandlers();
+  }
+
+  @override
+  void componentWillUnmount() {
+    super.componentWillUnmount();
+
+    unbindRootCloseHandlers();
+  }
 
   @override
   render() {
@@ -65,4 +82,29 @@ class FabToolbarComponent extends UiStatefulComponent<FabToolbarProps, FabToolba
   }
 
   void toggle() => setState(newState()..isOpen = !state.isOpen);
+
+  void close() => setState(newState()..isOpen = false);
+
+  void open() => setState(newState()..isOpen = true);
+
+  @override
+  void handleCapturingDocumentFocus(FocusEvent event) {
+    if (event.target is! Element || !findDomNode(this).contains(event.target)) {
+      close();
+    }
+  }
+
+  @override
+  void handleDocumentClick(MouseEvent event) {
+    if (event.target is Element && !findDomNode(this).contains(event.target)) {
+      close();
+    }
+  }
+
+  @override
+  void handleDocumentKeyDown(KeyboardEvent event) {
+    if (event.keyCode == KeyCode.ESC) {
+      close();
+    }
+  }
 }
