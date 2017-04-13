@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'package:react/react_client/react_interop.dart';
 import 'package:web_skin_dart/ui_components.dart';
 import 'package:web_skin_dart/ui_core.dart';
@@ -7,20 +6,24 @@ import 'package:web_skin_dart/ui_core.dart';
 UiFactory<FabToolbarProps> FabToolbar;
 
 @Props()
-class FabToolbarProps extends AbstractTransitionProps {
+class FabToolbarProps extends UiProps {
   dynamic buttonContent;
 }
 
 @State()
-class FabToolbarState extends AbstractTransitionState {}
+class FabToolbarState extends UiState {
+  bool isOpen;
+}
 
 @Component()
-class FabToolbarComponent extends AbstractTransitionComponent<FabToolbarProps, FabToolbarState> {
+class FabToolbarComponent extends UiStatefulComponent<FabToolbarProps, FabToolbarState> {
+  getInitialState() => newState()..isOpen = false;
+
   @override
   render() {
     var classes = forwardingClassNameBuilder()
       ..add('fab-toolbar fab-toolbar--primary')
-      ..add('fab-toolbar--open', isOrWillBeShown)
+      ..add('fab-toolbar--open', state.isOpen)
       ..blacklist('btn');
 
     return (Button()
@@ -30,18 +33,14 @@ class FabToolbarComponent extends AbstractTransitionComponent<FabToolbarProps, F
       ..onClick = (_) {
         toggle();
       })(
-      state.transitionPhase == TransitionPhase.SHOWN
-          ? null
-          : (Dom.div()..className = 'fab-toolbar__content')(props.buttonContent),
-      state.transitionPhase == TransitionPhase.HIDDEN
-          ? null
-          : (Dom.div()..className = 'fab-toolbar--open__content')(
-              (Block()
-                ..scroll = true
-                ..align = BlockAlign.CENTER)(
-                _renderToolbarItems(),
-              ),
-            ),
+      (Dom.div()..className = 'fab-toolbar__content')(props.buttonContent),
+      (Dom.div()..className = 'fab-toolbar--open__content')(
+        (Block()
+          ..scroll = true
+          ..align = BlockAlign.CENTER)(
+          _renderToolbarItems(),
+        ),
+      ),
     );
   }
 
@@ -65,9 +64,5 @@ class FabToolbarComponent extends AbstractTransitionComponent<FabToolbarProps, F
     }
   }
 
-  @override
-  Element getTransitionDomNode() => findDomNode(this);
-
-  @override
-  bool get initiallyShown => false;
+  void toggle() => setState(newState()..isOpen = !state.isOpen);
 }
