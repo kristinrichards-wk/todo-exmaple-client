@@ -85,4 +85,76 @@
   }
 }
 
+.fab-toolbar {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 3rem;
+  width: 5.6rem;
+  height: 5.6rem;
+  border-radius: 50%;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+  transition-property: box-shadow, width, height, margin, border-radius, background-color;
+  box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
+  border: transparent solid .1rem;
+  overflow: hidden;
+}
+
+.fab-toolbar:hover, .fab-toolbar:focus {
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.23), 0 3px 12px rgba(0, 0, 0, 0.16);
+}
+
+.fab-toolbar:focus {
+  border: #33a9ff solid .1rem;
+  outline: none;
+}
+
+.fab-toolbar__content,
+.fab-toolbar--open__content {
+  z-index: 1;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fab-toolbar--open__content {
+  opacity: 0;
+  z-index: 0;
+}
+
+.fab-toolbar--open {
+  width: 100%;
+  height: 8rem;
+  border-radius: 0;
+  margin: 0;
+}
+
+.fab-toolbar--open .fab-toolbar__content {
+  opacity: 0;
+  z-index: 0;
+}
+
+.fab-toolbar--open .fab-toolbar--open__content {
+  opacity: 1;
+  z-index: 1;
+}
+
+.fab-toolbar--primary {
+  background: #66cc00;
+  color: white;
+}
+
+.fab-toolbar--primary.fab-toolbar--open {
+  background: white;
+  color: #595959;
+}
+
 /*# sourceMappingURL=styles.css.map */

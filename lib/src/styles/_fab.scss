@@ -1,0 +1,123 @@
+// From https://css-tricks.com/snippets/sass/material-shadows-mixin/
+
+
+/// Computes a top-shadow for a card effect.
+/// @param {Number} $depth - depth level
+/// @return {List}
+@function top-shadow($depth) {
+  $primary-offset: nth(1.5 3 10 14 19, $depth) * 1px;
+  $blur: nth(1.5 3 10 14 19, $depth) * 4px;
+  $color: rgba(black, nth(.12 .16 .19 .25 .30, $depth));
+
+  @return 0 $primary-offset $blur $color;
+}
+
+/// Computes a bottom-shadow for a card effect.
+/// @param {Number} $depth - depth level
+/// @return {List}
+@function bottom-shadow($depth) {
+  $primary-offset: nth(1.5 3 6 10 15, $depth) * 1px;
+  $blur: nth(1 3 3 5 6, $depth) * 4px;
+  $color: rgba(black, nth(.24 .23 .23 .22 .22, $depth));
+
+  @return 0 $primary-offset $blur $color;
+}
+
+/// Gives a card depth effect.
+/// @param {Number} $depth - depth level (between 1 and 5)
+/// @link http://www.google.com/design/spec/layout/layout-principles.html#layout-principles-dimensionality Google Design
+/// @requires {function} top-shadow
+/// @requires {function} bottom-shadow
+@mixin material-card($depth) {
+  @if $depth < 1 {
+    box-shadow: none;
+  } @else if $depth > 5 {
+    @warn "Invalid $depth `#{$depth}` for mixin `card`.";
+  } @else {
+    box-shadow: bottom-shadow($depth), top-shadow($depth);
+  }
+}
+
+
+$fab-margin: 3rem;
+$fab-size: 5.6rem;
+$fab-bar-height: 8rem;
+$transition-duration: .2s;
+
+.fab-toolbar {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: $fab-margin;
+  width: $fab-size;
+  height: $fab-size;
+  border-radius: 50%;
+
+  transition-duration: $transition-duration;
+  transition-timing-function: ease;
+  transition-property: box-shadow, width, height, margin, border-radius, background-color;
+
+  @include material-card(1);
+
+  &:hover,
+  &:focus {
+    @include material-card(2);
+  }
+
+  border: transparent solid .1rem;
+  &:focus {
+    border: #33a9ff solid .1rem;
+    outline: none;
+  }
+
+  overflow: hidden;
+}
+
+.fab-toolbar__content,
+.fab-toolbar--open__content {
+  z-index: 1;
+  opacity: 1;
+  transition: opacity $transition-duration ease;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fab-toolbar--open__content {
+  opacity: 0;
+  z-index: 0;
+}
+
+.fab-toolbar--open {
+  width: 100%;
+  height: $fab-bar-height;
+  border-radius: 0;
+  margin: 0;
+
+  .fab-toolbar__content {
+    opacity: 0;
+    z-index: 0;
+  }
+
+  .fab-toolbar--open__content {
+    opacity: 1;
+    z-index: 1;
+  }
+}
+
+.fab-toolbar--primary {
+  background: $zc-green;
+  color: white;
+
+  &.fab-toolbar--open {
+    background: white;
+    color: $text-color;
+  }
+}
