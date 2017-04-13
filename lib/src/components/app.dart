@@ -28,20 +28,18 @@ class TodoAppComponent extends FluxUiComponent<TodoAppProps> {
 
   @override
   render() {
-    var elements = [];
+    var createTodoInput;
+    var todoListFilter;
+    var todoList;
 
-    // Create To-do Input
-    elements.add((BlockContent()
-      ..key = 'create'
+    createTodoInput = (BlockContent()
       ..shrink = true)(
       (CreateTodoInput()..actions = props.actions)(),
-    ));
+    );
 
-    // Filter
     if (props.withFilter) {
-      elements.add((BlockContent()
+      todoListFilter = (BlockContent()
         ..collapse = BlockCollapse.VERTICAL
-        ..key = 'filter'
         ..shrink = true)(
         (TodoListFilter()
           ..actions = props.actions
@@ -49,12 +47,10 @@ class TodoAppComponent extends FluxUiComponent<TodoAppProps> {
           ..includeIncomplete = props.store.includeIncomplete
           ..includePrivate = props.store.includePrivate
           ..includePublic = props.store.includePublic)(),
-      ));
+      );
     }
 
-    // To-do List
-    elements.add((Block()
-      ..key = 'todos'
+    todoList = (Block()
       // Add a top gutter and collapse the content's top padding
       // so that there's still space above when the content is scrolled.
       ..gutter = BlockGutter.TOP)(
@@ -68,8 +64,12 @@ class TodoAppComponent extends FluxUiComponent<TodoAppProps> {
       (TodoListFab()
         ..actions = props.actions
         ..store = props.store)(),
-    ));
+    );
 
-    return (VBlock()..className = 'todo-app')(elements);
+    return (VBlock()..className = 'todo-app')(
+      createTodoInput,
+      todoListFilter,
+      todoList,
+    );
   }
 }
