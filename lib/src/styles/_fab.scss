@@ -1,6 +1,5 @@
 // From https://css-tricks.com/snippets/sass/material-shadows-mixin/
 
-
 /// Computes a top-shadow for a card effect.
 /// @param {Number} $depth - depth level
 /// @return {List}
@@ -39,21 +38,23 @@
 }
 
 
-$fab-margin: 3rem;
-$fab-size: 5.6rem;
-$fab-bar-height: 8rem;
-$transition-duration: .2s;
+$fab-toolbar-margin: 3rem;
+$fab-toolbar-diameter: 5.6rem;
+$fab-toolbar-transition-duration: .2s;
+
+$fab-toolbar-open-margin: 0;
+$fab-toolbar-open-height: 8rem;
 
 .fab-toolbar {
   position: absolute;
   right: 0;
   bottom: 0;
-  margin: $fab-margin;
-  width: $fab-size;
-  height: $fab-size;
+  margin: $fab-toolbar-margin;
+  width: $fab-toolbar-diameter;
+  height: $fab-toolbar-diameter;
   border-radius: 50%;
 
-  transition-duration: $transition-duration;
+  transition-duration: $fab-toolbar-transition-duration;
   transition-timing-function: ease;
   transition-property: box-shadow, width, height, margin, border-radius, background-color;
 
@@ -67,17 +68,28 @@ $transition-duration: .2s;
   border: transparent solid .1rem;
   &:focus {
     border: #33a9ff solid .1rem;
+    // override default outline
     outline: none;
   }
 
   overflow: hidden;
 }
 
+
+// Toolbar transitioning and content
+//
+// 1. Transition the appearance of the content:
+//   1a. Crossfade the default content and the open content,
+//   1b. Bring the active content to the front so that the
+//       user can interact with it
+// 2. Transition the shape of the toolbar itself
+
 .fab-toolbar__content,
 .fab-toolbar--open__content {
-  z-index: 1;
-  opacity: 1;
-  transition: opacity $transition-duration ease;
+  transition: opacity $fab-toolbar-transition-duration ease; // [1a]
+
+  opacity: 1; // [1a]
+  z-index: 1; // [1b]
 
   position: absolute;
   top: 0;
@@ -91,26 +103,29 @@ $transition-duration: .2s;
 }
 
 .fab-toolbar--open__content {
-  opacity: 0;
-  z-index: 0;
+  opacity: 0; // [1a]
+  z-index: 0; // [1b]
 }
 
 .fab-toolbar--open {
+  // [2]
   width: 100%;
-  height: $fab-bar-height;
+  height: $fab-toolbar-open-height;
+  margin: $fab-toolbar-open-margin;
   border-radius: 0;
-  margin: 0;
 
   .fab-toolbar__content {
-    opacity: 0;
-    z-index: 0;
+    opacity: 0; // [1a]
+    z-index: 0; // [1b]
   }
 
   .fab-toolbar--open__content {
-    opacity: 1;
-    z-index: 1;
+    opacity: 1; // [1a]
+    z-index: 1; // [1b]
   }
 }
+
+// Skinning
 
 .fab-toolbar--primary {
   background: $zc-green;
