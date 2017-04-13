@@ -18,7 +18,9 @@ class FabToolbarState extends UiState {
 }
 
 @Component()
-class FabToolbarComponent extends UiStatefulComponent<FabToolbarProps, FabToolbarState> with RootCloseHandlersMixin {
+class FabToolbarComponent extends UiStatefulComponent<FabToolbarProps, FabToolbarState>
+    with RootCloseHandlersMixin {
+  @override
   Map getInitialState() => newState()..isOpen = false;
 
   @override
