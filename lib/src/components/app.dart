@@ -32,8 +32,7 @@ class TodoAppComponent extends FluxUiComponent<TodoAppProps> {
     var todoListFilter;
     var todoList;
 
-    createTodoInput = (BlockContent()
-      ..shrink = true)(
+    createTodoInput = (BlockContent()..shrink = true)(
       (CreateTodoInput()..actions = props.actions)(),
     );
 
