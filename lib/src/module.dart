@@ -29,5 +29,6 @@ class TodoModule extends Module {
     });
   }
 
+  @override
   TodoComponents get components => _components;
 }

@@ -15,6 +15,7 @@ class TodoListFilterSidebarProps extends FluxUiProps<TodoActions, TodoStore> {}
 
 @Component()
 class TodoListFilterSidebarComponent extends FluxUiComponent<TodoListFilterSidebarProps> {
+  @override
   render() {
     return WorkspacesMenu()(
       (WorkspacesMenuItem()

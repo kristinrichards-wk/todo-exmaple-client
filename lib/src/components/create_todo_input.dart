@@ -27,6 +27,7 @@ class CreateTodoInputComponent
   @override
   getInitialState() => (newState()..newTodoDescription = '');
 
+  @override
   render() {
     return (Form()
       ..className = 'create-todo-input'

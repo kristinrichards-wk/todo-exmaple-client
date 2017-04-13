@@ -36,7 +36,7 @@ class EditTodoModalComponent extends UiStatefulComponent<EditTodoModalProps, Edi
   render() {
     return (Modal()
       ..addProps(copyUnconsumedProps())
-      ..title = 'Edit Todo')(
+      ..header = 'Edit Todo')(
       (Dom.div()..className = 'modal-body')(
         FormLayout()(
           (TextInput()
