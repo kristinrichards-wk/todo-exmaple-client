@@ -25,8 +25,9 @@ class TodoAppComponent extends FluxUiComponent<TodoAppProps> {
 
   @override
   render() {
-    return (Dom.div()..className = 'todo-app')(
-      'Hello world!',
+    return (VBlock()..className = 'todo-app')(
+      (BlockContent()..shrink = true)('<Create a todo>'),
+      BlockContent()('<List of todos> ' * 10000),
     );
   }
 }
