@@ -7,6 +7,7 @@ dependencies:
       name: messaging_sdk
       url: https://pub.workiva.org
     version: ^2.7.1
+  meta: ^1.0.5
   todo_sdk:
     git:
       url: git@github.com:Workiva/todo-example-sdk.git

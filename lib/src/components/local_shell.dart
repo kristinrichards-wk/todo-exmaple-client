@@ -11,6 +11,7 @@ class TodoLocalShellProps extends UiProps {}
 
 @Component()
 class TodoLocalShellComponent extends UiComponent<TodoLocalShellProps> {
+  @override
   render() {
     return GridFrame()(
       VBlock()(

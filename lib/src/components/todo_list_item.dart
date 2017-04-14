@@ -19,21 +19,13 @@ class TodoListItemProps extends UiProps {
   Todo todo;
 }
 
-@State()
-class TodoListItemState extends UiState {
-  bool isEditing;
-}
-
 @Component()
-class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoListItemState> {
+class TodoListItemComponent extends UiComponent<TodoListItemProps> {
   @override
   Map getDefaultProps() => (newProps()
     ..currentUserId = ''
     ..isExpanded = false
     ..todo = null);
-
-  @override
-  Map getInitialState() => (newState()..isEditing = false);
 
   @override
   render() {
@@ -43,18 +35,19 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
       ..add('todo-list__item--expanded', props.isExpanded);
 
     return (ListGroupItem()..className = classes.toClassName())(
-      Block()(
-        _renderCompletion(),
-        _renderContents(),
-        _renderControls(),
-      ),
+      _renderCompletion(),
+      _renderContents(),
+      _renderControls(),
     );
   }
 
   ReactElement _renderCompletion() {
     return (BlockContent()
       ..className = 'todo-list__item__completion-indicator'
-      ..shrink = true)(
+      ..collapse = BlockCollapse.ALL
+      ..shrink = true
+      // Prevent clipping of Button focus border
+      ..overflow = true)(
       (Button()
         ..className = 'todo-check'
         ..isDisabled = !_canModify
@@ -68,7 +61,9 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
   }
 
   ReactElement _renderContents() {
-    return (BlockContent()..className = 'todo-list__item__contents')(
+    return (BlockContent()
+      ..className = 'todo-list__item__contents'
+      ..collapse = BlockCollapse.VERTICAL)(
       (Dom.div()
         ..className = 'todo-list__item__title'
         ..onClick = _toggleExpansion)(
@@ -98,12 +93,15 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
     }
 
     return (BlockContent()
+      ..className = 'todo-list__item__controls'
+      ..collapse = BlockCollapse.ALL
       ..shrink = true
-      ..className = 'todo-list__item__controls')(
+      // Prevent clipping of Button focus border
+      ..overflow = true)(
       (ButtonToolbar()
-        ..onClick = (e) {
+        ..onClick = (react.SyntheticMouseEvent event) {
           // Prevent clicks from expanding/collapsing the item
-          e.stopPropagation();
+          event.stopPropagation();
         })(
         _renderControl('todo-list__item__edit-btn', _edit, IconGlyph.PENCIL),
         props.todo.isCompleted

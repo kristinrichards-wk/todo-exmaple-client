@@ -22,11 +22,29 @@ class TodoStore extends Store {
 
     triggerOnAction(_actions.selectTodo, _selectTodo);
 
-    triggerOnAction(_actions.toggleIncludeComplete, (_) => _includeComplete = !_includeComplete);
-    triggerOnAction(
-        _actions.toggleIncludeIncomplete, (_) => _includeIncomplete = !_includeIncomplete);
-    triggerOnAction(_actions.toggleIncludePrivate, (_) => _includePrivate = !_includePrivate);
-    triggerOnAction(_actions.toggleIncludePublic, (_) => _includePublic = !_includePublic);
+    triggerOnAction(_actions.toggleIncludeComplete, (_) {
+      _includeComplete = !_includeComplete;
+      // One of these should be true at any given time, or nothing will be displayed.
+      if (!_includeComplete) _includeIncomplete = true;
+    });
+
+    triggerOnAction(_actions.toggleIncludeIncomplete, (_) {
+      _includeIncomplete = !_includeIncomplete;
+      // One of these should be true at any given time, or nothing will be displayed.
+      if (!_includeIncomplete) _includeComplete = true;
+    });
+
+    triggerOnAction(_actions.toggleIncludePrivate, (_) {
+      _includePrivate = !_includePrivate;
+      // One of these should be true at any given time, or nothing will be displayed.
+      if (!_includePrivate) _includePublic = true;
+    });
+
+    triggerOnAction(_actions.toggleIncludePublic, (_) {
+      _includePublic = !_includePublic;
+      // One of these should be true at any given time, or nothing will be displayed.
+      if (!_includePublic) _includePrivate = true;
+    });
 
     _sdk.todoCreated.listen((todo) {
       _todosMap[todo.id] = todo;

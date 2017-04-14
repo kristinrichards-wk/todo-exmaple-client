@@ -521,8 +521,8 @@ packages:
     version: "0.0.7"
   todo_sdk:
     description:
-      ref: update_sdk_2017_link
-      resolved-ref: d4ca0b09e283260ba282b7d618ef9ea043151647
+      ref: "5351948d37bb59e71bd97b98fe7371eef4f37d6e"
+      resolved-ref: "5351948d37bb59e71bd97b98fe7371eef4f37d6e"
       url: "git@github.com:Workiva/todo-example-sdk.git"
     source: git
     version: "0.0.1"

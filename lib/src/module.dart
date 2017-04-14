@@ -24,10 +24,10 @@ class TodoModule extends Module {
     _actions.editTodo.listen((todo) {
       _modalManager.show((EditTodoModal()
         ..actions = _actions
-        ..originalTodo = todo
-        ..modalManager = _modalManager)());
+        ..todo = todo)());
     });
   }
 
+  @override
   TodoComponents get components => _components;
 }

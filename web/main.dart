@@ -7,6 +7,9 @@ import 'package:todo_client/todo_client.dart' show TodoModule;
 import 'package:todo_sdk/todo_sdk.dart';
 import 'package:truss/truss.dart' show WorkspacesShell;
 import 'package:w_session/w_session.dart';
+// Added to enable React component debugging via $r in the Dartium dev tools.
+// ignore: unused_import
+import 'package:web_skin_dart/ui_core.dart' show $r;
 
 main() async {
   setClientConfiguration();

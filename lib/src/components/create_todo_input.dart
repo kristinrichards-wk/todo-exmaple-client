@@ -25,8 +25,9 @@ class CreateTodoInputState extends UiState {
 class CreateTodoInputComponent
     extends UiStatefulComponent<CreateTodoInputProps, CreateTodoInputState> {
   @override
-  getInitialState() => (newState()..newTodoDescription = '');
+  Map getInitialState() => (newState()..newTodoDescription = '');
 
+  @override
   render() {
     return (Form()
       ..className = 'create-todo-input'
@@ -42,10 +43,9 @@ class CreateTodoInputComponent
     );
   }
 
-  _createTodo(e) {
-    e.preventDefault();
-    Todo toCreate = new Todo(description: state.newTodoDescription);
-    props.actions.createTodo(toCreate);
+  void _createTodo(_) {
+    var todo = new Todo(description: state.newTodoDescription);
+    props.actions.createTodo(todo);
     setState(newState()..newTodoDescription = '');
   }
 

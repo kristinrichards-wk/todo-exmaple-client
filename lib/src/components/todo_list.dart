@@ -29,24 +29,21 @@ class TodoListComponent extends UiComponent<TodoListProps> {
   @override
   render() {
     if (props.todos.isEmpty) {
-      return (Dom.div()..className = 'todo-list')(
-        (Dom.div()..className = 'text-muted')(
-          'No todos to show. Create one or adjust the filters.',
-        ),
-      );
-    } else {
-      List todoItems = props.todos
-          .map((todo) => (TodoListItem()
-            ..actions = props.actions
-            ..currentUserId = props.currentUserId
-            ..isExpanded = props.activeTodo == todo
-            ..key = todo.id
-            ..todo = todo)())
-          .toList();
-      return (ListGroup()
-        ..className = 'todo-list'
-        ..isBordered = true
-        ..size = ListGroupSize.LARGE)(todoItems);
+      return (EmptyView()..header = 'No todos to show. Create one or adjust the filters.')();
     }
+
+    var todoItems = props.todos.map((todo) => (TodoListItem()
+      ..actions = props.actions
+      ..currentUserId = props.currentUserId
+      ..isExpanded = props.activeTodo == todo
+      ..key = todo.id
+      ..todo = todo)());
+
+    return (ListGroup()
+      ..className = 'todo-list'
+      ..isBordered = true
+      ..size = ListGroupSize.LARGE)(
+      todoItems,
+    );
   }
 }
