@@ -7,6 +7,7 @@ UiFactory<TodoListItemProps> TodoListItem;
 
 @Props()
 class TodoListItemProps extends UiProps {
+  Todo todo;
 }
 
 @Component()
@@ -16,5 +17,8 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
 
   @override
   render() {
+    return (ListGroupItem()..className = 'todo-list__item')(
+      props.todo.description,
+    );
   }
 }

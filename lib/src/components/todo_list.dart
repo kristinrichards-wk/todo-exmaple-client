@@ -32,11 +32,9 @@ class TodoListComponent extends UiComponent<TodoListProps> {
       );
     }
 
-    var todoItems = props.todos.map((todo) {
-      return (ListGroupItem()
-        ..className = 'todo-list__item'
-        ..key = todo.id)(todo.description);
-    });
+    var todoItems = props.todos.map((todo) => (TodoListItem()
+      ..todo = todo
+      ..key = todo.id)());
 
     return (ListGroup()
       ..className = 'todo-list'
