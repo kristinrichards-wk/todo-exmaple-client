@@ -18,6 +18,8 @@ class TodoAppProps extends FluxUiProps<TodoActions, TodoStore> {
 
 @Component()
 class TodoAppComponent extends FluxUiComponent<TodoAppProps> {
+  TextInputComponent _createInputRef;
+
   @override
   getDefaultProps() => (newProps()
     ..currentUserId = ''
@@ -26,8 +28,34 @@ class TodoAppComponent extends FluxUiComponent<TodoAppProps> {
   @override
   render() {
     return (VBlock()..className = 'todo-app')(
-      (BlockContent()..shrink = true)('<Create a todo>'),
-      BlockContent()('<List of todos> ' * 10000),
+      (BlockContent()..shrink = true)(
+        (Form()
+          ..onSubmit = (_) {
+            props.actions.createTodo(new Todo(description: _createInputRef.getValue()));
+          })(
+          (TextInput()
+            ..ref = (ref) {
+              _createInputRef = ref;
+            }
+            ..autoFocus = true
+            ..hideLabel = true
+            ..label = 'Create a Todo'
+            ..placeholder = 'What do you need to do?'
+            ..size = InputSize.LARGE)(),
+        ),
+      ),
+      BlockContent()(
+        (ListGroup()
+          ..className = 'todo-list'
+          ..isBordered = true
+          ..size = ListGroupSize.LARGE)(
+          props.store.todos.map((todo) {
+            return (ListGroupItem()
+              ..className = 'todo-list__item'
+              ..key = todo.id)(todo.description);
+          }),
+        ),
+      ),
     );
   }
 }
