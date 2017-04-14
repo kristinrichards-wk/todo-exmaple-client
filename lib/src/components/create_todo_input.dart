@@ -12,19 +12,41 @@ UiFactory<CreateTodoInputProps> CreateTodoInput;
 
 @Props()
 class CreateTodoInputProps extends UiProps {
+  TodoActions actions;
 }
 
 @State()
 class CreateTodoInputState extends UiState {
+  String newTodoDescription;
 }
 
 @Component()
 class CreateTodoInputComponent
     extends UiStatefulComponent<CreateTodoInputProps, CreateTodoInputState> {
   @override
-  Map getInitialState() => (newState());
+  Map getInitialState() => (newState()..newTodoDescription = '');
 
   @override
   render() {
+    return (Form()..onSubmit = _createTodo)(
+      (TextInput()
+        ..autoFocus = true
+        ..hideLabel = true
+        ..label = 'Create a Todo'
+        ..placeholder = 'What do you need to do?'
+        ..size = InputSize.LARGE
+        ..onChange = _updateNewTodoDescription
+        ..value = state.newTodoDescription)(),
+    );
+  }
+
+  void _createTodo(_) {
+    props.actions.createTodo(new Todo(description: state.newTodoDescription));
+    setState(newState()..newTodoDescription = '');
+  }
+
+  void _updateNewTodoDescription(react.SyntheticFormEvent event) {
+    TextInputElement input = event.target;
+    setState(newState()..newTodoDescription = input.value);
   }
 }

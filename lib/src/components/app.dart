@@ -1,6 +1,5 @@
 library todo_client.src.module.components.app;
 
-import 'package:todo_sdk/todo_sdk.dart' show Todo;
 import 'package:web_skin_dart/ui_components.dart';
 import 'package:web_skin_dart/ui_core.dart';
 
@@ -20,8 +19,6 @@ class TodoAppProps extends FluxUiProps<TodoActions, TodoStore> {
 
 @Component()
 class TodoAppComponent extends FluxUiComponent<TodoAppProps> {
-  TextInputComponent _createInputRef;
-
   @override
   getDefaultProps() => (newProps()
     ..currentUserId = ''
@@ -31,20 +28,7 @@ class TodoAppComponent extends FluxUiComponent<TodoAppProps> {
   render() {
     return (VBlock()..className = 'todo-app')(
       (BlockContent()..shrink = true)(
-        (Form()
-          ..onSubmit = (_) {
-            props.actions.createTodo(new Todo(description: _createInputRef.getValue()));
-          })(
-          (TextInput()
-            ..ref = (ref) {
-              _createInputRef = ref;
-            }
-            ..autoFocus = true
-            ..hideLabel = true
-            ..label = 'Create a Todo'
-            ..placeholder = 'What do you need to do?'
-            ..size = InputSize.LARGE)(),
-        ),
+        (CreateTodoInput()..actions = props.actions)(),
       ),
       (Block()
         // Add a top gutter and collapse the content's top padding
