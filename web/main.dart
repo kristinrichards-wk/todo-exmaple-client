@@ -40,8 +40,6 @@ main() async {
   var component = shell.components.content(
       // Main content area of the shell.
       content: mainContent,
-      // Populate the workspaces sidebar with a variant of the to-do filter.
-      menuContent: todoModule.components.sidebar(),
       // Hide the create menu.
       menuHeader: null);
 

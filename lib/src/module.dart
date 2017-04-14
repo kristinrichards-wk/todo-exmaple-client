@@ -4,7 +4,6 @@ import 'package:w_module/w_module.dart';
 
 import 'package:todo_client/src/actions.dart';
 import 'package:todo_client/src/components.dart';
-import 'package:todo_client/src/components/edit_todo_modal.dart';
 import 'package:todo_client/src/store.dart';
 
 class TodoModule extends Module {
@@ -22,9 +21,7 @@ class TodoModule extends Module {
     _components = new TodoComponents(_actions, _store);
 
     _actions.editTodo.listen((todo) {
-      _modalManager.show((EditTodoModal()
-        ..actions = _actions
-        ..todo = todo)());
+      // _modalManager.show(...);
     });
   }
 
