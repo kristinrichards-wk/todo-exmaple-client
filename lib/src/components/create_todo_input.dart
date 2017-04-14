@@ -43,7 +43,7 @@ class CreateTodoInputComponent
     );
   }
 
-  void _createTodo(e) {
+  void _createTodo(_) {
     var todo = new Todo(description: state.newTodoDescription);
     props.actions.createTodo(todo);
     setState(newState()..newTodoDescription = '');

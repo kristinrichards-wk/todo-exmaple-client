@@ -96,17 +96,17 @@
   transition-duration: 0.2s;
   transition-timing-function: ease;
   transition-property: box-shadow, width, height, margin, border-radius, background-color;
-  box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 0.15rem 0.4rem rgba(0, 0, 0, 0.24), 0 0.15rem 0.6rem rgba(0, 0, 0, 0.12);
   border: transparent solid .1rem;
   overflow: hidden;
 }
 
 .fab-toolbar:hover, .fab-toolbar:focus {
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.23), 0 3px 12px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 0.3rem 1.2rem rgba(0, 0, 0, 0.23), 0 0.3rem 1.2rem rgba(0, 0, 0, 0.16);
 }
 
 .fab-toolbar:focus {
-  border: #33a9ff solid .1rem;
+  border: #33a9ff solid 0.1rem;
   outline: none;
 }
 

@@ -1,5 +1,6 @@
 import 'dart:html';
 
+import 'package:react/react.dart' as react;
 import 'package:react/react_client/react_interop.dart';
 import 'package:web_skin_dart/ui_components.dart';
 import 'package:web_skin_dart/ui_core.dart';
@@ -68,10 +69,10 @@ class FabToolbarComponent extends UiStatefulComponent<FabToolbarProps, FabToolba
       var child = props.children[i];
 
       yield (BlockContent()
-        ..onClick = (e) {
+        ..onClick = (react.SyntheticMouseEvent event) {
           // Prevent clicks from bubbling to the toolbar, resulting in it closing.
-          if (e.currentTarget != e.target) {
-            e.stopPropagation();
+          if (event.currentTarget != event.target) {
+            event.stopPropagation();
           }
         }
         ..key = i

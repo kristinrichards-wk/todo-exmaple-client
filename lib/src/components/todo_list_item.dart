@@ -99,9 +99,9 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
       // Prevent clipping of Button focus border
       ..overflow = true)(
       (ButtonToolbar()
-        ..onClick = (e) {
+        ..onClick = (react.SyntheticMouseEvent event) {
           // Prevent clicks from expanding/collapsing the item
-          e.stopPropagation();
+          event.stopPropagation();
         })(
         _renderControl('todo-list__item__edit-btn', _edit, IconGlyph.PENCIL),
         props.todo.isCompleted

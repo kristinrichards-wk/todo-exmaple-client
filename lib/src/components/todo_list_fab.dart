@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 import 'package:react/react_client.dart';
 import 'package:todo_client/src/actions.dart';
 import 'package:todo_client/src/store.dart';
@@ -25,34 +26,34 @@ class TodoListFabComponent extends UiComponent<TodoListFabProps> {
         name: 'Your Todos',
         glyph: IconGlyph.FOLDER,
         isActive: props.store.includePrivate,
-        onClick: (e) => props.actions.toggleIncludePrivate(),
+        onClick: (_) => props.actions.toggleIncludePrivate(),
       ),
       _renderFabButton(
         name: 'Public Todos',
         glyph: IconGlyph.FOLDER_OPEN,
         isActive: props.store.includePublic,
-        onClick: (e) => props.actions.toggleIncludePublic(),
+        onClick: (_) => props.actions.toggleIncludePublic(),
       ),
       _renderFabButton(
         name: 'Unfinished Todos',
         glyph: IconGlyph.CHECKMARK,
         isActive: props.store.includeIncomplete,
-        onClick: (e) => props.actions.toggleIncludeIncomplete(),
+        onClick: (_) => props.actions.toggleIncludeIncomplete(),
       ),
       _renderFabButton(
         name: 'Finished Todos',
         glyph: IconGlyph.TASK_CREATE,
         isActive: props.store.includeComplete,
-        onClick: (e) => props.actions.toggleIncludeComplete(),
+        onClick: (_) => props.actions.toggleIncludeComplete(),
       ),
     );
   }
 
   ReactElement _renderFabButton({
-    String name,
-    bool isActive,
-    MouseEventCallback onClick,
-    IconGlyph glyph,
+    @required String name,
+    @required bool isActive,
+    @required MouseEventCallback onClick,
+    @required IconGlyph glyph,
   }) {
     return (OverlayTrigger()
       ..overlay = Tooltip()(name)
