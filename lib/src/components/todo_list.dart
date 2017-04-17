@@ -29,7 +29,7 @@ class TodoListComponent extends UiComponent<TodoListProps> {
   @override
   render() {
     if (props.todos.isEmpty) {
-      return (EmptyView()..header = 'No todos to show. Create one or adjust the filters.')();
+      return (EmptyView()..header = 'No todos to show')('Create one or adjust the filters.');
     }
 
     var todoItems = props.todos.map((todo) => (TodoListItem()
