@@ -41,23 +41,18 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
     );
   }
 
-  ReactElement _renderCompletion() {
-    return (BlockContent()
-      ..className = 'todo-list__item__completion-indicator'
-      ..collapse = BlockCollapse.ALL
-      ..shrink = true
-      // Prevent clipping of Button focus border
-      ..overflow = true)(
-      (Button()
-        ..className = 'todo-check'
-        ..isDisabled = !_canModify
-        ..size = ButtonSize.XSMALL
-        ..skin = ButtonSkin.VANILLA
-        ..noText = true
-        ..onClick = _toggleCompletion)(
-        (Icon()..glyph = IconGlyph.CHECKMARK)(),
-      ),
-    );
+  ReactElement _renderTaskCheckbox() {
+    return (CheckboxInput()
+      ..checked = props.todo.isCompleted
+      ..isDisabled = !_canModify
+      ..label = 'Complete Task'
+      ..hideLabel = true
+      // In theory this would be some unique id that your app could keep track of for data persistence
+      ..value = ''
+      ..onChange = _toggleCompletion
+      ..onFocus = _handleChildFocus
+      ..onBlur = _handleChildBlur
+    )();
   }
 
   ReactElement _renderContents() {
