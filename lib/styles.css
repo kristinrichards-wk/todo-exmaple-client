@@ -3,6 +3,10 @@
   margin: 0 auto;
 }
 
+.todo-shell {
+  overflow: hidden;
+}
+
 .todo-shell .wksp-main {
   padding-bottom: 0;
 }

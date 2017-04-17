@@ -1,3 +1,7 @@
+.todo-shell {
+  overflow: hidden; // Get rid of rubber-band scrolling at beginning / end of child scroll
+}
+
 .todo-shell .wksp-main {
   padding-bottom: 0;
 }
