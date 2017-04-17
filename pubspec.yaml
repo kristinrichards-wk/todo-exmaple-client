@@ -35,6 +35,12 @@ dev_dependencies:
   dart_dev: ^1.7.2
   dart_style: ^1.0.3
   test: ^0.12.20
+  mockito: ">=0.11.0 <2.0.0"
+  w_test_tools:
+    hosted:
+      name: w_test_tools
+      url: https://pub.workiva.org
+    version: "^0.1.9"
 
 transformers:
   - web_skin_dart

@@ -52,12 +52,18 @@ class FabToolbarComponent extends UiStatefulComponent<FabToolbarProps, FabToolba
       ..classNameBlacklist = classes.toClassNameBlacklist()
       ..onClick = (_) {
         toggle();
-      })(
-      (Dom.div()..className = 'fab-toolbar__content')(props.buttonContent),
-      (Dom.div()..className = 'fab-toolbar--open__content')(
+      }
+      ..addTestId('fabToolbar.button'))(
+      (Dom.div()
+        ..className = 'fab-toolbar__content'
+        ..addTestId('fabToolbar.content'))(props.buttonContent),
+      (Dom.div()
+        ..className = 'fab-toolbar--open__content'
+        ..addTestId('fabToolbar.openContent'))(
         (Block()
           ..scroll = true
-          ..align = BlockAlign.CENTER)(
+          ..align = BlockAlign.CENTER
+          ..addTestId('fabToolbar.openContentBlock'))(
           _renderToolbarItems(),
         ),
       ),
@@ -78,7 +84,8 @@ class FabToolbarComponent extends UiStatefulComponent<FabToolbarProps, FabToolba
         ..key = i
         ..shrink = true
         ..scroll = false
-        ..overflow = true)(
+        ..overflow = true
+        ..addTestId('fabToolbar.toolbarItem.$i'))(
         child,
       );
     }

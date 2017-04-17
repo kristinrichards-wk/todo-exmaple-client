@@ -7,6 +7,7 @@ script:
   - pub get
   - pub run dart_dev format --check
   - pub run dart_dev analyze
+  - DART_FLAGS=--checked xvfb-run -s '-screen 0 1024x768x24' pub run dart_dev test
 
 after_script:
 
