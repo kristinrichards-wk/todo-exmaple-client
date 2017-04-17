@@ -75,3 +75,21 @@
     width: auto;
   }
 }
+
+.login-prompt {
+.todo-list__item__edit-btn,
+.todo-list__item__privacy-btn {
+  #{$link-hover-focus} {
+    color: $zc-green;
+  }
+}
+
+  color: $zc-gray-80;
+  background-color: #fff;
+  font-size: 1.6rem;
+  text-align: center;
+}
+
+.login-prompt p {
+  margin: 0;
+}
