@@ -1,4 +1,4 @@
-.wksp-main {
+.todo-shell .wksp-main {
   padding-bottom: 0;
 }
 
@@ -20,7 +20,7 @@
   }
 }
 
-:not(.icon):not(:focus)[aria-hidden] {
+.todo-app :not(.icon):not(:focus)[aria-hidden] {
   visibility: hidden;
 
   .todo-list__item--hovered & {

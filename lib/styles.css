@@ -3,6 +3,10 @@
   margin: 0 auto;
 }
 
+.todo-shell .wksp-main {
+  padding-bottom: 0;
+}
+
 .todo-list {
   margin-bottom: 0 !important;
 }
@@ -20,11 +24,11 @@
   color: #b2b2b2;
 }
 
-:not(.icon):not(:focus)[aria-hidden] {
+.todo-app :not(.icon):not(:focus)[aria-hidden] {
   visibility: hidden;
 }
 
-.todo-list__item--hovered :not(.icon):not(:focus)[aria-hidden] {
+.todo-list__item--hovered .todo-app :not(.icon):not(:focus)[aria-hidden] {
   visibility: visible;
 }
 
