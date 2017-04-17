@@ -1,7 +1,5 @@
 import 'dart:html';
 
-import 'package:react/react.dart' as react;
-import 'package:react/react_client/react_interop.dart';
 import 'package:web_skin_dart/ui_components.dart';
 import 'package:web_skin_dart/ui_core.dart';
 
@@ -58,30 +56,17 @@ class FabToolbarComponent extends UiStatefulComponent<FabToolbarProps, FabToolba
         (Block()
           ..scroll = true
           ..align = BlockAlign.CENTER)(
-          _renderToolbarItems(),
+          (ToggleButtonGroup()
+            ..size = ButtonGroupSize.LARGE
+            ..skin = ButtonSkin.LINK
+            ..hideGroupLabel = true
+            ..groupLabel = 'Filter Options'
+          )(
+            props.children,
+          ),
         ),
       ),
     );
-  }
-
-  Iterable<ReactElement> _renderToolbarItems() sync* {
-    for (var i = 0; i < props.children.length; i++) {
-      var child = props.children[i];
-
-      yield (BlockContent()
-        ..onClick = (react.SyntheticMouseEvent event) {
-          // Prevent clicks from bubbling to the toolbar, resulting in it closing.
-          if (event.currentTarget != event.target) {
-            event.stopPropagation();
-          }
-        }
-        ..key = i
-        ..shrink = true
-        ..scroll = false
-        ..overflow = true)(
-        child,
-      );
-    }
   }
 
   void toggle() => setState(newState()..isOpen = !state.isOpen);
