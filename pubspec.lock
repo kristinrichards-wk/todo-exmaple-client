@@ -126,7 +126,7 @@ packages:
       name: csslib
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.13.4"
+    version: "0.13.5"
   dart_dev:
     description:
       name: dart_dev
@@ -348,7 +348,7 @@ packages:
       name: platform_detect
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0"
+    version: "1.3.0"
   plugin:
     description:
       name: plugin
@@ -512,7 +512,7 @@ packages:
       name: test
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.20+9"
+    version: "0.12.20+10"
   thrift:
     description:
       name: thrift
@@ -544,7 +544,7 @@ packages:
       name: truss
       url: "https://pub.workiva.org"
     source: hosted
-    version: "3.8.3"
+    version: "3.8.4"
   tuple:
     description:
       name: tuple
@@ -574,7 +574,7 @@ packages:
       name: user_analytics
       url: "https://pub.workiva.org"
     source: hosted
-    version: "2.57.1"
+    version: "3.9.0"
   utf:
     description:
       name: utf
@@ -604,13 +604,13 @@ packages:
       name: w_context_menu
       url: "https://pub.workiva.org"
     source: hosted
-    version: "5.7.0"
+    version: "5.9.0"
   w_flux:
     description:
       name: w_flux
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.6.1"
+    version: "2.7.0"
   w_module:
     description:
       name: w_module
@@ -634,7 +634,7 @@ packages:
       name: w_session
       url: "https://pub.workiva.org"
     source: hosted
-    version: "5.15.0"
+    version: "5.16.0"
   w_test_tools:
     description:
       name: w_test_tools
@@ -652,7 +652,7 @@ packages:
       name: w_virtual_components
       url: "https://pub.workiva.org"
     source: hosted
-    version: "1.14.0"
+    version: "1.15.0"
   w_webdriver_utils:
     description:
       name: w_webdriver_utils
@@ -670,7 +670,7 @@ packages:
       name: web_skin
       url: "https://pub.workiva.org"
     source: hosted
-    version: "1.16.6"
+    version: "1.17.0"
   web_skin_dart:
     description:
       name: web_skin_dart

@@ -60,8 +60,7 @@ class FabToolbarComponent extends UiStatefulComponent<FabToolbarProps, FabToolba
             ..size = ButtonGroupSize.LARGE
             ..skin = ButtonSkin.LINK
             ..hideGroupLabel = true
-            ..groupLabel = 'Filter Options'
-          )(
+            ..groupLabel = 'Filter Options')(
             props.children,
           ),
         ),

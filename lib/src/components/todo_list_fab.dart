@@ -23,29 +23,25 @@ class TodoListFabComponent extends UiComponent<TodoListFabProps> {
       ..addProps(copyUnconsumedProps())
       ..buttonContent = (Icon()..glyph = IconGlyph.FILTER)())(
       _renderFabButton(
-        name: 'Your Todos',
-        glyph: IconGlyph.USER,
-        isActive: props.store.includePrivate,
-        onChange: ((_) => props.actions.toggleIncludePrivate())
-      ),
+          name: 'Your Todos',
+          glyph: IconGlyph.USER,
+          isActive: props.store.includePrivate,
+          onChange: ((_) => props.actions.toggleIncludePrivate())),
       _renderFabButton(
-        name: 'Public Todos',
-        glyph: IconGlyph.USERS,
-        isActive: props.store.includePublic,
-        onChange: ((_) => props.actions.toggleIncludePublic())
-      ),
+          name: 'Public Todos',
+          glyph: IconGlyph.USERS,
+          isActive: props.store.includePublic,
+          onChange: ((_) => props.actions.toggleIncludePublic())),
       _renderFabButton(
-        name: 'Unfinished Todos',
-        glyph: IconGlyph.TIE_OUT_UNTIED,
-        isActive: props.store.includeIncomplete,
-        onChange: ((_) => props.actions.toggleIncludeIncomplete())
-      ),
+          name: 'Unfinished Todos',
+          glyph: IconGlyph.TIE_OUT_UNTIED,
+          isActive: props.store.includeIncomplete,
+          onChange: ((_) => props.actions.toggleIncludeIncomplete())),
       _renderFabButton(
-        name: 'Finished Todos',
-        glyph: IconGlyph.TIE_OUT_TIED,
-        isActive: props.store.includeComplete,
-        onChange: ((_) => props.actions.toggleIncludeComplete())
-      ),
+          name: 'Finished Todos',
+          glyph: IconGlyph.TIE_OUT_TIED,
+          isActive: props.store.includeComplete,
+          onChange: ((_) => props.actions.toggleIncludeComplete())),
     );
   }
 
