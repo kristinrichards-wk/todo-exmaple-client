@@ -24,10 +24,12 @@
   }
 }
 
-.todo-app :not(.icon):not(:focus)[aria-hidden] {
-  visibility: hidden;
+.todo-app {
+  :not(.icon):not(:focus)[aria-hidden] {
+    visibility: hidden;
+  }
 
-  .todo-list__item--hovered & {
+  .todo-list__item--hovered [aria-hidden] {
     visibility: visible;
   }
 }
