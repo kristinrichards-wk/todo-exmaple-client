@@ -29,7 +29,7 @@
     visibility: hidden;
   }
 
-  .todo-list__item--hovered [aria-hidden] {
+  .todo-list__item--hovered :not(.icon):not(:focus)[aria-hidden] {
     visibility: visible;
   }
 }

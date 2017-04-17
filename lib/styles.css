@@ -32,7 +32,7 @@
   visibility: hidden;
 }
 
-.todo-app .todo-list__item--hovered [aria-hidden] {
+.todo-app .todo-list__item--hovered :not(.icon):not(:focus)[aria-hidden] {
   visibility: visible;
 }
 

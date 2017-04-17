@@ -112,11 +112,13 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
       ..placement = OverlayPlacement.TOP_RIGHT
       ..delayShow = 1000
       ..useLegacyPositioning = false
-      ..trigger = OverlayTriggerType.HOVER)((Dom.div()
-      ..role = Role.button
-      ..onClick = _toggleExpansion)(
-      props.todo.description,
-    ));
+      ..trigger = OverlayTriggerType.HOVER)(
+      (Dom.div()
+        ..role = Role.button
+        ..onClick = _toggleExpansion)(
+        props.todo.description,
+      ),
+    );
   }
 
   ReactElement _renderTaskLabels() {
@@ -132,7 +134,7 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
   }
 
   ReactElement _renderTaskControlsToolbar() {
-    return (ButtonToolbar()..onClick = _handleTaskActionsToolbarClick)(
+    return ButtonToolbar()(
       _renderEditTaskButton(),
       _renderTogglePrivacyButton(),
       _renderDeleteButton(),
@@ -173,7 +175,7 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
         ..onBlur = _handleChildBlur
         ..addProps(ariaProps()
           ..label = label
-          ..hidden = !_canModify || !state.isHovered))(
+          ..hidden = !_canModify || (!state.isHovered && !state.isChildFocused)))(
         (Icon()..glyph = glyph)(),
       ),
     );
@@ -182,11 +184,6 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
   bool get _canModify => props.currentUserId == null || props.currentUserId == props.todo.userID;
 
   bool get _hasNotes => props.todo.notes != null && props.todo.notes.isNotEmpty;
-
-  void _handleTaskActionsToolbarClick(react.SyntheticMouseEvent event) {
-    // Prevent clicks from expanding/collapsing the item
-    event.stopPropagation();
-  }
 
   void _delete(_) {
     props.actions.deleteTodo(props.todo);
