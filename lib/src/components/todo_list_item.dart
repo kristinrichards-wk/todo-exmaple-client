@@ -176,7 +176,6 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
   }
 
   void _toggleExpansion(react.SyntheticMouseEvent event) {
-    event.stopPropagation();
     props.actions.selectTodo(props.isExpanded ? null : props.todo);
   }
 
