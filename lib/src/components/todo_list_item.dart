@@ -66,25 +66,21 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
           // Row 1, Column 2: (task name)
           (BlockContent()
             ..className = 'todo-list__item__block todo-list__item__header-block'
-            ..collapse = BlockCollapse.VERTICAL
-            ..scroll = false
-            ..overflow = true)(
+            ..collapse = BlockCollapse.VERTICAL)(
             _renderTaskHeader(),
           ),
           // Row 1, Column 3: (task labels)
           (BlockContent()
             ..className = 'todo-list__item__block todo-list__item__labels-block'
             ..collapse = BlockCollapse.ALL
-            ..shrink = true
-            ..overflow = true)(
+            ..shrink = true)(
             _renderTaskLabels(),
           ),
           // Row 1, Column 4: "shrink-wrapped" width (edit button)
           (BlockContent()
             ..className = 'todo-list__item__block todo-list__item__controls-block'
             ..collapse = BlockCollapse.VERTICAL | BlockCollapse.RIGHT
-            ..shrink = true
-            ..overflow = true)(
+            ..shrink = true)(
             _renderTaskControlsToolbar(),
           ),
         ),
