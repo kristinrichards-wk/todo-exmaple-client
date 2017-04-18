@@ -24,14 +24,8 @@
   }
 }
 
-.todo-app {
-  :not(.icon):not(:focus)[aria-hidden] {
-    visibility: hidden;
-  }
-
-  .todo-list__item--hovered :not(.icon):not(:focus)[aria-hidden] {
-    visibility: visible;
-  }
+.todo-list__item__controls-toolbar[aria-hidden="true"] {
+  visibility: hidden;
 }
 
 .todo-list__item__block {

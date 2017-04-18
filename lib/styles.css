@@ -28,12 +28,8 @@
   color: #b2b2b2;
 }
 
-.todo-app :not(.icon):not(:focus)[aria-hidden] {
+.todo-list__item__controls-toolbar[aria-hidden="true"] {
   visibility: hidden;
-}
-
-.todo-app .todo-list__item--hovered :not(.icon):not(:focus)[aria-hidden] {
-  visibility: visible;
 }
 
 .todo-list__item__block {

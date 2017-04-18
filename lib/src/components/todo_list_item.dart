@@ -46,8 +46,7 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
       ..add('todo-list__item')
       ..add('todo-list__item--complete', props.todo.isCompleted)
       ..add('todo-list__item--incomplete', !props.todo.isCompleted)
-      ..add('todo-list__item--expanded', props.isExpanded)
-      ..add('todo-list__item--hovered', state.isHovered || state.isChildFocused);
+      ..add('todo-list__item--expanded', props.isExpanded);
 
     return (ListGroupItem()
       ..className = classes.toClassName()
@@ -153,7 +152,9 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
       (Icon()..glyph = IconGlyph.TRASH)(),
     );
 
-    return (ButtonToolbar()..addProps(ariaProps()..hidden = true))(
+    return (ButtonToolbar()
+      ..className = 'todo-list__item__controls-toolbar'
+      ..addProps(ariaProps()..hidden = !_isHovered))(
       edit,
       privacy,
       delete,
@@ -163,6 +164,8 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
   bool get _canModify => props.currentUserId == null || props.currentUserId == props.todo.userID;
 
   bool get _hasNotes => props.todo.notes != null && props.todo.notes.isNotEmpty;
+
+  bool get _isHovered => state.isHovered || state.isChildFocused;
 
   void _delete(_) {
     props.actions.deleteTodo(props.todo);
