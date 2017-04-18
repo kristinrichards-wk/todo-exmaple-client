@@ -56,38 +56,40 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
       ..onFocus = _handleChildFocus
       ..onBlur = _handleChildBlur)(
       // Row 1: Checkmark, title, edit button
-      Dom.div()(Block()(
-        // Row 1, Column 1: "shrink-wrapped" width (checkbox)
-        (Block()
-          ..className = 'todo-list__item__block todo-list__item__checkbox-block'
-          ..shrink = true)(
-          _renderTaskCheckbox(),
+      Dom.div()(
+        Block()(
+          // Row 1, Column 1: "shrink-wrapped" width (checkbox)
+          (Block()
+            ..className = 'todo-list__item__block todo-list__item__checkbox-block'
+            ..shrink = true)(
+            _renderTaskCheckbox(),
+          ),
+          // Row 1, Column 2: (task name)
+          (BlockContent()
+            ..className = 'todo-list__item__block todo-list__item__header-block'
+            ..collapse = BlockCollapse.VERTICAL
+            ..scroll = false
+            ..overflow = true)(
+            _renderTaskHeader(),
+          ),
+          // Row 1, Column 3: (task labels)
+          (BlockContent()
+            ..className = 'todo-list__item__block todo-list__item__labels-block'
+            ..collapse = BlockCollapse.ALL
+            ..shrink = true
+            ..overflow = true)(
+            _renderTaskLabels(),
+          ),
+          // Row 1, Column 4: "shrink-wrapped" width (edit button)
+          (BlockContent()
+            ..className = 'todo-list__item__block todo-list__item__controls-block'
+            ..collapse = BlockCollapse.VERTICAL | BlockCollapse.RIGHT
+            ..shrink = true
+            ..overflow = true)(
+            _renderTaskControlsToolbar(),
+          ),
         ),
-        // Row 1, Column 2: (task name)
-        (BlockContent()
-          ..className = 'todo-list__item__block todo-list__item__header-block'
-          ..collapse = BlockCollapse.VERTICAL
-          ..scroll = false
-          ..overflow = true)(
-          _renderTaskHeader(),
-        ),
-        // Row 1, Column 3: (task labels)
-        (BlockContent()
-          ..className = 'todo-list__item__block todo-list__item__labels-block'
-          ..collapse = BlockCollapse.ALL
-          ..shrink = true
-          ..overflow = true)(
-          _renderTaskLabels(),
-        ),
-        // Row 1, Column 4: "shrink-wrapped" width (edit button)
-        (BlockContent()
-          ..className = 'todo-list__item__block todo-list__item__controls-block'
-          ..collapse = BlockCollapse.VERTICAL | BlockCollapse.RIGHT
-          ..shrink = true
-          ..overflow = true)(
-          _renderTaskControlsToolbar(),
-        ),
-      )),
+      ),
       // Row 2: Notes (collapsed by default)
       _renderTaskNotes(),
     );
@@ -132,23 +134,24 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
 
     var edit = (_plainButtonFactory()
       ..className = 'todo-list__item__edit-btn'
-      ..onClick = _edit)(
+      ..onClick = _edit
+      ..isDisabled = !_canModify)(
       (Icon()..glyph = IconGlyph.PENCIL)(),
     );
 
     var privacy = (_plainButtonFactory()
       ..className = 'todo-list__item__privacy-btn'
       ..onClick = _togglePrivacy
-      ..isDisabled = props.todo.isCompleted)(
+      ..isDisabled = !_canModify || props.todo.isCompleted)(
       (Icon()..glyph = props.todo.isPublic ? IconGlyph.EYE : IconGlyph.EYE_BLOCKED)(),
     );
 
     var delete = (_plainButtonFactory()
       ..className = 'todo-list__item__delete-btn'
       ..onClick = _delete
-      ..isDisabled = props.todo.isCompleted)(
+      ..isDisabled = !_canModify || props.todo.isCompleted)(
       (Icon()..glyph = IconGlyph.TRASH)(),
-     );
+    );
 
     return (ButtonToolbar()..addProps(ariaProps()..hidden = true))(
       edit,
