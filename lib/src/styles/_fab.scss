@@ -53,6 +53,7 @@ $fab-toolbar-open-height: 8rem;
   width: $fab-toolbar-diameter;
   height: $fab-toolbar-diameter;
   border-radius: 50%;
+  z-index: 10;
 
   transition-duration: $fab-toolbar-transition-duration;
   transition-timing-function: ease;

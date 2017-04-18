@@ -2,21 +2,44 @@
 <html lang="en">
 <head>
   <!-- MUST BE THE FIRST META TAG WITHIN <HEAD> -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
   <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style"
-        content="black-translucent"/>
-  <meta name="google" content="notranslate" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
   <title>Todo Example</title>
+
+  <!-- PRELOAD scripts -->
+  <link rel="preload" href="/packages/react/react.js" as="script">
+  <link rel="preload" href="/packages/react/react_dom.js" as="script">
+  <link rel="preload" href="main.dart.js" as="script">
+  <link rel="preload" href="/packages/browser/dart.js" as="script">
+
+  <!-- PRELOAD fonts -->
+  <link rel="preload" href="/packages/web_skin/dist/fonts/icons/Wdesk_Icons.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/packages/web_skin/dist/fonts/icons/Wdesk_Icons_Color.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/packages/web_skin/dist/fonts/icons/Wdesk_Doctype-Icons.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/packages/web_skin/dist/fonts/icons/Wdesk_Icons_Xbrl.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/packages/web_skin/dist/fonts/lato/Lato-Regular.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/packages/web_skin/dist/fonts/lato/Lato-Italic.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/packages/web_skin/dist/fonts/lato/Lato-Bold.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/packages/web_skin/dist/fonts/lato/Lato-BoldItalic.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/packages/web_skin/dist/fonts/lato/Lato-Light.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/packages/web_skin/dist/fonts/lato/Lato-LightItalic.woff" as="font" type="font/woff" crossorigin>
+
+  <!-- PRELOAD images -->
+  <link rel="preload" href="/packages/web_skin/dist/img/brand/w-symbol_white.svg" as="image">
+  <link rel="preload" href="/packages/web_skin/dist/img/brand/wdesk-logo_color.svg" as="image">
+  <link rel="preload" href="/packages/web_skin/dist/img/brand/wdesk-logo_color.png" as="image" media="(max-resolution: 1dppx)">
+  <link rel="preload" href="/packages/web_skin/dist/img/brand/wdesk-logo_color_retina.png" as="image" media="(min-resolution: 2dppx)">
 
   <!-- stylesheets -->
   <link rel="stylesheet" href="/packages/web_skin/dist/css/web-skin.min.css">
   <link rel="stylesheet" href="/packages/web_skin/dist/css/peripherals/grid-v2.min.css">
-  <link rel="stylesheet" href="/packages/web_skin/dist/css/peripherals/workspaces.css">
+  <link rel="stylesheet" href="/packages/web_skin/dist/css/peripherals/icons-beta.min.css">
+  <link rel="stylesheet" href="/packages/web_skin/dist/css/peripherals/dropdown-submenu.css">
+  <link rel="stylesheet" href="/packages/truss/workspaces_shell.css">
   <link rel="stylesheet" href="/packages/todo_client/styles.css">
 
   <!-- favicon / branding -->
@@ -67,7 +90,7 @@
   <meta name="msapplication-TileImage"
         content="/packages/web_skin/dist/ico/mstile-144x144.png">
   <meta name="msapplication-TileColor" content="#66CC00">
-  <meta name="application-name" content="Wdesk">
+  <meta name="application-name" content="Todo Example">
 
   <!-- IE11 tiles -->
   <meta name="msapplication-square70x70logo"
@@ -80,28 +103,15 @@
         content="/packages/web_skin/dist/ico/mstile-310x150.png">
 
   <style>
-    /* Disable ALL zoom capabilities on IE 11 */
-    body {
-      -ms-content-zooming: none !important;
-    }
-  </style>
-
-  <style>
-    .login-prompt {
-      color: #8a8a8a;
-      background-color: #fff;
-      font-size: 16px;
-      text-align: center;
-    }
-
-    .login-prompt p {
-      margin: 0;
-    }
+      /* Disable ALL zoom capabilities on IE 11 */
+      body {
+          -ms-content-zooming: none !important;
+      }
   </style>
 
   <script src="/packages/web_skin/dist/js/core/modernizr/modernizr-custom.js"></script>
 </head>
-<body>
+<body class="todo-shell">
 
   <div id="shell-container" class="shell">
     <div class="wdesk-loading-frame">

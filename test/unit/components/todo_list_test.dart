@@ -13,7 +13,8 @@ main() {
       var instance = render(TodoList()());
       var emptyViewProps = EmptyView(getPropsByTestId(instance, 'todoList.emptyView'));
 
-      expect(emptyViewProps.header, 'No todos to show. Create one or adjust the filters.');
+      expect(emptyViewProps.header, 'No todos to show');
+      expect(emptyViewProps.children.single, 'Create one or adjust the filters.');
     });
 
     test('renders a ListGroup with correct props', () {

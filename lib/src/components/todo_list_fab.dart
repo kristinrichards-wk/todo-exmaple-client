@@ -24,47 +24,44 @@ class TodoListFabComponent extends UiComponent<TodoListFabProps> {
       ..buttonContent = (Icon()..glyph = IconGlyph.FILTER)()
       ..addTestId('todoListFab.fabToolbar'))(
       _renderFabButton(
-        name: 'Your Todos',
-        glyph: IconGlyph.FOLDER,
-        isActive: props.store.includePrivate,
-        onClick: (_) => props.actions.toggleIncludePrivate(),
-      ),
+          name: 'Your Todos',
+          glyph: IconGlyph.USER,
+          isActive: props.store.includePrivate,
+          onChange: ((_) => props.actions.toggleIncludePrivate())),
       _renderFabButton(
-        name: 'Public Todos',
-        glyph: IconGlyph.FOLDER_OPEN,
-        isActive: props.store.includePublic,
-        onClick: (_) => props.actions.toggleIncludePublic(),
-      ),
+          name: 'Public Todos',
+          glyph: IconGlyph.USERS,
+          isActive: props.store.includePublic,
+          onChange: ((_) => props.actions.toggleIncludePublic())),
       _renderFabButton(
-        name: 'Unfinished Todos',
-        glyph: IconGlyph.CHECKMARK,
-        isActive: props.store.includeIncomplete,
-        onClick: (_) => props.actions.toggleIncludeIncomplete(),
-      ),
+          name: 'Unfinished Todos',
+          glyph: IconGlyph.TIE_OUT_UNTIED,
+          isActive: props.store.includeIncomplete,
+          onChange: ((_) => props.actions.toggleIncludeIncomplete())),
       _renderFabButton(
-        name: 'Finished Todos',
-        glyph: IconGlyph.TASK_CREATE,
-        isActive: props.store.includeComplete,
-        onClick: (_) => props.actions.toggleIncludeComplete(),
-      ),
+          name: 'Finished Todos',
+          glyph: IconGlyph.TIE_OUT_TIED,
+          isActive: props.store.includeComplete,
+          onChange: ((_) => props.actions.toggleIncludeComplete())),
     );
   }
 
   ReactElement _renderFabButton({
     @required String name,
     @required bool isActive,
-    @required MouseEventCallback onClick,
+    @required FormEventCallback onChange,
     @required IconGlyph glyph,
   }) {
     return (OverlayTrigger()
       ..overlay = Tooltip()(name)
       ..placement = OverlayPlacement.TOP
+      ..useLegacyPositioning = false
       ..addTestId('todoListFab.overlayTrigger.${name.replaceAll(' ', '')}'))(
-      (Button()
-        ..size = ButtonSize.LARGE
+      (CheckboxButton()
+        ..addProps(ariaProps()..label = name)
         ..noText = true
-        ..isActive = isActive
-        ..onClick = onClick
+        ..checked = isActive
+        ..onChange = onChange
         ..addTestId('todoListFab.button.${name.replaceAll(' ', '')}'))(
         (Icon()
           ..glyph = glyph

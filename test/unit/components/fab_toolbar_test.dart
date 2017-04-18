@@ -48,13 +48,15 @@ main() {
 
     test('renders opened content correctly', () {
       var instance = render(FabToolbar()(
-        (Button()..addTestId('firstToolbarChild'))(),
+        (CheckboxButton()..addTestId('firstToolbarChild'))(),
       ));
       var openContentNode = queryByTestId(instance, 'fabToolbar.openContent');
       var openContentBlockNode = queryByTestId(instance, 'fabToolbar.openContentBlock');
       var openContentBlockProps = Block(getPropsByTestId(instance, 'fabToolbar.openContentBlock'));
-      var fabToolbarItem1Node = queryByTestId(instance, 'fabToolbar.toolbarItem.0');
-      var fabToolbarItem1Props = BlockContent(getPropsByTestId(instance, 'fabToolbar.toolbarItem.0'));
+      var toggleButtonGroupNode = queryByTestId(instance, 'fabToolbar.toggleButtonGroup');
+      var toggleButtonGroupProps = ToggleButtonGroup(getPropsByTestId(instance, 'fabToolbar.toggleButtonGroup'));
+      var toggleButtonGroupButtonGroupNode = queryByTestId(instance, 'wsd.ToggleButtonGroup.buttonGroup');
+      var checkboxButtonNode = queryByTestId(instance, 'firstToolbarChild');
 
       expect(openContentNode, hasExactClasses('fab-toolbar--open__content'));
       expect(openContentNode.children, hasLength(1));
@@ -63,14 +65,14 @@ main() {
       expect(openContentBlockProps.scroll, isTrue);
       expect(openContentBlockProps.align, BlockAlign.CENTER);
       expect(openContentBlockNode.children, hasLength(1));
-      expect(openContentBlockNode.children.single, fabToolbarItem1Node);
+      expect(openContentBlockNode.children.single, toggleButtonGroupNode);
 
-      expect(fabToolbarItem1Props.onClick, isNotNull);
-      expect(fabToolbarItem1Props.shrink, isTrue);
-      expect(fabToolbarItem1Props.scroll, false);
-      expect(fabToolbarItem1Props.overflow, true);
-      expect(fabToolbarItem1Node.children, hasLength(1));
-      expect(fabToolbarItem1Node.children.single, queryByTestId(instance, 'firstToolbarChild'));
+      expect(toggleButtonGroupProps.size, ButtonGroupSize.LARGE);
+      expect(toggleButtonGroupProps.skin, ButtonSkin.LINK);
+      expect(toggleButtonGroupProps.hideGroupLabel, isTrue);
+      expect(toggleButtonGroupProps.groupLabel, 'Filter Options');
+      expect(toggleButtonGroupButtonGroupNode.children, hasLength(1));
+      expect(toggleButtonGroupButtonGroupNode.children.single, checkboxButtonNode);
     });
 
     group('correctly handles events', () {
@@ -106,24 +108,6 @@ main() {
         click(node);
 
         expect(dartInstance.state.isOpen, isFalse);
-      });
-
-      test('when clicking a toolbar item', () {
-        var stopPropagationCalled = false;
-        var instance = renderAttachedToDocument(FabToolbar()(
-          (Button()..addTestId('firstToolbarChild'))(),
-        ));
-        var toolbarItem1Node = queryByTestId(instance, 'fabToolbar.toolbarItem.0');
-
-        click(toolbarItem1Node, {
-          'target': new DivElement(),
-          'currentTarget': new DivElement(),
-          'stopPropagation': () {
-            stopPropagationCalled = true;
-          },
-        });
-
-        expect(stopPropagationCalled, isTrue);
       });
 
       test('when focusing an element outside the FAB', () {
