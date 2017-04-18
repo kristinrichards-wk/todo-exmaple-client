@@ -13,15 +13,18 @@ class TodoLocalShellProps extends UiProps {}
 class TodoLocalShellComponent extends UiComponent<TodoLocalShellProps> {
   @override
   render() {
-    return GridFrame()(
-      VBlock()(
+    return (GridFrame()..addTestId('todoLocalShell.gridFrame'))(
+      (VBlock()..addTestId('todoLocalShell.vBlock'))(
         (BlockContent()
           ..className = 'login-prompt'
-          ..shrink = true)(
+          ..shrink = true
+          ..addTestId('todoLocalShell.blockContent'))(
           'Want to save and share your todos? ',
-          (Dom.a()..href = '/login')('Sign in now.'),
+          (Dom.a()
+            ..href = '/login'
+            ..addTestId('todoLocalShell.login'))('Sign in now.'),
         ),
-        Block()(props.children),
+        (Block()..addTestId('todoLocalShell.block'))(props.children),
       ),
     );
   }

@@ -22,14 +22,15 @@ class TodoListProps extends UiProps {
 class TodoListComponent extends UiComponent<TodoListProps> {
   @override
   getDefaultProps() => (newProps()
-    ..todos = []
-    ..activeTodo = null
+    ..todos = const []
     ..currentUserId = '');
 
   @override
   render() {
     if (props.todos.isEmpty) {
-      return (EmptyView()..header = 'No todos to show. Create one or adjust the filters.')();
+      return (EmptyView()
+        ..header = 'No todos to show. Create one or adjust the filters.'
+        ..addTestId('todoList.emptyView'))();
     }
 
     var todoItems = props.todos.map((todo) => (TodoListItem()
@@ -37,12 +38,14 @@ class TodoListComponent extends UiComponent<TodoListProps> {
       ..currentUserId = props.currentUserId
       ..isExpanded = props.activeTodo == todo
       ..key = todo.id
-      ..todo = todo)());
+      ..todo = todo
+      ..addTestId('todoList.todoListItem.${todo.id}'))());
 
     return (ListGroup()
       ..className = 'todo-list'
       ..isBordered = true
-      ..size = ListGroupSize.LARGE)(
+      ..size = ListGroupSize.LARGE
+      ..addTestId('todoList.listGroup'))(
       todoItems,
     );
   }

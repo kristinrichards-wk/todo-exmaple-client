@@ -21,7 +21,8 @@ class TodoListFabComponent extends UiComponent<TodoListFabProps> {
   render() {
     return (FabToolbar()
       ..addProps(copyUnconsumedProps())
-      ..buttonContent = (Icon()..glyph = IconGlyph.FILTER)())(
+      ..buttonContent = (Icon()..glyph = IconGlyph.FILTER)()
+      ..addTestId('todoListFab.fabToolbar'))(
       _renderFabButton(
         name: 'Your Todos',
         glyph: IconGlyph.FOLDER,
@@ -57,13 +58,17 @@ class TodoListFabComponent extends UiComponent<TodoListFabProps> {
   }) {
     return (OverlayTrigger()
       ..overlay = Tooltip()(name)
-      ..placement = OverlayPlacement.TOP)(
+      ..placement = OverlayPlacement.TOP
+      ..addTestId('todoListFab.overlayTrigger.${name.replaceAll(' ', '')}'))(
       (Button()
         ..size = ButtonSize.LARGE
         ..noText = true
         ..isActive = isActive
-        ..onClick = onClick)(
-        (Icon()..glyph = glyph)(),
+        ..onClick = onClick
+        ..addTestId('todoListFab.button.${name.replaceAll(' ', '')}'))(
+        (Icon()
+          ..glyph = glyph
+          ..addTestId('todoListFab.icon.${name.replaceAll(' ', '')}'))(),
       ),
     );
   }
