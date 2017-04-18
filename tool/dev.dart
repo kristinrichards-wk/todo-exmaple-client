@@ -1,6 +1,6 @@
 library tool.dev;
 
-import 'package:dart_dev/dart_dev.dart' show Environment, TestRunnerConfig, config, dev;
+import 'package:dart_dev/dart_dev.dart' show TestRunnerConfig, config, dev;
 
 main(List<String> args) async {
   // https://github.com/Workiva/dart_dev
@@ -30,7 +30,10 @@ main(List<String> args) async {
           '<script src="packages/react/react_dom.js"></script>'
         ])
   ];
-  config.test.unitTests = ['test/unit/generated_runner_test.dart'];
+  config.test
+    ..platforms = ['content-shell']
+    ..pubServe = true
+    ..unitTests = ['test/unit/generated_runner_test.dart'];
 
   config.taskRunner.tasksToRun = [
     'pub run dart_dev format --check',
