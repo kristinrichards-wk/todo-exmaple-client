@@ -1,5 +1,7 @@
 library todo_client.src.module.components.todo_list_item;
 
+import 'dart:html';
+
 import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart';
 import 'package:todo_sdk/todo_sdk.dart' show Todo;
@@ -16,7 +18,6 @@ class TodoListItemProps extends UiProps {
   TodoActions actions;
   String currentUserId;
   bool isExpanded;
-  bool isHovered;
   Todo todo;
 }
 
@@ -32,7 +33,6 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
   Map getDefaultProps() => (newProps()
     ..currentUserId = ''
     ..isExpanded = false
-    ..isHovered = false
     ..todo = null);
 
   @override
@@ -52,7 +52,9 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
     return (ListGroupItem()
       ..className = classes.toClassName()
       ..onMouseEnter = _handleItemMouseEnter
-      ..onMouseLeave = _handleItemMouseLeave)(
+      ..onMouseLeave = _handleItemMouseLeave
+      ..onFocus = _handleChildFocus
+      ..onBlur = _handleChildBlur)(
       // Row 1: Checkmark, title, edit button
       Dom.div()(Block()(
         // Row 1, Column 1: "shrink-wrapped" width (checkbox)
@@ -99,25 +101,14 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
       ..hideLabel = true
       // In theory this would be some unique id that your app could keep track of for data persistence
       ..value = ''
-      ..onChange = _toggleCompletion
-      ..onFocus = _handleChildFocus
-      ..onBlur = _handleChildBlur)();
+      ..onChange = _toggleCompletion)();
   }
 
   ReactElement _renderTaskHeader() {
-    var hintContent = props.isExpanded ? 'Click to hide task notes' : 'Click to show task notes';
-
-    return (OverlayTrigger()
-      ..overlay = Tooltip()(hintContent)
-      ..placement = OverlayPlacement.TOP_RIGHT
-      ..delayShow = 1000
-      ..useLegacyPositioning = false
-      ..trigger = OverlayTriggerType.HOVER)(
-      (Dom.div()
-        ..role = Role.button
-        ..onClick = _toggleExpansion)(
-        props.todo.description,
-      ),
+    return (Dom.div()
+      ..role = Role.button
+      ..onClick = _toggleExpansion)(
+      props.todo.description,
     );
   }
 
@@ -134,50 +125,35 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
   }
 
   ReactElement _renderTaskControlsToolbar() {
-    return ButtonToolbar()(
-      _renderEditTaskButton(),
-      _renderTogglePrivacyButton(),
-      _renderDeleteButton(),
+    _plainButtonFactory() => Button()
+      ..skin = ButtonSkin.VANILLA
+      ..size = ButtonSize.XSMALL
+      ..noText = true;
+
+    var edit = (_plainButtonFactory()
+      ..className = 'todo-list__item__edit-btn'
+      ..onClick = _edit)(
+      (Icon()..glyph = IconGlyph.PENCIL)(),
     );
-  }
 
-  ReactElement _renderEditTaskButton() {
-    return _renderTaskControlButton(
-        IconGlyph.PENCIL, 'Edit Task', 'todo-list__item__edit-btn', _edit);
-  }
+    var privacy = (_plainButtonFactory()
+      ..className = 'todo-list__item__privacy-btn'
+      ..onClick = _togglePrivacy
+      ..isDisabled = props.todo.isCompleted)(
+      (Icon()..glyph = props.todo.isPublic ? IconGlyph.EYE : IconGlyph.EYE_BLOCKED)(),
+    );
 
-  ReactElement _renderTogglePrivacyButton() {
-    var glyph = props.todo.isPublic ? IconGlyph.EYE : IconGlyph.EYE_BLOCKED;
-    var label = props.todo.isPublic ? 'Make Private' : 'Make Public';
+    var delete = (_plainButtonFactory()
+      ..className = 'todo-list__item__delete-btn'
+      ..onClick = _delete
+      ..isDisabled = props.todo.isCompleted)(
+      (Icon()..glyph = IconGlyph.TRASH)(),
+     );
 
-    return _renderTaskControlButton(glyph, label, 'todo-list__item__privacy-btn', _togglePrivacy);
-  }
-
-  ReactElement _renderDeleteButton() {
-    return _renderTaskControlButton(
-        IconGlyph.TRASH, 'Delete Task', 'todo-list__item__delete-btn', _delete);
-  }
-
-  ReactElement _renderTaskControlButton(
-      IconGlyph glyph, String label, String className, MouseEventCallback onClick) {
-    return (OverlayTrigger()
-      ..overlay = (Tooltip()..arrowVisible = true)(label)
-      ..placement = OverlayPlacement.TOP
-      ..useLegacyPositioning = false)(
-      (Button()
-        ..className = className
-        ..skin = ButtonSkin.VANILLA
-        ..size = ButtonSize.XSMALL
-        ..noText = true
-        ..onClick = onClick
-        ..isDisabled = !_canModify
-        ..onFocus = _handleChildFocus
-        ..onBlur = _handleChildBlur
-        ..addProps(ariaProps()
-          ..label = label
-          ..hidden = !_canModify || (!state.isHovered && !state.isChildFocused)))(
-        (Icon()..glyph = glyph)(),
-      ),
+    return (ButtonToolbar()..addProps(ariaProps()..hidden = true))(
+      edit,
+      privacy,
+      delete,
     );
   }
 
@@ -207,22 +183,25 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
   }
 
   void _handleItemMouseEnter(react.SyntheticMouseEvent event) {
-    if (!state.isHovered) setState(newState()..isHovered = true);
+    setState(newState()..isHovered = true);
   }
 
   void _handleItemMouseLeave(react.SyntheticMouseEvent event) {
-    if (state.isHovered) setState(newState()..isHovered = false);
+    setState(newState()..isHovered = false);
   }
 
   void _handleChildFocus(react.SyntheticFocusEvent event) {
-    if (!state.isChildFocused) setState(newState()..isChildFocused = true);
+    setState(newState()..isChildFocused = true);
   }
 
   void _handleChildBlur(react.SyntheticFocusEvent event) {
-    if (event.relatedTarget == null) return;
-
-    if (closest(event.relatedTarget, '.todo-list__item', upperBound: findDomNode(this)) != null) {
-      if (state.isChildFocused) setState(newState()..isChildFocused = false);
+    var newlyFocusedTarget = event.relatedTarget;
+    // newlyFocusedTarget could be null or a window, so check if it's an Element first.
+    if (newlyFocusedTarget is Element && findDomNode(this).contains(newlyFocusedTarget)) {
+      // Don't do anything if we're moving from one item to another
+      return;
     }
+
+    setState(newState()..isChildFocused = false);
   }
 }
