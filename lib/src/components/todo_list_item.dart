@@ -12,6 +12,7 @@ UiFactory<TodoListItemProps> TodoListItem;
 @Props()
 class TodoListItemProps extends UiProps {
   TodoActions actions;
+  String currentUserId;
   bool isExpanded;
   Todo todo;
 }
@@ -20,6 +21,7 @@ class TodoListItemProps extends UiProps {
 class TodoListItemComponent extends UiComponent<TodoListItemProps> {
   @override
   Map getDefaultProps() => (newProps()
+    ..currentUserId = ''
     ..isExpanded = false
     ..todo = null);
 
@@ -61,6 +63,7 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
   ReactElement _renderTaskCheckbox() {
     return (CheckboxInput()
       ..checked = props.todo.isCompleted
+      ..isDisabled = !_canModify
       ..label = 'Complete Task'
       ..hideLabel = true
       // In theory this would be some unique id that your app could keep track of for data persistence
@@ -94,15 +97,21 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
       ..size = ButtonSize.XSMALL
       ..noText = true;
 
-    var edit = (_plainButtonFactory()..onClick = _edit)(
+    var edit = (_plainButtonFactory()
+      ..onClick = _edit
+      ..isDisabled = !_canModify)(
       (Icon()..glyph = IconGlyph.PENCIL)(),
     );
 
-    var privacy = (_plainButtonFactory()..onClick = _togglePrivacy)(
+    var privacy = (_plainButtonFactory()
+      ..onClick = _togglePrivacy
+      ..isDisabled = !_canModify || props.todo.isCompleted)(
       (Icon()..glyph = props.todo.isPublic ? IconGlyph.EYE : IconGlyph.EYE_BLOCKED)(),
     );
 
-    var delete = (_plainButtonFactory()..onClick = _delete)(
+    var delete = (_plainButtonFactory()
+      ..onClick = _delete
+      ..isDisabled = !_canModify || props.todo.isCompleted)(
       (Icon()..glyph = IconGlyph.TRASH)(),
     );
 
@@ -112,6 +121,8 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
       delete,
     );
   }
+
+  bool get _canModify => props.currentUserId == null || props.currentUserId == props.todo.userID;
 
   bool get _hasNotes => props.todo.notes != null && props.todo.notes.isNotEmpty;
 
