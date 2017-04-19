@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:react/react.dart' as react;
 import 'package:react/react_client.dart';
 import 'package:todo_sdk/todo_sdk.dart' show Todo;
@@ -17,13 +19,24 @@ class TodoListItemProps extends UiProps {
   Todo todo;
 }
 
+@State()
+class TodoListItemState extends UiState {
+  bool isHovered;
+  bool isChildFocused;
+}
+
 @Component()
-class TodoListItemComponent extends UiComponent<TodoListItemProps> {
+class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoListItemState> {
   @override
   Map getDefaultProps() => (newProps()
     ..currentUserId = ''
     ..isExpanded = false
     ..todo = null);
+
+  @override
+  Map getInitialState() => (newState()
+    ..isHovered = false
+    ..isChildFocused = false);
 
   @override
   render() {
@@ -33,7 +46,12 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
       ..add('todo-list__item--incomplete', !props.todo.isCompleted)
       ..add('todo-list__item--expanded', props.isExpanded);
 
-    return (ListGroupItem()..className = classes.toClassName())(
+    return (ListGroupItem()
+      ..className = classes.toClassName()
+      ..onMouseEnter = _handleItemMouseEnter
+      ..onMouseLeave = _handleItemMouseLeave
+      ..onFocus = _handleChildFocus
+      ..onBlur = _handleChildBlur)(
       // Row 1: Checkmark, title, edit button
       Dom.div()(
         Block()(
@@ -128,7 +146,9 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
       (Icon()..glyph = IconGlyph.TRASH)(),
     );
 
-    return (ButtonToolbar()..className = 'todo-list__item__controls-toolbar')(
+    return (ButtonToolbar()
+      ..className = 'todo-list__item__controls-toolbar'
+      ..addProps(ariaProps()..hidden = !_isHovered))(
       edit,
       privacy,
       delete,
@@ -138,6 +158,8 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
   bool get _canModify => props.currentUserId == null || props.currentUserId == props.todo.userID;
 
   bool get _hasNotes => props.todo.notes != null && props.todo.notes.isNotEmpty;
+
+  bool get _isHovered => state.isHovered || state.isChildFocused;
 
   void _delete(_) {
     props.actions.deleteTodo(props.todo);
@@ -157,5 +179,28 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
 
   void _toggleCompletion(react.SyntheticFormEvent event) {
     props.actions.updateTodo(props.todo.change(isCompleted: !props.todo.isCompleted));
+  }
+
+  void _handleItemMouseEnter(react.SyntheticMouseEvent event) {
+    setState(newState()..isHovered = true);
+  }
+
+  void _handleItemMouseLeave(react.SyntheticMouseEvent event) {
+    setState(newState()..isHovered = false);
+  }
+
+  void _handleChildFocus(react.SyntheticFocusEvent event) {
+    setState(newState()..isChildFocused = true);
+  }
+
+  void _handleChildBlur(react.SyntheticFocusEvent event) {
+    var newlyFocusedTarget = event.relatedTarget;
+    // newlyFocusedTarget could be null or a window, so check if it's an Element first.
+    if (newlyFocusedTarget is Element && findDomNode(this).contains(newlyFocusedTarget)) {
+      // Don't do anything if we're moving from one item to another
+      return;
+    }
+
+    setState(newState()..isChildFocused = false);
   }
 }
