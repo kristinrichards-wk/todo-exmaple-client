@@ -43,6 +43,10 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
           BlockContent()(
             _renderTaskHeader(),
           ),
+          // Row 1, Column 3: (task labels)
+          (BlockContent()..shrink = true)(
+            _renderTaskLabels(),
+          ),
         ),
       ),
       // Row 2: Notes (collapsed by default)
@@ -66,6 +70,10 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
       ..onClick = _toggleExpansion)(
       props.todo.description,
     );
+  }
+
+  ReactElement _renderTaskLabels() {
+    return Label()(props.todo.isPublic ? 'public' : 'private');
   }
 
   ReactElement _renderTaskNotes() {
