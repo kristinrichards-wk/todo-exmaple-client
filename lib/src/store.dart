@@ -1,24 +1,30 @@
 import 'package:todo_sdk/todo_sdk.dart' show Todo, TodoSdk;
+import 'package:truss/modal_manager.dart';
 import 'package:w_flux/w_flux.dart';
 
 import 'package:todo_client/src/actions.dart' show TodoActions;
 
 class TodoStore extends Store {
-  TodoActions _actions;
+  final TodoActions _actions;
+  final TodoSdk _sdk;
+  final ModalManager _modalManager;
+
   String _activeTodoId;
   bool _includeComplete = true;
   bool _includeIncomplete = true;
   bool _includePrivate = true;
   bool _includePublic = true;
-  TodoSdk _sdk;
+
   Map<String, Todo> _todosMap = {};
 
-  TodoStore(TodoActions actions, TodoSdk sdk)
+  TodoStore(TodoActions actions, TodoSdk sdk, ModalManager modalManager)
       : _actions = actions,
-        _sdk = sdk {
-    _actions.createTodo.listen(_createTodo);
-    _actions.deleteTodo.listen(_deleteTodo);
-    _actions.updateTodo.listen(_updateTodo);
+        _sdk = sdk,
+        _modalManager = modalManager {
+    manageActionSubscription(_actions.createTodo.listen(_createTodo));
+    manageActionSubscription(_actions.deleteTodo.listen(_deleteTodo));
+    manageActionSubscription(_actions.editTodo.listen(_editTodo));
+    manageActionSubscription(_actions.updateTodo.listen(_updateTodo));
 
     triggerOnAction(_actions.selectTodo, _selectTodo);
 
@@ -46,20 +52,20 @@ class TodoStore extends Store {
       if (!_includePublic) _includePrivate = true;
     });
 
-    _sdk.todoCreated.listen((todo) {
+    manageStreamSubscription(_sdk.todoCreated.listen((todo) {
       _todosMap[todo.id] = todo;
       trigger();
-    });
+    }));
 
-    _sdk.todoDeleted.listen((todo) {
+    manageStreamSubscription(_sdk.todoDeleted.listen((todo) {
       _todosMap.remove(todo.id);
       trigger();
-    });
+    }));
 
-    _sdk.todoUpdated.listen((todo) {
+    manageStreamSubscription(_sdk.todoUpdated.listen((todo) {
       _todosMap[todo.id] = todo;
       trigger();
-    });
+    }));
 
     _initialize();
   }
@@ -93,6 +99,10 @@ class TodoStore extends Store {
 
   _deleteTodo(Todo todo) {
     _sdk.deleteTodo(todo.id);
+  }
+
+  _editTodo(Todo todo) {
+    print('TODO: show edit todo modal');
   }
 
   _selectTodo(Todo todo) {

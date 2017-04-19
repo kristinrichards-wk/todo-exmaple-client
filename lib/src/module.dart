@@ -17,12 +17,8 @@ class TodoModule extends Module {
     _modalManager = modalManager ?? new ModalManager();
 
     _actions = new TodoActions();
-    _store = new TodoStore(_actions, _sdk);
+    _store = new TodoStore(_actions, _sdk, _modalManager);
     _components = new TodoComponents(_actions, _store);
-
-    _actions.editTodo.listen((todo) {
-      // _modalManager.show(...);
-    });
   }
 
   @override
