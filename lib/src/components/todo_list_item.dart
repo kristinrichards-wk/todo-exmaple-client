@@ -47,6 +47,10 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
           (BlockContent()..shrink = true)(
             _renderTaskLabels(),
           ),
+          // Row 1, Column 4: "shrink-wrapped" width (edit button)
+          (BlockContent()..shrink = true)(
+            _renderTaskControlsToolbar(),
+          ),
         ),
       ),
       // Row 2: Notes (collapsed by default)
@@ -80,6 +84,43 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
     if (!props.isExpanded) return null;
 
     return Dom.div()(props.todo.notes);
+  }
+
+  ReactElement _renderTaskControlsToolbar() {
+    _plainButtonFactory() => Button()
+      ..skin = ButtonSkin.VANILLA
+      ..size = ButtonSize.XSMALL
+      ..noText = true;
+
+    var edit = (_plainButtonFactory()..onClick = _edit)(
+      (Icon()..glyph = IconGlyph.PENCIL)(),
+    );
+
+    var privacy = (_plainButtonFactory()..onClick = _togglePrivacy)(
+      (Icon()..glyph = IconGlyph.EYE)(),
+    );
+
+    var delete = (_plainButtonFactory()..onClick = _delete)(
+      (Icon()..glyph = IconGlyph.TRASH)(),
+    );
+
+    return ButtonToolbar()(
+      edit,
+      privacy,
+      delete,
+    );
+  }
+
+  void _delete(_) {
+    props.actions.deleteTodo(props.todo);
+  }
+
+  void _edit(_) {
+    props.actions.editTodo(props.todo);
+  }
+
+  void _togglePrivacy(_) {
+    props.actions.updateTodo(props.todo.change(isPublic: !props.todo.isPublic));
   }
 
   void _toggleExpansion(react.SyntheticMouseEvent event) {
