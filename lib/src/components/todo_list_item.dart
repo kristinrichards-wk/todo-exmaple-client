@@ -83,7 +83,9 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
   ReactElement _renderTaskNotes() {
     if (!props.isExpanded) return null;
 
-    return Dom.div()(props.todo.notes);
+    return Dom.div()(
+      _hasNotes ? props.todo.notes : (Dom.em()..className = 'text-muted')('No notes.'),
+    );
   }
 
   ReactElement _renderTaskControlsToolbar() {
@@ -97,7 +99,7 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
     );
 
     var privacy = (_plainButtonFactory()..onClick = _togglePrivacy)(
-      (Icon()..glyph = IconGlyph.EYE)(),
+      (Icon()..glyph = props.todo.isPublic ? IconGlyph.EYE : IconGlyph.EYE_BLOCKED)(),
     );
 
     var delete = (_plainButtonFactory()..onClick = _delete)(
@@ -110,6 +112,8 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
       delete,
     );
   }
+
+  bool get _hasNotes => props.todo.notes != null && props.todo.notes.isNotEmpty;
 
   void _delete(_) {
     props.actions.deleteTodo(props.todo);
