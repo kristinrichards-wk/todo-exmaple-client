@@ -28,16 +28,21 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
       ..add('todo-list__item--incomplete', !props.todo.isCompleted);
 
     return (ListGroupItem()..className = classes.toClassName())(
-      Block()(
-        // Row 1, Column 1: "shrink-wrapped" width (checkbox)
-        (Block()..shrink = true)(
-          _renderTaskCheckbox(),
-        ),
-        // Row 1, Column 2: (task name)
-        BlockContent()(
-          _renderTaskHeader(),
+      // Row 1: Checkmark, title, edit button
+      Dom.div()(
+        Block()(
+          // Row 1, Column 1: "shrink-wrapped" width (checkbox)
+          (Block()..shrink = true)(
+            _renderTaskCheckbox(),
+          ),
+          // Row 1, Column 2: (task name)
+          BlockContent()(
+            _renderTaskHeader(),
+          ),
         ),
       ),
+      // Row 2: Notes (collapsed by default)
+      _renderTaskNotes(),
     );
   }
 
@@ -55,6 +60,10 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
     return Dom.div()(
       props.todo.description,
     );
+  }
+
+  ReactElement _renderTaskNotes() {
+    return Dom.div()(props.todo.notes);
   }
 
   void _toggleCompletion(react.SyntheticFormEvent event) {
