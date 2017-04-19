@@ -12,20 +12,24 @@ UiFactory<TodoListItemProps> TodoListItem;
 @Props()
 class TodoListItemProps extends UiProps {
   TodoActions actions;
+  bool isExpanded;
   Todo todo;
 }
 
 @Component()
 class TodoListItemComponent extends UiComponent<TodoListItemProps> {
   @override
-  Map getDefaultProps() => (newProps());
+  Map getDefaultProps() => (newProps()
+    ..isExpanded = false
+    ..todo = null);
 
   @override
   render() {
     var classes = forwardingClassNameBuilder()
       ..add('todo-list__item')
       ..add('todo-list__item--complete', props.todo.isCompleted)
-      ..add('todo-list__item--incomplete', !props.todo.isCompleted);
+      ..add('todo-list__item--incomplete', !props.todo.isCompleted)
+      ..add('todo-list__item--expanded', props.isExpanded);
 
     return (ListGroupItem()..className = classes.toClassName())(
       // Row 1: Checkmark, title, edit button
@@ -57,13 +61,21 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
   }
 
   ReactElement _renderTaskHeader() {
-    return Dom.div()(
+    return (Dom.div()
+      ..role = Role.button
+      ..onClick = _toggleExpansion)(
       props.todo.description,
     );
   }
 
   ReactElement _renderTaskNotes() {
+    if (!props.isExpanded) return null;
+
     return Dom.div()(props.todo.notes);
+  }
+
+  void _toggleExpansion(react.SyntheticMouseEvent event) {
+    props.actions.selectTodo(props.isExpanded ? null : props.todo);
   }
 
   void _toggleCompletion(react.SyntheticFormEvent event) {

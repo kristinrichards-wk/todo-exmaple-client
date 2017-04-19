@@ -34,6 +34,8 @@ class TodoListComponent extends UiComponent<TodoListProps> {
 
     var todoItems = props.todos.map((todo) => (TodoListItem()
       ..todo = todo
+      ..actions = props.actions
+      ..isExpanded = props.activeTodo == todo
       ..key = todo.id)());
 
     return (ListGroup()
