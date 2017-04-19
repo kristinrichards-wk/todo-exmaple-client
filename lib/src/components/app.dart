@@ -45,16 +45,16 @@ class TodoAppComponent extends FluxUiComponent<TodoAppProps> {
             ..size = InputSize.LARGE)(),
         ),
       ),
-      BlockContent()(
-        (ListGroup()
-          ..className = 'todo-list'
-          ..isBordered = true
-          ..size = ListGroupSize.LARGE)(
-          props.store.todos.map((todo) {
-            return (ListGroupItem()
-              ..className = 'todo-list__item'
-              ..key = todo.id)(todo.description);
-          }),
+      (Block()
+        // Add a top gutter and collapse the content's top padding
+        // so that there's still space above when the content is scrolled.
+        ..gutter = BlockGutter.TOP)(
+        (BlockContent()..collapse = BlockCollapse.TOP)(
+          (TodoList()
+            ..actions = props.actions
+            ..activeTodo = props.store.activeTodo
+            ..currentUserId = props.currentUserId
+            ..todos = props.store.todos)(),
         ),
       ),
     );
