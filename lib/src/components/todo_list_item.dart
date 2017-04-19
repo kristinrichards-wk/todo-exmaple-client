@@ -38,21 +38,27 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
       Dom.div()(
         Block()(
           // Row 1, Column 1: "shrink-wrapped" width (checkbox)
-          (Block()..shrink = true)(
+          (Block()
+            ..className = 'todo-list__item__block todo-list__item__checkbox-block'
+            ..shrink = true)(
             _renderTaskCheckbox(),
           ),
           // Row 1, Column 2: (task name)
-          (BlockContent()..collapse = BlockCollapse.VERTICAL)(
+          (BlockContent()
+            ..className = 'todo-list__item__block todo-list__item__header-block'
+            ..collapse = BlockCollapse.VERTICAL)(
             _renderTaskHeader(),
           ),
           // Row 1, Column 3: (task labels)
           (BlockContent()
+            ..className = 'todo-list__item__block todo-list__item__labels-block'
             ..collapse = BlockCollapse.ALL
             ..shrink = true)(
             _renderTaskLabels(),
           ),
           // Row 1, Column 4: "shrink-wrapped" width (edit button)
           (BlockContent()
+            ..className = 'todo-list__item__block todo-list__item__controls-block'
             ..collapse = BlockCollapse.VERTICAL | BlockCollapse.RIGHT
             ..shrink = true)(
             _renderTaskControlsToolbar(),
@@ -90,7 +96,7 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
   ReactElement _renderTaskNotes() {
     if (!props.isExpanded) return null;
 
-    return Dom.div()(
+    return (Dom.div()..className = 'todo-list__item__notes')(
       _hasNotes ? props.todo.notes : (Dom.em()..className = 'text-muted')('No notes.'),
     );
   }
@@ -102,24 +108,27 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
       ..noText = true;
 
     var edit = (_plainButtonFactory()
+      ..className = 'todo-list__item__edit-btn'
       ..onClick = _edit
       ..isDisabled = !_canModify)(
       (Icon()..glyph = IconGlyph.PENCIL)(),
     );
 
     var privacy = (_plainButtonFactory()
+      ..className = 'todo-list__item__privacy-btn'
       ..onClick = _togglePrivacy
       ..isDisabled = !_canModify || props.todo.isCompleted)(
       (Icon()..glyph = props.todo.isPublic ? IconGlyph.EYE : IconGlyph.EYE_BLOCKED)(),
     );
 
     var delete = (_plainButtonFactory()
+      ..className = 'todo-list__item__delete-btn'
       ..onClick = _delete
       ..isDisabled = !_canModify || props.todo.isCompleted)(
       (Icon()..glyph = IconGlyph.TRASH)(),
     );
 
-    return ButtonToolbar()(
+    return (ButtonToolbar()..className = 'todo-list__item__controls-toolbar')(
       edit,
       privacy,
       delete,
