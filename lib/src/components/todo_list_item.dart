@@ -42,15 +42,19 @@ class TodoListItemComponent extends UiComponent<TodoListItemProps> {
             _renderTaskCheckbox(),
           ),
           // Row 1, Column 2: (task name)
-          BlockContent()(
+          (BlockContent()..collapse = BlockCollapse.VERTICAL)(
             _renderTaskHeader(),
           ),
           // Row 1, Column 3: (task labels)
-          (BlockContent()..shrink = true)(
+          (BlockContent()
+            ..collapse = BlockCollapse.ALL
+            ..shrink = true)(
             _renderTaskLabels(),
           ),
           // Row 1, Column 4: "shrink-wrapped" width (edit button)
-          (BlockContent()..shrink = true)(
+          (BlockContent()
+            ..collapse = BlockCollapse.VERTICAL | BlockCollapse.RIGHT
+            ..shrink = true)(
             _renderTaskControlsToolbar(),
           ),
         ),
