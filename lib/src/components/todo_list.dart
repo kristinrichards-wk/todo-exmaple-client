@@ -27,7 +27,9 @@ class TodoListComponent extends UiComponent<TodoListProps> {
   @override
   render() {
     if (props.todos.isEmpty) {
-      return (EmptyView()..header = 'No todos to show')(
+      return (EmptyView()
+        ..header = 'No todos to show'
+        ..addTestId('todoList.emptyView'))(
         'Create one or adjust the filters.',
       );
     }
@@ -37,12 +39,14 @@ class TodoListComponent extends UiComponent<TodoListProps> {
       ..actions = props.actions
       ..currentUserId = props.currentUserId
       ..isExpanded = props.activeTodo == todo
-      ..key = todo.id)());
+      ..key = todo.id
+      ..addTestId('todoList.todoListItem.${todo.id}'))());
 
     return (ListGroup()
       ..className = 'todo-list'
       ..isBordered = true
-      ..size = ListGroupSize.LARGE)(
+      ..size = ListGroupSize.LARGE
+      ..addTestId('todoList.listGroup'))(
       todoItems,
     );
   }

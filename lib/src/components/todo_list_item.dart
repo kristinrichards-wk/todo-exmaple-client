@@ -51,34 +51,39 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
       ..onMouseEnter = _handleItemMouseEnter
       ..onMouseLeave = _handleItemMouseLeave
       ..onFocus = _handleChildFocus
-      ..onBlur = _handleChildBlur)(
+      ..onBlur = _handleChildBlur
+      ..addTestId('todoListItem.listGroupItem'))(
       // Row 1: Checkmark, title, edit button
       Dom.div()(
         Block()(
           // Row 1, Column 1: "shrink-wrapped" width (checkbox)
           (Block()
             ..className = 'todo-list__item__block todo-list__item__checkbox-block'
-            ..shrink = true)(
+            ..shrink = true
+            ..addTestId('todoListItem.checkboxBlock'))(
             _renderTaskCheckbox(),
           ),
           // Row 1, Column 2: (task name)
           (BlockContent()
             ..className = 'todo-list__item__block todo-list__item__header-block'
-            ..collapse = BlockCollapse.VERTICAL)(
+            ..collapse = BlockCollapse.VERTICAL
+            ..addTestId('todoListItem.headerBlockContent'))(
             _renderTaskHeader(),
           ),
           // Row 1, Column 3: (task labels)
           (BlockContent()
             ..className = 'todo-list__item__block todo-list__item__labels-block'
             ..collapse = BlockCollapse.ALL
-            ..shrink = true)(
+            ..shrink = true
+            ..addTestId('todoListItem.labelsBlockContent'))(
             _renderTaskLabels(),
           ),
           // Row 1, Column 4: "shrink-wrapped" width (edit button)
           (BlockContent()
             ..className = 'todo-list__item__block todo-list__item__controls-block'
             ..collapse = BlockCollapse.VERTICAL | BlockCollapse.RIGHT
-            ..shrink = true)(
+            ..shrink = true
+            ..addTestId('todoListItem.controlsBlockContent'))(
             _renderTaskControlsToolbar(),
           ),
         ),
@@ -96,19 +101,21 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
       ..hideLabel = true
       // In theory this would be some unique id that your app could keep track of for data persistence
       ..value = ''
-      ..onChange = _toggleCompletion)();
+      ..onChange = _toggleCompletion
+      ..addTestId('todoListItem.completeCheckbox'))();
   }
 
   ReactElement _renderTaskHeader() {
     return (Dom.div()
       ..role = Role.button
-      ..onClick = _toggleExpansion)(
+      ..onClick = _toggleExpansion
+      ..addTestId('todoListItem.header'))(
       props.todo.description,
     );
   }
 
   ReactElement _renderTaskLabels() {
-    return Label()(props.todo.isPublic ? 'public' : 'private');
+    return (Label()..addTestId('todoListItem.label'))(props.todo.isPublic ? 'public' : 'private');
   }
 
   ReactElement _renderTaskNotes() {
@@ -128,27 +135,31 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
     var edit = (_plainButtonFactory()
       ..className = 'todo-list__item__edit-btn'
       ..onClick = _edit
-      ..isDisabled = !_canModify)(
+      ..isDisabled = !_canModify
+      ..addTestId('todoListItem.editButton'))(
       (Icon()..glyph = IconGlyph.PENCIL)(),
     );
 
     var privacy = (_plainButtonFactory()
       ..className = 'todo-list__item__privacy-btn'
       ..onClick = _togglePrivacy
-      ..isDisabled = !_canModify || props.todo.isCompleted)(
+      ..isDisabled = !_canModify || props.todo.isCompleted
+      ..addTestId('todoListItem.privacyButton'))(
       (Icon()..glyph = props.todo.isPublic ? IconGlyph.EYE : IconGlyph.EYE_BLOCKED)(),
     );
 
     var delete = (_plainButtonFactory()
       ..className = 'todo-list__item__delete-btn'
       ..onClick = _delete
-      ..isDisabled = !_canModify || props.todo.isCompleted)(
+      ..isDisabled = !_canModify || props.todo.isCompleted
+      ..addTestId('todoListItem.deleteButton'))(
       (Icon()..glyph = IconGlyph.TRASH)(),
     );
 
     return (ButtonToolbar()
       ..className = 'todo-list__item__controls-toolbar'
-      ..addProps(ariaProps()..hidden = !_isHovered))(
+      ..addProps(ariaProps()..hidden = !_isHovered)
+      ..addTestId('todoListItem.buttonToolbar'))(
       edit,
       privacy,
       delete,

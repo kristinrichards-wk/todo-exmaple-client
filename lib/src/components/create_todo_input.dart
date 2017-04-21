@@ -28,7 +28,9 @@ class CreateTodoInputComponent
 
   @override
   render() {
-    return (Form()..onSubmit = _createTodo)(
+    return (Form()
+      ..onSubmit = _createTodo
+      ..addTestId('createTodoInput.form'))(
       (TextInput()
         ..autoFocus = true
         ..hideLabel = true
@@ -36,7 +38,8 @@ class CreateTodoInputComponent
         ..placeholder = 'What do you need to do?'
         ..size = InputSize.LARGE
         ..onChange = _updateNewTodoDescription
-        ..value = state.newTodoDescription)(),
+        ..value = state.newTodoDescription
+        ..addTestId('createTodoInput.input'))(),
     );
   }
 
