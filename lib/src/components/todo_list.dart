@@ -4,6 +4,7 @@ import 'package:web_skin_dart/ui_components.dart';
 import 'package:web_skin_dart/ui_core.dart';
 
 import 'package:todo_client/src/actions.dart' show TodoActions;
+import 'package:todo_client/src/components/todo_list_item.dart';
 
 @Factory()
 UiFactory<TodoListProps> TodoList;
