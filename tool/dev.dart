@@ -8,6 +8,7 @@ main(List<String> args) async {
   var directories = ['lib/', 'tool/', 'web/'];
   config.analyze.entryPoints = directories;
   config.format
+    ..exclude = ['tool/over_react_format/']
     ..paths = directories
     ..lineLength = 100;
 

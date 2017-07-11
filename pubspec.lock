@@ -331,6 +331,12 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.14.0"
+  over_react_format:
+    description:
+      name: over_react_format
+      url: "https://pub.workiva.org"
+    source: hosted
+    version: "2.0.0"
   over_react_test:
     description:
       name: over_react_test

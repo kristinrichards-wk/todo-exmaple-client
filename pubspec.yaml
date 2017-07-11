@@ -1,5 +1,8 @@
 name: todo_client
-version: 0.0.1
+version: 1.0.0
+
+environment:
+  sdk: '>=1.23.0 <2.0.0'
 
 dependencies:
   messaging_sdk:
@@ -37,6 +40,11 @@ dev_dependencies:
   dartdoc: ^0.12.0
   test: ^0.12.20
   mockito: ^2.0.0
+  over_react_format:
+    hosted:
+      name: over_react_format
+      url: https://pub.workiva.org
+    version: ^2.0.0
   over_react_test: ^1.0.1
   w_test_tools:
     hosted:
