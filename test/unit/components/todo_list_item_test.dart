@@ -16,14 +16,16 @@ main() {
     group('renders a ListGroupItem with correct className', () {
       test('by default', () {
         var instance = render((TodoListItem()..todo = new Todo())());
-        var listGroupItemProps = ListGroupItem(getPropsByTestId(instance, 'todoListItem.listGroupItem'));
+        var listGroupItemProps =
+            ListGroupItem(getPropsByTestId(instance, 'todoListItem.listGroupItem'));
 
         expect(listGroupItemProps.className, 'todo-list__item todo-list__item--incomplete');
       });
 
       test('when the todo is complete', () {
         var instance = render((TodoListItem()..todo = new Todo(isCompleted: true))());
-        var listGroupItemProps = ListGroupItem(getPropsByTestId(instance, 'todoListItem.listGroupItem'));
+        var listGroupItemProps =
+            ListGroupItem(getPropsByTestId(instance, 'todoListItem.listGroupItem'));
 
         expect(listGroupItemProps.className, 'todo-list__item todo-list__item--complete');
       });
@@ -33,9 +35,11 @@ main() {
           ..todo = new Todo()
           ..isExpanded = true
         )());
-        var listGroupItemProps = ListGroupItem(getPropsByTestId(instance, 'todoListItem.listGroupItem'));
+        var listGroupItemProps =
+            ListGroupItem(getPropsByTestId(instance, 'todoListItem.listGroupItem'));
 
-        expect(listGroupItemProps.className, 'todo-list__item todo-list__item--incomplete todo-list__item--expanded');
+        expect(listGroupItemProps.className,
+            'todo-list__item todo-list__item--incomplete todo-list__item--expanded');
       });
     });
 
@@ -50,7 +54,8 @@ main() {
     group('renders a ButtonToolbar with correct props', () {
       test('by default', () {
         var instance = render((TodoListItem()..todo = new Todo())());
-        var buttonToolbarProps = ButtonToolbar(getPropsByTestId(instance, 'todoListItem.buttonToolbar'));
+        var buttonToolbarProps =
+            ButtonToolbar(getPropsByTestId(instance, 'todoListItem.buttonToolbar'));
 
         expect(buttonToolbarProps.className, 'todo-list__item__controls-toolbar');
         expect(ariaProps(buttonToolbarProps).hidden, isTrue);
@@ -62,7 +67,8 @@ main() {
 
         dartInstance.setState(dartInstance.newState()..isChildFocused = true);
 
-        var buttonToolbarProps = ButtonToolbar(getPropsByTestId(instance, 'todoListItem.buttonToolbar'));
+        var buttonToolbarProps =
+            ButtonToolbar(getPropsByTestId(instance, 'todoListItem.buttonToolbar'));
 
         expect(buttonToolbarProps.className, 'todo-list__item__controls-toolbar');
         expect(ariaProps(buttonToolbarProps).hidden, isFalse);
@@ -74,7 +80,8 @@ main() {
 
         dartInstance.setState(dartInstance.newState()..isHovered = true);
 
-        var buttonToolbarProps = ButtonToolbar(getPropsByTestId(instance, 'todoListItem.buttonToolbar'));
+        var buttonToolbarProps =
+            ButtonToolbar(getPropsByTestId(instance, 'todoListItem.buttonToolbar'));
 
         expect(buttonToolbarProps.className, 'todo-list__item__controls-toolbar');
         expect(ariaProps(buttonToolbarProps).hidden, isFalse);

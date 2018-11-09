@@ -30,7 +30,8 @@ class CreateTodoInputComponent
   render() {
     return (Form()
       ..onSubmit = _createTodo
-      ..addTestId('createTodoInput.form'))(
+      ..addTestId('createTodoInput.form')
+    )(
       (TextInput()
         ..autoFocus = true
         ..hideLabel = true
@@ -39,7 +40,8 @@ class CreateTodoInputComponent
         ..size = InputSize.LARGE
         ..onChange = _updateNewTodoDescription
         ..value = state.newTodoDescription
-        ..addTestId('createTodoInput.input'))(),
+        ..addTestId('createTodoInput.input')
+      )(),
     );
   }
 

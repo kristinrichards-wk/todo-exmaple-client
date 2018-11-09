@@ -31,12 +31,14 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
   Map getDefaultProps() => (newProps()
     ..currentUserId = ''
     ..isExpanded = false
-    ..todo = null);
+    ..todo = null
+  );
 
   @override
   Map getInitialState() => (newState()
     ..isHovered = false
-    ..isChildFocused = false);
+    ..isChildFocused = false
+  );
 
   @override
   render() {
@@ -52,7 +54,8 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
       ..onMouseLeave = _handleItemMouseLeave
       ..onFocus = _handleChildFocus
       ..onBlur = _handleChildBlur
-      ..addTestId('todoListItem.listGroupItem'))(
+      ..addTestId('todoListItem.listGroupItem')
+    )(
       // Row 1: Checkmark, title, edit button
       Dom.div()(
         Block()(
@@ -60,14 +63,16 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
           (Block()
             ..className = 'todo-list__item__block todo-list__item__checkbox-block'
             ..shrink = true
-            ..addTestId('todoListItem.checkboxBlock'))(
+            ..addTestId('todoListItem.checkboxBlock')
+          )(
             _renderTaskCheckbox(),
           ),
           // Row 1, Column 2: (task name)
           (BlockContent()
             ..className = 'todo-list__item__block todo-list__item__header-block'
             ..collapse = BlockCollapse.VERTICAL
-            ..addTestId('todoListItem.headerBlockContent'))(
+            ..addTestId('todoListItem.headerBlockContent')
+          )(
             _renderTaskHeader(),
           ),
           // Row 1, Column 3: (task labels)
@@ -75,7 +80,8 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
             ..className = 'todo-list__item__block todo-list__item__labels-block'
             ..collapse = BlockCollapse.ALL
             ..shrink = true
-            ..addTestId('todoListItem.labelsBlockContent'))(
+            ..addTestId('todoListItem.labelsBlockContent')
+          )(
             _renderTaskLabels(),
           ),
           // Row 1, Column 4: "shrink-wrapped" width (edit button)
@@ -83,7 +89,8 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
             ..className = 'todo-list__item__block todo-list__item__controls-block'
             ..collapse = BlockCollapse.VERTICAL | BlockCollapse.RIGHT
             ..shrink = true
-            ..addTestId('todoListItem.controlsBlockContent'))(
+            ..addTestId('todoListItem.controlsBlockContent')
+          )(
             _renderTaskControlsToolbar(),
           ),
         ),
@@ -102,14 +109,16 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
       // In theory this would be some unique id that your app could keep track of for data persistence
       ..value = ''
       ..onChange = _toggleCompletion
-      ..addTestId('todoListItem.completeCheckbox'))();
+      ..addTestId('todoListItem.completeCheckbox')
+    )();
   }
 
   ReactElement _renderTaskHeader() {
     return (Dom.div()
       ..role = Role.button
       ..onClick = _toggleExpansion
-      ..addTestId('todoListItem.header'))(
+      ..addTestId('todoListItem.header')
+    )(
       props.todo.description,
     );
   }
@@ -136,7 +145,8 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
       ..className = 'todo-list__item__edit-btn'
       ..onClick = _edit
       ..isDisabled = !_canModify
-      ..addTestId('todoListItem.editButton'))(
+      ..addTestId('todoListItem.editButton')
+    )(
       (Icon()..glyph = IconGlyph.PENCIL)(),
     );
 
@@ -144,7 +154,8 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
       ..className = 'todo-list__item__privacy-btn'
       ..onClick = _togglePrivacy
       ..isDisabled = !_canModify || props.todo.isCompleted
-      ..addTestId('todoListItem.privacyButton'))(
+      ..addTestId('todoListItem.privacyButton')
+    )(
       (Icon()..glyph = props.todo.isPublic ? IconGlyph.EYE : IconGlyph.EYE_BLOCKED)(),
     );
 
@@ -152,14 +163,16 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
       ..className = 'todo-list__item__delete-btn'
       ..onClick = _delete
       ..isDisabled = !_canModify || props.todo.isCompleted
-      ..addTestId('todoListItem.deleteButton'))(
+      ..addTestId('todoListItem.deleteButton')
+    )(
       (Icon()..glyph = IconGlyph.TRASH)(),
     );
 
     return (ButtonToolbar()
       ..className = 'todo-list__item__controls-toolbar'
       ..addProps(ariaProps()..hidden = !_isHovered)
-      ..addTestId('todoListItem.buttonToolbar'))(
+      ..addTestId('todoListItem.buttonToolbar')
+    )(
       edit,
       privacy,
       delete,

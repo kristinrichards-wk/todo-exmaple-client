@@ -105,7 +105,8 @@ class TodoStore extends Store {
   _editTodo(Todo todo) {
     _modalManager.show((EditTodoModal()
       ..actions = _actions
-      ..todo = todo)());
+      ..todo = todo
+    )());
   }
 
   _selectTodo(Todo todo) {

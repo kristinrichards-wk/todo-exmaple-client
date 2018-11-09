@@ -26,10 +26,12 @@ class EditTodoModalComponent extends UiComponent<EditTodoModalProps> {
     return (Modal()
       ..addProps(copyUnconsumedProps())
       ..header = 'Edit Todo'
-      ..addTestId('editTodoModal.modal'))(
+      ..addTestId('editTodoModal.modal')
+    )(
       (Form()
         ..onSubmit = _save
-        ..addTestId('editTodoModal.form'))(
+        ..addTestId('editTodoModal.form')
+      )(
         (DialogBody()..addTestId('editTodoModal.dialogBody'))(
           (TextInput()
             ..label = 'Title'
@@ -37,7 +39,8 @@ class EditTodoModalComponent extends UiComponent<EditTodoModalProps> {
             ..ref = (ref) {
               _titleInputRef = ref;
             }
-            ..addTestId('editTodoModal.titleInput'))(),
+            ..addTestId('editTodoModal.titleInput')
+          )(),
           (TextInput()
             ..isMultiline = true
             ..placeholder = 'Notes'
@@ -46,13 +49,15 @@ class EditTodoModalComponent extends UiComponent<EditTodoModalProps> {
             ..ref = (ref) {
               _notesInputRef = ref;
             }
-            ..addTestId('editTodoModal.notesInput'))(),
+            ..addTestId('editTodoModal.notesInput')
+          )(),
         ),
         (DialogFooter()..addTestId('editTodoModal.dialogFooter'))(
           (FormSubmitInput()
             ..skin = ButtonSkin.SUCCESS
             ..pullRight = true
-            ..addTestId('editTodoModal.submitButton'))('Save'),
+            ..addTestId('editTodoModal.submitButton')
+          )('Save'),
         ),
       ),
     );
