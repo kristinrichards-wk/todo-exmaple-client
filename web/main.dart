@@ -25,7 +25,7 @@ main() async {
   await natsMessagingClient.open();
 
   // Instantiate the authenticated & authorized to-do SDK.
-  final todoSdk = new WdeskTodoSdk(natsMessagingClient);
+  final todoSdk = new MockTodoSdk();
 
   // Inject the service into our to-do module.
   final todoModule = new TodoModule(todoSdk);

@@ -179,7 +179,7 @@ class TodoListItemComponent extends UiStatefulComponent<TodoListItemProps, TodoL
     );
   }
 
-  bool get _canModify => props.currentUserId == null || props.currentUserId == props.todo.userID;
+  bool get _canModify => props.currentUserId == null || props.todo.userID == null || props.currentUserId == props.todo.userID;
 
   bool get _hasNotes => props.todo.notes != null && props.todo.notes.isNotEmpty;
 
