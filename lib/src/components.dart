@@ -18,5 +18,6 @@ class TodoComponents extends ModuleComponents {
     ..actions = _actions
     ..store = _store
     ..currentUserId = currentUserId
-    ..withFilter = withFilter)();
+    ..withFilter = withFilter
+  )();
 }

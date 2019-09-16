@@ -19,7 +19,8 @@ class TodoAppComponent extends FluxUiComponent<TodoAppProps> {
   @override
   getDefaultProps() => (newProps()
     ..currentUserId = ''
-    ..withFilter = true);
+    ..withFilter = true
+  );
 
   @override
   render() {
