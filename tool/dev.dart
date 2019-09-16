@@ -8,7 +8,7 @@ main(List<String> args) async {
   var directories = ['lib/', 'tool/', 'web/'];
   config.analyze.entryPoints = directories;
   config.format
-    ..directories = directories
+    ..paths = directories
     ..lineLength = 100;
 
   config.genTestRunner.configs = [
