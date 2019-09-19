@@ -3,7 +3,6 @@ import 'package:truss/modal_manager.dart';
 import 'package:w_flux/w_flux.dart';
 
 import 'package:todo_client/src/actions.dart' show TodoActions;
-import 'package:todo_client/src/components/edit_todo_modal.dart';
 
 class TodoStore extends Store {
   final TodoActions _actions;
@@ -103,10 +102,7 @@ class TodoStore extends Store {
   }
 
   _editTodo(Todo todo) {
-    _modalManager.show((EditTodoModal()
-      ..actions = _actions
-      ..todo = todo
-    )());
+    print('TODO: show edit todo modal');
   }
 
   _selectTodo(Todo todo) {
