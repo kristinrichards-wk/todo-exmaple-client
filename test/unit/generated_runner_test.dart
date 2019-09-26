@@ -11,5 +11,4 @@ import 'package:web_skin_dart/ui_core.dart';
 void main() {
   setClientConfiguration();
   enableTestMode();
-  components_todo_list_item_test.main();
 }
