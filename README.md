@@ -1,8 +1,12 @@
-# LINK 2015 Client
+# Todo Example Client Application
+
+> ### Workshop: _Building UI with Web Skin Dart_
+> 
+> If you came here looking for instructions to the workshop based on this repo, check them out in [`workshop.md` on the workshop branch](https://github.com/Workiva/todo-example-client/blob/ui-workshop/start/workshop.md).
 
 ## Installation
 ```
-git clone git@github.com:Workiva/link-2015-client.git
+git clone git@github.com:greglittlefield-wf/todo-example-client.git --branch 8-tests_done_formatted
 ```
 
 ## Building
@@ -16,3 +20,11 @@ pub serve
 ```
 
 Open [http://localhost:8080](http://localhost:8080).
+
+## Development
+
+### Formatting:
+Run
+```
+pub run dart_dev format
+```

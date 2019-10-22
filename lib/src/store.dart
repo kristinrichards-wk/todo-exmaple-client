@@ -1,49 +1,71 @@
-library todo_example.src.module.store;
-
 import 'package:todo_sdk/todo_sdk.dart' show Todo, TodoSdk;
+import 'package:truss/modal_manager.dart';
 import 'package:w_flux/w_flux.dart';
 
-import 'package:todo_example/src/actions.dart' show TodoActions;
+import 'package:todo_client/src/actions.dart' show TodoActions;
 
 class TodoStore extends Store {
-  TodoActions _actions;
+  final TodoActions _actions;
+  final TodoSdk _sdk;
+  final ModalManager _modalManager;
+
   String _activeTodoId;
   bool _includeComplete = true;
   bool _includeIncomplete = true;
   bool _includePrivate = true;
   bool _includePublic = true;
-  TodoSdk _service;
+
   Map<String, Todo> _todosMap = {};
 
-  TodoStore(TodoActions actions, TodoSdk service)
+  TodoStore(TodoActions actions, TodoSdk sdk, ModalManager modalManager)
       : _actions = actions,
-        _service = service {
-    _actions.createTodo.listen(_createTodo);
-    _actions.deleteTodo.listen(_deleteTodo);
-    _actions.updateTodo.listen(_updateTodo);
+        _sdk = sdk,
+        _modalManager = modalManager {
+    manageActionSubscription(_actions.createTodo.listen(_createTodo));
+    manageActionSubscription(_actions.deleteTodo.listen(_deleteTodo));
+    manageActionSubscription(_actions.editTodo.listen(_editTodo));
+    manageActionSubscription(_actions.updateTodo.listen(_updateTodo));
 
     triggerOnAction(_actions.selectTodo, _selectTodo);
 
-    triggerOnAction(_actions.toggleIncludeComplete, (_) => _includeComplete = !_includeComplete);
-    triggerOnAction(
-        _actions.toggleIncludeIncomplete, (_) => _includeIncomplete = !_includeIncomplete);
-    triggerOnAction(_actions.toggleIncludePrivate, (_) => _includePrivate = !_includePrivate);
-    triggerOnAction(_actions.toggleIncludePublic, (_) => _includePublic = !_includePublic);
-
-    _service.todoCreated.listen((todo) {
-      _todosMap[todo.id] = todo;
-      trigger();
+    triggerOnAction(_actions.toggleIncludeComplete, (_) {
+      _includeComplete = !_includeComplete;
+      // One of these should be true at any given time, or nothing will be displayed.
+      if (!_includeComplete) _includeIncomplete = true;
     });
 
-    _service.todoDeleted.listen((todo) {
+    triggerOnAction(_actions.toggleIncludeIncomplete, (_) {
+      _includeIncomplete = !_includeIncomplete;
+      // One of these should be true at any given time, or nothing will be displayed.
+      if (!_includeIncomplete) _includeComplete = true;
+    });
+
+    triggerOnAction(_actions.toggleIncludePrivate, (_) {
+      _includePrivate = !_includePrivate;
+      // One of these should be true at any given time, or nothing will be displayed.
+      if (!_includePrivate) _includePublic = true;
+    });
+
+    triggerOnAction(_actions.toggleIncludePublic, (_) {
+      _includePublic = !_includePublic;
+      // One of these should be true at any given time, or nothing will be displayed.
+      if (!_includePublic) _includePrivate = true;
+    });
+
+    manageStreamSubscription(_sdk.todoCreated.listen((todo) {
+      _todosMap[todo.id] = todo;
+      trigger();
+    }));
+
+    manageStreamSubscription(_sdk.todoDeleted.listen((todo) {
       _todosMap.remove(todo.id);
       trigger();
-    });
+    }));
 
-    _service.todoUpdated.listen((todo) {
+    manageStreamSubscription(_sdk.todoUpdated.listen((todo) {
       _todosMap[todo.id] = todo;
       trigger();
-    });
+    }));
 
     _initialize();
   }
@@ -53,11 +75,12 @@ class TodoStore extends Store {
   bool get includeIncomplete => _includeIncomplete;
   bool get includePrivate => _includePrivate;
   bool get includePublic => _includePublic;
+
   List<Todo> get todos {
     List<Todo> complete = [];
     List<Todo> incomplete = [];
     for (var todo in _todosMap.values) {
-      if (!_service.userCanAccess(todo)) continue;
+      if (!_sdk.userCanAccess(todo)) continue;
       if (!includeComplete && todo.isCompleted) continue;
       if (!includeIncomplete && !todo.isCompleted) continue;
       if (!includePrivate && !todo.isPublic) continue;
@@ -68,14 +91,18 @@ class TodoStore extends Store {
     return []..addAll(incomplete.reversed)..addAll(complete.reversed);
   }
 
-  bool canAccess(Todo todo) => _service.userCanAccess(todo);
+  bool canAccess(Todo todo) => _sdk.userCanAccess(todo);
 
   _createTodo(Todo todo) {
-    _service.createTodo(todo);
+    _sdk.createTodo(todo);
   }
 
   _deleteTodo(Todo todo) {
-    _service.deleteTodo(todo.id);
+    _sdk.deleteTodo(todo.id);
+  }
+
+  _editTodo(Todo todo) {
+    print('TODO: show edit todo modal');
   }
 
   _selectTodo(Todo todo) {
@@ -83,12 +110,12 @@ class TodoStore extends Store {
   }
 
   _updateTodo(Todo todo) {
-    _service.updateTodo(todo);
+    _sdk.updateTodo(todo);
   }
 
   _initialize() async {
     _todosMap = new Map.fromIterable(
-        await _service.queryTodos(
+        await _sdk.queryTodos(
             includeComplete: true,
             includeIncomplete: true,
             includePrivate: true,
