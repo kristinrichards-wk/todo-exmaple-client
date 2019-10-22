@@ -6,7 +6,7 @@
 
 ## Installation
 ```
-git clone git@github.com:greglittlefield-wf/todo-example-client.git --branch 8-tests_done_formatted
+git clone https://github.com/kristinrichards-wk/todo-exmaple-client.git
 ```
 
 ## Building
